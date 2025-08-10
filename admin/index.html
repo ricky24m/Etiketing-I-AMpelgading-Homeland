@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management Dashboard - I'AMpel GADING</title>
+    <link rel="stylesheet" href="css/admin.css"> <!-- Fixed path -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="../images/Logoo.png" alt="Logo" class="login-logo">
+                <h1>Management Dashboard</h1>
+                <p>I'AMpel GADING Homeland</p>
+            </div>
+            
+            <form id="admin-login-form" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required 
+                           placeholder="Masukkan username" value="admin">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="Masukkan password" value="password123">
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <span class="btn-text">Login</span>
+                    <span class="btn-loading" style="display: none;">Memproses...</span>
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <div style="background: #e0f7e9; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <p><strong>✅ Login Credentials:</strong></p>
+                    <p>Username: <code>admin</code></p>
+                    <p>Password: <code>password123</code></p>
+                    <p style="color: #16A34A; font-size: 0.85rem; margin-top: 8px;">
+                        <strong>Password menggunakan plain text (tidak di-encrypt)</strong>
+                    </p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <p style="font-size: 0.8rem; color: #666;">Troubleshooting:</p>
+                    <a href="php/setup-admin.php" style="font-size: 0.8rem; color: #2563eb;">Setup Admin</a> | 
+                    <a href="php/debug-login.php" style="font-size: 0.8rem; color: #2563eb;">Debug Login</a> | 
+                    <a href="php/generate-password.php" style="font-size: 0.8rem; color: #2563eb;">Password Info</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/admin-auth.js"></script>
+</body>
+</html>

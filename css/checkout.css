@@ -1,0 +1,436 @@
+.checkout-container {
+            display: flex;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 32px 16px;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(22, 163, 74, 0.08);
+        }
+
+        .checkout-calendar {
+            flex: 1 1 45%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .checkout-calendar label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: #16A34A;
+        }
+
+        .checkout-calendar input[type="date"] {
+            font-size: 2rem;
+            padding: 24px 18px;
+            border-radius: 12px;
+            border: 2px solid #16A34A;
+            background: #f8f9fa;
+            color: #065F46;
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        .checkout-form-section {
+            flex: 1 1 55%;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .checkout-cart-list {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .checkout-cart-list h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+            color: #16A34A;
+        }
+
+        .checkout-cart-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .checkout-cart-list li {
+            margin-bottom: 7px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .checkout-cart-total {
+            font-weight: 700;
+            color: #16A34A;
+            margin-top: 10px;
+        }
+
+        .checkout-form label {
+            font-weight: 600;
+            color: #065F46;
+            margin-bottom: 4px;
+        }
+
+        .checkout-form input[type="text"],
+        .checkout-form input[type="email"],
+        .checkout-form input[type="tel"] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .checkout-form input[type="text"]:focus,
+        .checkout-form input[type="email"]:focus,
+        .checkout-form input[type="tel"]:focus {
+            border-color: #16A34A;
+            outline: none;
+        }
+
+        .checkout-form .checkout-date-display {
+            font-size: 1rem;
+            color: #065F46;
+            margin-bottom: 10px;
+        }
+
+        .checkout-form .checkout-btn {
+            width: 100%;
+            background: #16A34A;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        .checkout-form .checkout-btn:hover {
+            background: #128B3B;
+        }
+
+        .checkout-hero {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    height: 160px;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.checkout-hero-img {
+    width: 100vw;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.7);
+}
+
+.checkout-hero-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-center {
+    text-align: center;
+    color: #fff;
+    z-index: 2;
+}
+
+.header-center h1 {
+    font-size: 2.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.booking-container {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.calendar-section {
+    flex: 1;
+    max-width: 500px;
+}
+
+.form-section {
+    flex: 1;
+    max-width: 600px;
+}
+
+.calendar-card, .form-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+}
+
+.calendar-card h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #16A34A;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.calendar-wrapper {
+    max-width: 100%;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+}
+
+.calendar-nav {
+    background: #16A34A;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background 0.2s;
+}
+
+.calendar-nav:hover {
+    background: #128B3B;
+}
+
+#current-month {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.calendar-grid {
+    width: 100%;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 0.5rem;
+}
+
+.calendar-weekdays div {
+    text-align: center;
+    font-weight: 600;
+    color: #666;
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fff;
+    position: relative;
+    min-height: 50px;
+}
+
+.calendar-day:hover {
+    background: #f0f9ff;
+    border-color: #16A34A;
+}
+
+.calendar-day.selected {
+    background: #16A34A;
+    color: #fff;
+    border-color: #16A34A;
+}
+
+.calendar-day.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+    background: #f5f5f5;
+}
+
+.calendar-day.other-month {
+    color: #ccc;
+}
+
+.day-number {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-card h2 {
+    color: #333;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.selected-date-info {
+    background: #f8f9fa;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border-left: 4px solid #16A34A;
+}
+
+.selected-date-info p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.cart-summary-checkout {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e0e0e0;
+}
+
+.cart-summary-checkout h3 {
+    margin: 0 0 0.5rem 0;
+    color: #16A34A;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.cart-summary-checkout p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.total-amount {
+    font-weight: 700;
+    color: #16A34A;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #ddd;
+}
+
+.booking-form {
+    width: 100%;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-grid input {
+    padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.2s;
+}
+
+.form-grid input:focus {
+    outline: none;
+    border-color: #16A34A;
+    box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.1);
+}
+
+.submit-btn {
+    width: 100%;
+    background: #16A34A;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.submit-btn:hover {
+    background: #128B3B;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .booking-container {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 0 0.5rem;
+    }
+    
+    .calendar-section, .form-section {
+        max-width: 100%;
+    }
+    
+    .calendar-card, .form-card {
+        padding: 1rem;
+    }
+    
+    .form-grid {
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-day {
+        min-height: 40px;
+    }
+    
+    .day-number {
+        font-size: 0.8rem;
+    }
+    
+    .form-grid input {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+}

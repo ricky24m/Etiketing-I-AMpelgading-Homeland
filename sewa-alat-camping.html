@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Tiket I'AMpel GADING Homeland</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sewa.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-booking">
+            <img src="images/Logoo.png" alt="Logo" class="logo-img">
+            <div class="navbar-nav">
+                <a href="index.html">Beranda</a>
+                <a href="katalog.html">Booking</a>
+                <a href="Panduan.html">Panduan Booking</a>
+            </div>
+            <div class="navbar-extra">
+                <a href="#" class="navbar-icon" data-cart id="cart-btn">
+                    <i data-feather="shopping-cart"></i>
+                </a>
+                <div id="cart-popup" class="cart-popup">
+                    <div id="cart-content"></div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="camping-hero">
+            <img src="images/camping.jpg" alt="Camping Image" class="camping-hero-img">
+            <div class="camping-hero-overlay">
+                <div class="header-center">
+                    <h1>Sewa Alat Camping</h1>
+                    <nav class="breadcrumb">
+                        <a href="index.html">Beranda</a>
+                        <span>&gt;</span>
+                        <a href="katalog.html">Booking</a>
+                        <span>&gt;</span>
+                        <a href="sewa-alat-camping.html">Sewa Alat Camping</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="keterangan">
+            <h1 style="font-size: 24px; text-align: center; margin-bottom: 20px; justify-content: center">Pilih Alat
+                Camping yang Anda Butuhkan</h1>
+            <p style="text-align: center; margin-bottom: 30px;">Semua alat berkualitas dan terawat dengan baik</p>
+        </div>
+
+        <!-- Container untuk daftar alat camping -->
+        <div class="camping-items-container">
+            <div class="camping-item">
+                <img src="images/tenda-2.png" alt="Tenda 2 Orang">
+                <h3>Tenda 2 Orang</h3>
+                <p class="price">Rp 50.000/hari</p>
+                <div class="quantity-control">
+                    <button class="btn-qty minus" data-item="tenda-2">-</button>
+                    <span class="qty-display" data-item="tenda-2">0</span>
+                    <button class="btn-qty plus" data-item="tenda-2">+</button>
+                </div>
+            </div>
+
+            <div class="camping-item">
+                <img src="images/tenda-4.jpg" alt="Tenda 4 Orang">
+                <h3>Tenda 4 Orang</h3>
+                <p class="price">Rp 85.000/hari</p>
+                <div class="quantity-control">
+                    <button class="btn-qty minus" data-item="tenda-4">-</button>
+                    <span class="qty-display" data-item="tenda-4">0</span>
+                    <button class="btn-qty plus" data-item="tenda-4">+</button>
+                </div>
+            </div>
+
+            <div class="camping-item">
+                <img src="images/tenda-4.jpg" alt="Tenda 4 Orang">
+                <h3>Tenda 6-8 Orang</h3>
+                <p class="price">Rp 115.000/hari</p>
+                <div class="quantity-control">
+                    <button class="btn-qty minus" data-item="tenda-6">-</button>
+                    <span class="qty-display" data-item="tenda-6">0</span>
+                    <button class="btn-qty plus" data-item="tenda-6">+</button>
+                </div>
+            </div>
+
+            <div class="camping-item">
+                <img src="images/kompor.jpg" alt="Kompor Portable">
+                <h3>Kompor Portable</h3>
+                <p class="price">Rp 30.000/hari</p>
+                <div class="quantity-control">
+                    <button class="btn-qty minus" data-item="kompor">-</button>
+                    <span class="qty-display" data-item="kompor">0</span>
+                    <button class="btn-qty plus" data-item="kompor">+</button>
+                </div>
+            </div>
+
+            <div class="camping-item">
+                <img src="images/sleepingbag.jpg" alt="Sleeping Bag">
+                <h3>Sleeping Bag</h3>
+                <p class="price">Rp 15.000/hari</p>
+                <div class="quantity-control">
+                    <button class="btn-qty minus" data-item="sleeping-bag">-</button>
+                    <span class="qty-display" data-item="sleeping-bag">0</span>
+                    <button class="btn-qty plus" data-item="sleeping-bag">+</button>
+                </div>
+            </div>
+
+            <div class="camping-item">
+                <img src="images/nesting.jpg" alt="Nesting">
+                <h3>Nesting</h3>
+                <p class="price">Rp 15.000/hari</p>
+                <div class="quantity-control">
+                    <button class="btn-qty minus" data-item="nesting">-</button>
+                    <span class="qty-display" data-item="nesting">0</span>
+                    <button class="btn-qty plus" data-item="nesting">+</button>
+                </div>
+            </div>
+
+            <div class="camping-item">
+                <img src="images/teapot.jpg" alt="Teapot">
+                <h3>Teapot</h3>
+                <p class="price">Rp 15.000/hari</p>
+                <div class="quantity-control">
+                    <button class="btn-qty minus" data-item="teapot">-</button>
+                    <span class="qty-display" data-item="teapot">0</span>
+                    <button class="btn-qty plus" data-item="teapot">+</button>
+                </div>
+            </div>
+
+            <div class="camping-item">
+                <img src="images/teapot.jpg" alt="Meja Lipat">
+                <h3>Meja Lipat</h3>
+                <p class="price">Rp 25.000/hari</p>
+                <div class="quantity-control">
+                    <button class="btn-qty minus" data-item="meja-lipat">-</button>
+                    <span class="qty-display" data-item="meja-lipat">0</span>
+                    <button class="btn-qty plus" data-item="meja-lipat">+</button>
+                </div>
+            </div>
+
+            <div class="camping-item">
+                <img src="images/kursi.jpg" alt="Kursi Lipat">
+                <h3>Kursi Lipat</h3>
+                <p class="price">Rp 20.000/hari</p>
+                <div class="quantity-control">
+                    <button class="btn-qty minus" data-item="kursi-lipat">-</button>
+                    <span class="qty-display" data-item="kursi-lipat">0</span>
+                    <button class="btn-qty plus" data-item="kursi-lipat">+</button>
+                </div>
+            </div>
+
+            <div class="camping-item">
+                <img src="images/lampu.jpg" alt="Lampu Tenda">
+                <h3>Lampu Tenda</h3>
+                <p class="price">Rp 10.000/hari</p>
+                <div class="quantity-control">
+                    <button class="btn-qty minus" data-item="lampu-tenda">-</button>
+                    <span class="qty-display" data-item="lampu-tenda">0</span>
+                    <button class="btn-qty plus" data-item="lampu-tenda">+</button>
+                </div>
+            </div>
+
+            <!-- Tambahkan item lainnya -->
+        </div>
+
+        <div class="cart-summary">
+            <button id="add-all-to-cart" class="btn-cart-summary">Tambahkan ke Keranjang</button>
+        </div>
+    </main>
+    <script src="src/navbar-scroll.js"></script>
+    <script src="src/cart.js"></script>
+    <script src="src/camping-handler.js"></script>
+    <script>feather.replace();</script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Tiket I'AMpel GADING Homeland</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/katalog.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <img src="images/Logoo.png" alt="Logo" class="logo-img">
+        <div class="navbar-nav">
+            <a href="index.html">Beranda</a>
+            <a href="katalog.html">Booking</a>
+            <a href="Panduan.html">Panduan Booking</a>
+        </div>
+        <div class="navbar-extra">
+            <input type="text" id="search-input" placeholder="Cari paket..."
+                style="padding:6px 14px;border-radius:8px;border:1px solid #ccc;font-size:1rem;margin-right:12px;">
+            <a href="#" class="navbar-icon" data-cart id="cart-btn">
+                <i data-feather="shopping-cart"></i>
+            </a>
+            <div id="cart-popup" class="cart-popup">
+                <div id="cart-content"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="menu-section">
+        <h2>Pilih Pesanan Anda</h2>
+        
+        <!-- Loading State -->
+        <div id="loading-state" class="loading-container">
+            <div class="spinner"></div>
+            <p>Memuat menu...</p>
+        </div>
+        
+        <!-- Menu Container - akan diisi dinamis -->
+        <div class="menu-container" id="menu-container" style="display: none;">
+            <!-- Menu items akan dimuat via JavaScript -->
+        </div>
+        
+        <!-- No Results -->
+        <div id="not-found" style="display:none;color:#d32f2f;font-weight:600;font-size:1.1rem;margin-top:24px;">
+            Paket yang anda cari tidak ada
+        </div>
+        
+        <!-- Error State -->
+        <div id="error-state" style="display:none;color:#d32f2f;font-weight:600;font-size:1.1rem;margin-top:24px;">
+            <p>Gagal memuat data menu. Silakan refresh halaman.</p>
+            <button onclick="loadKatalogMenu()" style="margin-top:10px;padding:8px 16px;background:#16A34A;color:white;border:none;border-radius:5px;cursor:pointer;">
+                Coba Lagi
+            </button>
+        </div>
+    </main>
+    <script src="src/footer.js"></script>
+    <script src="src/cart.js"></script>
+    <script src="src/katalog-dynamic.js"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+.wisata-hero {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    height: 160px;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.wisata-hero-img {
+    width: 100vw;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.7);
+}
+
+.wisata-hero-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-center {
+    text-align: center;
+    color: #fff;
+    z-index: 2;
+    background: none;
+    padding: 32px 0 0 0;
+    border-radius: 0;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.header-center h1 {
+    font-size: 2.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.header-center .breadcrumb {
+    border-radius: 8px;
+    padding: 8px 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.08rem;
+    color: #fff;
+    margin-top: 3px;
+}
+
+#wisata-table {
+    width: 700px;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(22,163,74,0.08);
+    font-size: 1.08rem;
+    margin-left: 10rem;
+    border: 1px solid #16A34A;
+}
+
+#wisata-table th,
+#wisata-table td {
+    border: 1px solid black;
+    padding: 10px 16px;
+    text-align: left;
+}
+.keterangan{
+    margin-top: 2rem;
+     margin-left: 10rem;
+}
+.keterangan ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.navbar-booking .navbar-extra {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: 48px;
+}
+.navbar-booking .navbar-icon {
+    color: #fff;
+    font-size: 1.6rem;
+    transition: color 0.2s;
+}
+
+.navbar-booking .navbar-icon:hover {
+    color: var(--primary);
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.btn-qty {
+    background: #16A34A;
+    color: #fff;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+    font-weight: 100;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-qty:hover {
+    background: #128B3B;
+}
+
+.qty-display {
+    font-size: 1.2rem;
+    font-weight: 300;
+    min-width: 32px;
+    text-align: center;
+    color: #333;
+}

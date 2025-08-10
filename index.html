@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Tiket I'AMpel GADING Homeland</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="src/app.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <img src="images/Logoo.png" alt="Logo" class="logo-img">
+        <div class="navbar-nav">
+            <a href="#home">Beranda</a>
+            <a href="#galeri">Galeri</a>
+            <a href="#testimonials">Testimoni</a>
+            <a href="#contact">Hubungi Kami</a>
+            <a href="katalog.html">Booking</a>
+            <a href="Panduan.html">Panduan Booking</a>
+        </div>
+    </nav>
+
+    <section class="hero-section" id="home">
+        <img src="images/hero.jpg" alt="Header" class="hero-img">
+        <div class="hero-overlay">
+            <div class="hero-auth-buttons">
+                <button class="hero-auth-btn hero-login-btn" id="hero-login-btn">
+                    <span>Login</span>
+                </button>
+                <button class="hero-auth-btn hero-register-btn" id="hero-register-btn">
+                    <span>Daftar</span>
+                </button>
+            </div>
+
+            <button class="arrow-btn right" id="slide-to-h2">&gt;</button>
+            <div class="hero-text hero-slide" id="hero-main">
+                <h1>SELAMAT DATANG DI
+                    <span class="hero-title">BOOKING TIKET ONLINE I'AMPEL GADING HOMELAND</span>
+                </h1>
+                <a href="katalog.html" class="cta">Booking Sekarang</a>
+            </div>
+            <button class="arrow-btn left" id="slide-to-h1" style="display:none;">&lt;</button>
+            <div class="hero-text hero-slide" id="hero-secondary" style="display:none;">
+                <h2>TATA TERTIB PENGUNJUNG / PESERTA CAMP</h2><br>
+                <ul>
+                    ✅ kesadaran diri, jangan bepergian jika kondisi badan sedang sakit.<br>
+                    ✅ Menjunjung tinggi norma-norma kesopanan & kesusilaan.<br>
+                    ✅ Dilarang Berbicara Keras, Berkata Kotor (Urakan).<br>
+                    ✅ Dilarang Buang air Kecil/Besar di sembarang tempat.<br>
+                    ✅ Dilarang membawa MIRAS & obat-obatan terlarang.<br>
+                    ✅ Dilarang meninggalkan sampah & bekas api unggun dalam kondisi berserakan di lokasi area camp.
+                    Datang Bersih, pulang bersih.<br>
+                    ✅ Pemberlakuan jam malam / jam Istirahat (Batas aktifitas sampai jam 00.00).<br>
+                    ✅ Batas mendirikan tenda (datang) bisa dimulai jam 15.00 / 3 sore keatas, batas bongkar tenda
+                    (pulang) max jam 10.00 siang.<br>
+                </ul><br>
+                <h2>Melanggar peraturan akan dikenakan sanksi / denda.</h2>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeri" class="galeri-section">
+        <h2><span>Galeri</span> Pengunjung</h2>
+        <p>Apa saja yang mereka lakukan saat berkunjung ke I'AMpel GADING Homeland</p>
+        <div class="gallery-container">
+            <button class="gallery-arrow left" id="gallery-prev">&lt;</button>
+            <button class="gallery-arrow right" id="gallery-next">&gt;</button>
+
+            <div class="gallery-wrapper" id="gallery-wrapper">
+                <div class="gallery-slide">
+                    <div class="gallery-item">
+                        <img src="images/galeri/camping.jpg" alt="Camping Experience">
+                        <div class="gallery-overlay">
+                            <h4>Camping Seru</h4>
+                            <p>Pengalaman camping yang tak terlupakan di bawah bintang-bintang</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/galeri/jeep.jpg" alt="Jeep Adventure">
+                        <div class="gallery-overlay">
+                            <h4>Jeep Adventure</h4>
+                            <p>Petualangan seru menyusuri jalur off-road menuju puncak</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/outbond.jpg" alt="Outbound Activities">
+                        <div class="gallery-overlay">
+                            <h4>Outbound Team</h4>
+                            <p>Kegiatan outbound untuk meningkatkan kerjasama tim</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-slide">
+                    <div class="gallery-item">
+                        <img src="images/galeri/wisata.jpg" alt="Nature Tourism">
+                        <div class="gallery-overlay">
+                            <h4>Wisata Alam</h4>
+                            <p>Menikmati keindahan alam pegunungan yang mempesona</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/galeri/pemandangan.jpg" alt="Mountain View">
+                        <div class="gallery-overlay">
+                            <h4>Pemandangan Indah</h4>
+                            <p>View spektakuler dari ketinggian 1350 mdpl</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/galeri/Puncak.jpg" alt="Local Culture">
+                        <div class="gallery-overlay">
+                            <h4>Puncak Gendol</h4>
+                            <p>Pemandangan Puncak Gendol</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-dots">
+                <div class="gallery-dot active" data-slide="0"></div>
+                <div class="gallery-dot" data-slide="1"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+        <h2><span>Testimoni</span> Pengunjung</h2>
+        <p>Apa kata mereka yang telah berkunjung ke I'AMpel GADING Homeland</p>
+
+        <div class="testimonials-container">
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i data-feather="user"></i>
+                        </div>
+                        <div class="user-details">
+                            <h4>Brian dan Adik Bermain</h4>
+                            <div class="rating">
+                                <span class="stars">★★★★★</span>
+                                <span class="rating-text">5.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="google-icon">
+                        <img src="images/google.svg" alt="Google" width="20">
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "Akses naik lumayan bagus .. mobil avanza,brio naik bisa , tempat bersih .. super dingin, Saran
+                    untuk kamar mandi mungkin bs di benahi lagi .. selebihnya syahdu"
+                </p>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i data-feather="user"></i>
+                        </div>
+                        <div class="user-details">
+                            <h4>Dhifalenza Al-Mahendra</h4>
+                            <div class="rating">
+                                <span class="stars">★★★★★</span>
+                                <span class="rating-text">5.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="google-icon">
+                        <img src="images/google.svg"
+                            alt="Google" width="20">
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "tempatnya asli sepi banget cocok buat penyendiri seperti aku wkwk.. datang kesini waktu lebaran
+                    dapet cuaca bagus banget, cahaya lampu kota dari kejauhan terang benderang diiringi suara takbir yg
+                    menggema"
+                </p>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i data-feather="user"></i>
+                        </div>
+                        <div class="user-details">
+                            <h4>A Nomo</h4>
+                            <div class="rating">
+                                <span class="stars">★★★★★</span>
+                                <span class="rating-text">5.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="google-icon">
+                        <img src="images/google.svg"
+                            alt="Google" width="20">
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "Tempatnya cukup bagus dan tertata walaupun tidak terlalu luas, akses sampai ke lokasi bisa pakai mobil tapi sebelum naik ada baiknya cek kondisi karena jalan yang terus menanjak dan beberapa jalan yg dilalui ada yang kurang bagus. "
+                </p>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i data-feather="user"></i>
+                        </div>
+                        <div class="user-details">
+                            <h4>Dyah Ayu</h4>
+                            <div class="rating">
+                                <span class="stars">★★★★★</span>
+                                <span class="rating-text">5.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="google-icon">
+                        <img src="images/google.svg"
+                            alt="Google" width="20">
+                    </div>
+                </div>
+                <p class="testimonial-text">
+                    "Tempat yang oke banget buat menghilangkan penat,pelayanan penjaga sangat ramah.Perjalananselalu ditemani pemandangan yang indah.Sayangnya untuk kamar mandi di atas belum ada penerangan dan kurang perawatan.!"
+                </p>
+            </div>
+        </div>
+
+        <div class="google-reviews-link">
+            <a href="https://www.google.com/search?sca_esv=afa8570cfb57dbd5&sxsrf=AE3TifOAkeR86_zbe2oapOGbz9dq0o2e3w:1754130188167&q=I+AMpelgading+HOMELAND&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EyaZZjWYFFv-J6_5Kas9aMyj2pFo-oLr8S1ZFgWe6ZyY6OWXeyaL6bIuNiOnysqsRIZMNsh2NQ-po0Vqc6KcmchW_T9DJpsicZcrb7GvRD5B4UHzqA%3D%3D&sa=X&ved=2ahUKEwidtoWW9OuOAxXMzTgGHffsG2cQmJ0LegQINxAA&biw=1536&bih=776&dpr=1.25"
+                target="_blank" class="btn-google-reviews">
+                <img src="images/google.svg" alt="Google"
+                    width="20">
+                Lihat Semua Review di Google
+            </a>
+        </div>
+    </section>
+
+    <script>
+        const main = document.getElementById('hero-main');
+        const secondary = document.getElementById('hero-secondary');
+        const toH2 = document.getElementById('slide-to-h2');
+        const toH1 = document.getElementById('slide-to-h1');
+
+        let currentSlide = 1; // 1 = main, 2 = secondary
+        let autoSlideInterval;
+        let isTransitioning = false; // Prevent overlapping transitions
+        function slideToSecondary() {
+            if (isTransitioning) return;
+            isTransitioning = true;
+
+            main.classList.add('slide-left');
+            toH2.style.display = 'none';
+
+            setTimeout(() => {
+                main.style.display = 'none';
+                main.classList.remove('slide-left');
+                secondary.style.display = '';
+                toH1.style.display = '';
+                secondary.classList.add('slide-in-right');
+
+                setTimeout(() => {
+                    secondary.classList.remove('slide-in-right');
+                    isTransitioning = false;
+                    currentSlide = 2;
+                }, 1000);
+            }, 1000);
+        }
+        function slideToMain() {
+            if (isTransitioning) return;
+            isTransitioning = true;
+
+            secondary.classList.add('slide-right');
+            toH1.style.display = 'none';
+
+            setTimeout(() => {
+                secondary.style.display = 'none';
+                secondary.classList.remove('slide-right');
+                main.style.display = '';
+                toH2.style.display = '';
+                main.classList.add('slide-in-left');
+
+                setTimeout(() => {
+                    main.classList.remove('slide-in-left');
+                    isTransitioning = false;
+                    currentSlide = 1;
+                }, 1000);
+            }, 1000);
+        }
+        toH2.onclick = function () {
+            slideToSecondary();
+            resetAutoSlide(); // Reset timer saat manual click
+        };
+
+        toH1.onclick = function () {
+            slideToMain();
+            resetAutoSlide(); // Reset timer saat manual click
+        };
+        function autoSlide() {
+            if (currentSlide === 1) {
+                slideToSecondary();
+            } else {
+                slideToMain();
+            }
+        }
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(autoSlide, 8000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        const heroSection = document.querySelector('.hero-section');
+
+        heroSection.addEventListener('mouseenter', () => {
+            clearInterval(autoSlideInterval);
+        });
+
+        heroSection.addEventListener('mouseleave', () => {
+            startAutoSlide();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            startAutoSlide();
+        });
+
+        let userActive = true;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) { // Jika scroll lebih dari 100px
+                clearInterval(autoSlideInterval);
+                userActive = false;
+            } else if (!userActive) {
+                startAutoSlide();
+                userActive = true;
+            }
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                clearInterval(autoSlideInterval);
+            } else if (userActive) {
+                startAutoSlide();
+            }
+        });
+    </script>
+
+    <script>
+        const galleryWrapper = document.getElementById('gallery-wrapper');
+        const galleryPrev = document.getElementById('gallery-prev');
+        const galleryNext = document.getElementById('gallery-next');
+        const galleryDots = document.querySelectorAll('.gallery-dot');
+        const galleryContainer = document.querySelector('.gallery-container');
+
+        let currentGallerySlide = 0; // 0 = slide pertama, 1 = slide kedua
+        let galleryAutoSlideInterval;
+        let galleryIsTransitioning = false;
+
+        function slideToGallery(slideIndex) {
+            if (galleryIsTransitioning || slideIndex === currentGallerySlide) return;
+            galleryIsTransitioning = true;
+
+            currentGallerySlide = slideIndex;
+            const translateX = currentGallerySlide * -50; // 2 slide, masing-masing 50%
+            galleryWrapper.style.transform = `translateX(${translateX}%)`;
+
+            // Update dots
+            galleryDots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentGallerySlide);
+            });
+
+            setTimeout(() => {
+                galleryIsTransitioning = false;
+            }, 1000); // sama dengan hero section (1000ms)
+        }
+
+        function nextGallerySlide() {
+            const next = (currentGallerySlide + 1) % 2;
+            slideToGallery(next);
+        }
+
+        function prevGallerySlide() {
+            const prev = (currentGallerySlide - 1 + 2) % 2;
+            slideToGallery(prev);
+        }
+
+        function autoGallerySlide() {
+            if (currentGallerySlide === 0) {
+                slideToGallery(1);
+            } else {
+                slideToGallery(0);
+            }
+        }
+
+        function startGalleryAutoSlide() {
+            galleryAutoSlideInterval = setInterval(autoGallerySlide, 8000); // 8 detik, sama dengan hero
+        }
+
+        function resetGalleryAutoSlide() {
+            clearInterval(galleryAutoSlideInterval);
+            startGalleryAutoSlide();
+        }
+
+        if (galleryNext) {
+            galleryNext.onclick = function () {
+                nextGallerySlide();
+                resetGalleryAutoSlide();
+            };
+        }
+        if (galleryPrev) {
+            galleryPrev.onclick = function () {
+                prevGallerySlide();
+                resetGalleryAutoSlide();
+            };
+        }
+        galleryDots.forEach((dot, idx) => {
+            dot.onclick = function () {
+                slideToGallery(idx);
+                resetGalleryAutoSlide();
+            };
+        });
+        if (galleryContainer) {
+            galleryContainer.addEventListener('mouseenter', () => {
+                clearInterval(galleryAutoSlideInterval);
+            });
+            galleryContainer.addEventListener('mouseleave', () => {
+                startGalleryAutoSlide();
+            });
+        }
+
+        // Mulai auto-slide saat halaman siap
+        document.addEventListener('DOMContentLoaded', () => {
+            startGalleryAutoSlide();
+        });
+
+        // Pause saat tab tidak aktif
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                clearInterval(galleryAutoSlideInterval);
+            } else {
+                startGalleryAutoSlide();
+            }
+        });
+    </script>
+
+    <section id="contact" class="contact-section">
+        <h2><span>Hubungi</span> Kami</h2>
+        <p>Dapatkan informasi lebih lanjut tentang paket wisata dan booking tiket online kami</p>
+        <div class="row">
+            <iframe src="https://www.google.com/maps/d/embed?mid=1fWstsFGZokZz8JR0YQR6tmC2ia5Giys&ehbc=2E312F"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            <form id="contact-form" method="POST" class="contact-form">
+                <h3>Kirim Pesan</h3>
+                <div class="input-group">
+                    <i data-feather="user"></i>
+                    <input type="text" name="nama" placeholder="Nama Lengkap" required>
+                </div>
+                <div class="input-group">
+                    <i data-feather="mail"></i>
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i data-feather="phone"></i>
+                    <input type="tel" name="phone" placeholder="No. Handphone" required>
+                </div>
+                <div class="input-group">
+                    <i data-feather="message-square"></i>
+                    <textarea name="pesan" placeholder="Pesan Anda..." rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">
+                    <i data-feather="send"></i>
+                    <span id="btn-text">Kirim Pesan</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <script src="src/footer.js"></script>
+    <script src="src/navbar-scroll.js"></script>
+    <script src="src/contact-form.js"></script>
+    <script src="src/auth-system.js"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+
+</html>

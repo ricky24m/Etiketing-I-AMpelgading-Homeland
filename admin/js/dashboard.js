@@ -1,0 +1,1034 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const menuItems = document.querySelectorAll('.menu-item');
+    const contentArea = document.getElementById('content-area');
+    const pageTitle = document.getElementById('page-title');
+
+    // Menu navigation (tidak ada pembatasan role)
+    menuItems.forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const menu = this.dataset.menu;
+
+            // Update active menu
+            menuItems.forEach(m => m.classList.remove('active'));
+            this.classList.add('active');
+
+            // Load content
+            loadContent(menu);
+        });
+    });
+
+    function loadContent(menu) {
+        // Hide all content
+        const allContent = contentArea.querySelectorAll('[id$="-content"]');
+        allContent.forEach(content => content.style.display = 'none');
+
+        switch (menu) {
+            case 'dashboard':
+                pageTitle.textContent = 'Dashboard';
+                document.getElementById('dashboard-content').style.display = 'block';
+                break;
+
+            case 'bookings':
+                pageTitle.textContent = 'Daftar Booking';
+                document.getElementById('bookings-content').style.display = 'block';
+                loadBookingsData();
+                break;
+
+            case 'finance':
+                pageTitle.textContent = 'Keuangan';
+                document.getElementById('finance-content').style.display = 'block';
+                loadFinanceData();
+                break;
+
+            case 'menu-management':
+                pageTitle.textContent = 'Kelola Menu';
+                document.getElementById('menu-content').style.display = 'block';
+                loadMenuManagement();
+                break;
+        }
+    }
+
+    function loadBookingsData() {
+        const bookingsContent = document.getElementById('bookings-content');
+        bookingsContent.innerHTML = `
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Memuat data booking...</p>
+            </div>
+        `;
+
+        // Load real data
+        loadBookingsTable();
+    }
+
+    // Sisanya tetap sama...
+});
+
+// 🎯 PINDAHKAN FUNGSI KE LUAR DOMContentLoaded
+function loadBookingsTable(page = 1, search = '', status = '') {
+    const bookingsContent = document.getElementById('bookings-content');
+    const limit = 10;
+
+    // Build API URL dengan path yang benar
+    const params = new URLSearchParams({
+        page: page,
+        limit: limit,
+        search: search,
+        status: status
+    });
+
+    // 🎯 FIX: Path API yang benar (keluar satu tingkat dari admin folder)
+    fetch(`php/api/get-bookings.php?${params}`)
+        .then(response => {
+            console.log('Response status:', response.status); // Debug
+            console.log('Response URL:', response.url); // Debug
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('API Response:', data); // Debug
+            if (data.success) {
+                renderBookingsTable(data.data, data.pagination);
+            } else {
+                throw new Error(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error loading bookings:', error);
+            bookingsContent.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center;">
+                    <h3 style="color: #dc2626;">❌ Error</h3>
+                    <p>Gagal memuat data booking: ${error.message}</p>
+                    <details style="margin-top: 10px; text-align: left;">
+                        <summary>Detail Error</summary>
+                        <pre style="background: #f3f4f6; padding: 10px; border-radius: 4px; font-size: 0.8rem;">${error.stack || error.message}</pre>
+                    </details>
+                    <button onclick="loadBookingsData()" style="background: #16A34A; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin-top: 10px;">
+                        Coba Lagi
+                    </button>
+                </div>
+            `;
+        });
+}
+
+// 🎯 PINDAHKAN FUNGSI RENDER KE LUAR JUGA
+function renderBookingsTable(bookings, pagination) {
+    const bookingsContent = document.getElementById('bookings-content');
+
+    const tableHTML = `
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #16A34A; margin: 0;">📋 Data Booking Pelanggan</h2>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <span style="font-size: 0.9rem; color: #666;">
+                        Total: ${pagination.total_records} booking
+                    </span>
+                </div>
+            </div>
+            
+            <!-- Search and Filter -->
+            <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <input type="text" id="search-booking" placeholder="Cari nama, email, order ID, atau telepon..." 
+                           style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9rem;">
+                </div>
+                <select id="status-filter" style="padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9rem;">
+                    <option value="">Semua Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="berhasil">Berhasil</option>
+                    <option value="gagal">Gagal</option>
+                </select>
+                <button onclick="searchBookings()" style="background: #16A34A; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">
+                    🔍 Cari
+                </button>
+                <button onclick="resetSearch()" style="background: #6b7280; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">
+                    ↻ Reset
+                </button>
+            </div>
+            
+            <!-- Table -->
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; min-width: 1000px;">
+                    <thead>
+                        <tr style="background: #f8f9fa;">
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Order ID</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Nama</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Email</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Telepon</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Pesanan</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Total</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Tanggal Booking</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Status</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${renderBookingRows(bookings)}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            ${renderPagination(pagination)}
+        </div>
+    `;
+
+    bookingsContent.innerHTML = tableHTML;
+}
+
+function renderBookingRows(bookings) {
+    if (bookings.length === 0) {
+        return `
+            <tr>
+                <td colspan="9" style="padding: 40px; text-align: center; color: #666;">
+                    <h3>📭 Tidak ada data booking</h3>
+                    <p>Belum ada booking yang masuk atau tidak ada hasil yang sesuai dengan pencarian.</p>
+                </td>
+            </tr>
+        `;
+    }
+
+    return bookings.map(booking => {
+        const statusColor = getStatusColor(booking.status);
+        const statusText = getStatusText(booking.status);
+
+        return `
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 12px; border: 1px solid #ddd;">
+                    <code style="background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem;">
+                        ${booking.order_id}
+                    </code>
+                </td>
+                <td style="padding: 12px; border: 1px solid #ddd;">${booking.nama}</td>
+                <td style="padding: 12px; border: 1px solid #ddd;">
+                    <a href="mailto:${booking.email}" style="color: #2563eb;">${booking.email}</a>
+                </td>
+                <td style="padding: 12px; border: 1px solid #ddd;">
+                    <a href="tel:${booking.phone}" style="color: #2563eb;">${booking.phone}</a>
+                </td>
+                <td style="padding: 12px; border: 1px solid #ddd; max-width: 200px;">
+                    <span title="${booking.items}">${booking.items_display}</span>
+                </td>
+                <td style="padding: 12px; border: 1px solid #ddd; font-weight: 600;">${booking.total_formatted}</td>
+                <td style="padding: 12px; border: 1px solid #ddd;">${booking.tanggal_booking_formatted}</td>
+                <td style="padding: 12px; border: 1px solid #ddd;">
+                    <span style="background: ${statusColor}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">
+                        ${statusText}
+                    </span>
+                </td>
+                <td style="padding: 12px; border: 1px solid #ddd;">
+                    <button onclick="showBookingDetail(${booking.id})" 
+                            style="background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
+                        📋 Detail
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function renderPagination(pagination) {
+    if (pagination.total_pages <= 1) {
+        return '';
+    }
+
+    const currentPage = pagination.current_page;
+    const totalPages = pagination.total_pages;
+
+    let paginationHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+            <div style="color: #666; font-size: 0.9rem;">
+                Halaman ${currentPage} dari ${totalPages} 
+                (${pagination.total_records} total booking)
+            </div>
+            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+    `;
+
+    // Tombol Prev
+    if (currentPage > 1) {
+        paginationHTML += `
+            <button onclick="loadBookingsTable(${currentPage - 1})" 
+                style="background: #6b7280; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">
+                ‹ Prev
+            </button>
+        `;
+    }
+
+    // Hitung range halaman
+    const maxButtons = 5;
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+
+    if (endPage - startPage < maxButtons - 1) {
+        startPage = Math.max(1, endPage - maxButtons + 1);
+    }
+
+    // Ellipsis sebelum
+    if (startPage > 1) {
+        paginationHTML += `
+            <button onclick="loadBookingsTable(1)" 
+                style="background: #f3f4f6; color: #333; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">
+                1
+            </button>
+        `;
+        if (startPage > 2) {
+            paginationHTML += `<span style="padding: 8px 4px; color: #666;">...</span>`;
+        }
+    }
+
+    // Nomor halaman
+    for (let i = startPage; i <= endPage; i++) {
+        const isActive = i === currentPage;
+        paginationHTML += `
+            <button onclick="loadBookingsTable(${i})" 
+                style="background: ${isActive ? '#16A34A' : '#f3f4f6'}; 
+                       color: ${isActive ? 'white' : '#333'}; 
+                       border: none; 
+                       padding: 8px 12px; 
+                       border-radius: 4px; 
+                       cursor: ${isActive ? 'default' : 'pointer'};
+                       ${isActive ? 'pointer-events: none;' : ''}">
+                ${i}
+            </button>
+        `;
+    }
+
+    // Ellipsis setelah
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            paginationHTML += `<span style="padding: 8px 4px; color: #666;">...</span>`;
+        }
+        paginationHTML += `
+            <button onclick="loadBookingsTable(${totalPages})" 
+                style="background: #f3f4f6; color: #333; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">
+                ${totalPages}
+            </button>
+        `;
+    }
+
+    // Tombol Next
+    if (currentPage < totalPages) {
+        paginationHTML += `
+            <button onclick="loadBookingsTable(${currentPage + 1})" 
+                style="background: #6b7280; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">
+                Next ›
+            </button>
+        `;
+    }
+
+    paginationHTML += `
+            </div>
+        </div>
+    `;
+
+    return paginationHTML;
+}
+
+function getStatusColor(status) {
+    switch (status) {
+        case 'berhasil': return '#16A34A';
+        case 'pending': return '#f59e0b';
+        case 'gagal': return '#dc2626';
+        default: return '#6b7280';
+    }
+}
+
+function getStatusText(status) {
+    switch (status) {
+        case 'berhasil': return 'Berhasil';
+        case 'pending': return 'Pending';
+        case 'gagal': return 'Gagal';
+        default: return status.charAt(0).toUpperCase() + status.slice(1);
+    }
+}
+
+// 🎯 PINDAHKAN FUNGSI SEARCH KE LUAR JUGA
+function searchBookings() {
+    const search = document.getElementById('search-booking').value;
+    const status = document.getElementById('status-filter').value;
+    loadBookingsTable(1, search, status);
+}
+
+function resetSearch() {
+    document.getElementById('search-booking').value = '';
+    document.getElementById('status-filter').value = '';
+    loadBookingsTable(1);
+}
+
+function showBookingDetail(bookingId) {
+    // Show loading in modal
+    Swal.fire({
+        title: 'Memuat detail...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    // 🎯 FIX: Path API yang benar
+    fetch(`php/api/get-booking-detail.php?id=${bookingId}`)
+        .then(response => {
+            console.log('Detail response status:', response.status); // Debug
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Detail API Response:', data); // Debug
+            if (data.success) {
+                showBookingDetailModal(data.data);
+            } else {
+                throw new Error(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error loading booking detail:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Gagal memuat detail booking: ' + error.message
+            });
+        });
+}
+
+function showBookingDetailModal(booking) {
+    const statusColor = getStatusColor(booking.status);
+    const statusText = getStatusText(booking.status);
+
+    Swal.fire({
+        title: 'Detail Booking',
+        html: `
+            <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h4 style="margin: 0 0 10px 0; color: #16A34A;">🎫 Informasi Booking</h4>
+                    <table style="width: 100%; border-spacing: 0;">
+                        <tr><td style="padding: 5px 0; font-weight: bold;">Order ID:</td><td style="padding: 5px 0;"><code style="background: #e5e7eb; padding: 2px 6px; border-radius: 4px;">${booking.order_id}</code></td></tr>
+                        <tr><td style="padding: 5px 0; font-weight: bold;">Status:</td><td style="padding: 5px 0;"><span style="background: ${statusColor}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.9rem;">${statusText}</span></td></tr>
+                        <tr><td style="padding: 5px 0; font-weight: bold;">Tanggal Order:</td><td style="padding: 5px 0;">${booking.order_date_formatted}</td></tr>
+                        <tr><td style="padding: 5px 0; font-weight: bold;">Tanggal Booking:</td><td style="padding: 5px 0;">${booking.tanggal_booking_formatted}</td></tr>
+                    </table>
+                </div>
+                
+                <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h4 style="margin: 0 0 10px 0; color: #2563eb;">👤 Data Pelanggan</h4>
+                    <table style="width: 100%; border-spacing: 0;">
+                        <tr><td style="padding: 5px 0; font-weight: bold;">Nama:</td><td style="padding: 5px 0;">${booking.nama}</td></tr>
+                        <tr><td style="padding: 5px 0; font-weight: bold;">NIK:</td><td style="padding: 5px 0;">${booking.nik}</td></tr>
+                        <tr><td style="padding: 5px 0; font-weight: bold;">Email:</td><td style="padding: 5px 0;"><a href="mailto:${booking.email}" style="color: #2563eb;">${booking.email}</a></td></tr>
+                        <tr><td style="padding: 5px 0; font-weight: bold;">Telepon:</td><td style="padding: 5px 0;"><a href="tel:${booking.phone}" style="color: #2563eb;">${booking.phone}</a></td></tr>
+                        <tr><td style="padding: 5px 0; font-weight: bold;">Kontak Darurat:</td><td style="padding: 5px 0;"><a href="tel:${booking.emergency}" style="color: #2563eb;">${booking.emergency}</a></td></tr>
+                    </table>
+                </div>
+                
+                <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h4 style="margin: 0 0 10px 0; color: #16A34A;">🛒 Detail Pesanan</h4>
+                    <div style="background: white; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+                        <strong>Items:</strong><br>
+                        <span style="color: #666;">${booking.items}</span>
+                    </div>
+                    <div style="text-align: right; font-size: 1.2rem; font-weight: bold; color: #16A34A;">
+                        Total: ${booking.total_formatted}
+                    </div>
+                </div>
+            </div>
+        `,
+        width: '700px',
+        confirmButtonText: 'Tutup',
+        confirmButtonColor: '#16A34A',
+        customClass: {
+            popup: 'booking-detail-modal'
+        }
+    });
+}
+
+// Tambahkan fungsi untuk load menu management
+function loadMenuManagement() {
+    const menuContent = document.getElementById('menu-content');
+    if (!menuContent) return;
+
+    menuContent.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Memuat data menu...</p>
+        </div>
+    `;
+
+    // Load real data untuk admin
+    fetch('php/api/get-admin-menu.php') // API khusus admin yang include deskripsi dan harga
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                renderAdminMenuTable(data.data);
+            } else {
+                throw new Error(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error loading admin menu:', error);
+            showAdminMenuError();
+        });
+}
+
+function renderAdminMenuTable(menuData) {
+    const menuContent = document.getElementById('menu-content');
+
+    let tableHTML = `
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #16A34A; margin: 0;">🍽️ Kelola Menu Katalog</h2>
+                <button onclick="addNewMenu()" style="background: #16A34A; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">
+                    + Tambah Menu
+                </button>
+            </div>
+            
+            <div style="margin-bottom: 20px; padding: 15px; background: #f0f9ff; border-radius: 8px;">
+                <p><strong>✅ Menu katalog disederhanakan</strong></p>
+                <p>Halaman katalog hanya menampilkan nama menu dan gambar. Deskripsi dan harga ditampilkan di halaman detail.</p>
+            </div>
+            
+            <div id="menu-table-container" style="margin-top: 20px; overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; min-width: 800px;">
+                    <thead>
+                        <tr style="background: #f8f9fa;">
+                            <th style="padding: 12px; border: 1px solid #ddd;">Nama Menu</th>
+                            <th style="padding: 12px; border: 1px solid #ddd;">Kategori</th>
+                            <th style="padding: 12px; border: 1px solid #ddd;">Harga</th>
+                            <th style="padding: 12px; border: 1px solid #ddd;">Status</th>
+                            <th style="padding: 12px; border: 1px solid #ddd;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    `;
+
+    menuData.forEach(menu => {
+        const hargaDisplay = menu.harga ? `Rp ${Number(menu.harga).toLocaleString()}` : 'Gratis';
+        const statusColor = menu.status === 'aktif' ? '#16A34A' : '#dc2626';
+
+        tableHTML += `
+            <tr>
+                <td style="padding: 12px; border: 1px solid #ddd;">
+                    <strong>${menu.nama_menu}</strong><br>
+                    <small style="color: #666;">${menu.deskripsi || 'Tidak ada deskripsi'}</small>
+                </td>
+                <td style="padding: 12px; border: 1px solid #ddd;">${menu.kategori}</td>
+                <td style="padding: 12px; border: 1px solid #ddd;">${hargaDisplay}</td>
+                <td style="padding: 12px; border: 1px solid #ddd;">
+                    <span style="background: ${statusColor}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">
+                        ${menu.status.charAt(0).toUpperCase() + menu.status.slice(1)}
+                    </span>
+                </td>
+                <td style="padding: 12px; border: 1px solid #ddd;">
+                    <button onclick="editMenu(${menu.id})" style="background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-right: 5px;">Edit</button>
+                    <button onclick="deleteMenu(${menu.id})" style="background: #dc2626; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Hapus</button>
+                </td>
+            </tr>
+        `;
+    });
+
+    tableHTML += `
+                </tbody>
+            </table>
+        </div>
+    </div>
+    `;
+
+    menuContent.innerHTML = tableHTML;
+}
+
+// Placeholder functions untuk menu management
+window.addNewMenu = function () {
+    alert('Fitur tambah menu akan dikembangkan. Akan membuka form untuk tambah menu baru.');
+}
+
+window.editMenu = function (id) {
+    alert('Fitur edit menu akan dikembangkan. Akan membuka form edit untuk menu ID: ' + id);
+}
+
+window.deleteMenu = function (id) {
+    if (confirm('Apakah Anda yakin ingin menghapus menu ini?')) {
+        alert('Menu akan dihapus. ID: ' + id);
+    }
+}
+
+// Pastikan fungsi ini dideklarasikan di global scope
+window.loadBookingsTable = loadBookingsTable;
+
+// Finance Functions
+function loadFinanceData() {
+    const financeContent = document.getElementById('finance-content');
+    if (!financeContent) return;
+
+    // Set default date range (current month)
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    
+    document.getElementById('start-date').value = firstDay.toISOString().split('T')[0];
+    document.getElementById('end-date').value = today.toISOString().split('T')[0];
+    
+    // Load initial data
+    loadRevenueData();
+}
+
+function loadRevenueData() {
+    const startDate = document.getElementById('start-date').value;
+    const endDate = document.getElementById('end-date').value;
+    
+    if (!startDate || !endDate) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Perhatian',
+            text: 'Silakan pilih tanggal mulai dan selesai'
+        });
+        return;
+    }
+    
+    if (new Date(startDate) > new Date(endDate)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Tanggal mulai tidak boleh lebih besar dari tanggal selesai'
+        });
+        return;
+    }
+    
+    // Show loading
+    const tbody = document.getElementById('revenue-tbody');
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;"><div class="loading">Memuat data...</div></td></tr>';
+    
+    // Build URL dengan parameter
+    const params = new URLSearchParams({
+        start_date: startDate,
+        end_date: endDate
+    });
+    
+    fetch(`php/api/get-revenue.php?${params}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                renderRevenueData(data.data);
+                updateRevenueSummary(data.summary);
+            } else {
+                showRevenueError('Gagal memuat data: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showRevenueError('Terjadi kesalahan saat memuat data');
+        });
+}
+
+function renderRevenueData(transactions) {
+    const tbody = document.getElementById('revenue-tbody');
+    
+    if (transactions.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 40px;">
+                    <div class="empty-state">Tidak ada data transaksi pada periode ini</div>
+                </td>
+            </tr>
+        `;
+        return;
+    }
+    
+    let html = '';
+    transactions.forEach(transaction => {
+        // Truncate items jika terlalu panjang
+        let items = transaction.items;
+        if (items.length > 40) {
+            items = items.substring(0, 40) + '...';
+        }
+        
+        html += `
+            <tr>
+                <td>${formatDate(transaction.order_date)}</td>
+                <td>
+                    <code style="font-size: 12px; background: #f3f4f6; padding: 2px 4px; border-radius: 3px;">
+                        ${transaction.order_id}
+                    </code>
+                </td>
+                <td>${transaction.nama}</td>
+                <td title="${transaction.items}">${items}</td>
+                <td style="font-weight: 600; color: #16A34A;">
+                    Rp ${parseInt(transaction.total).toLocaleString()}
+                </td>
+            </tr>
+        `;
+    });
+    
+    tbody.innerHTML = html;
+}
+
+function updateRevenueSummary(summary) {
+    // Update total revenue
+    document.getElementById('total-revenue').textContent = 
+        'Rp ' + parseInt(summary.total_revenue).toLocaleString();
+    
+    // Update total transactions
+    document.getElementById('total-transactions').textContent = summary.total_transactions;
+    
+    // Update average per transaction
+    const average = summary.total_transactions > 0 ? 
+        Math.round(summary.total_revenue / summary.total_transactions) : 0;
+    document.getElementById('average-transaction').textContent = 
+        'Rp ' + average.toLocaleString();
+    
+    // Update period
+    const startDate = document.getElementById('start-date').value;
+    const endDate = document.getElementById('end-date').value;
+    const periodText = `${formatDateId(startDate)} - ${formatDateId(endDate)}`;
+    document.getElementById('revenue-period').textContent = periodText;
+}
+
+function resetDateFilter() {
+    // Set to current month
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    
+    document.getElementById('start-date').value = firstDay.toISOString().split('T')[0];
+    document.getElementById('end-date').value = today.toISOString().split('T')[0];
+    
+    // Reload data
+    loadRevenueData();
+}
+
+function showRevenueError(message) {
+    const tbody = document.getElementById('revenue-tbody');
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="5" style="text-align: center; padding: 40px;">
+                <div style="color: #dc2626;">❌ ${message}</div>
+                <button onclick="loadRevenueData()" style="margin-top: 10px; padding: 8px 16px; background: #16A34A; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Coba Lagi
+                </button>
+            </td>
+        </tr>
+    `;
+    
+    // Reset summary
+    document.getElementById('total-revenue').textContent = 'Rp 0';
+    document.getElementById('total-transactions').textContent = '0';
+    document.getElementById('average-transaction').textContent = 'Rp 0';
+    document.getElementById('revenue-period').textContent = 'Error';
+}
+
+// Utility function for date formatting
+
+// Utility function for date formatting
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('id-ID', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+}
+
+function formatDateId(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('id-ID', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+}
+
+// Global variables untuk revenue pagination
+let revenueCurrentPage = 1;
+let revenueEntriesPerPage = 10;
+let revenueAllTransactions = []; // Menyimpan semua data
+
+// Finance Functions
+function loadFinanceData() {
+    const financeContent = document.getElementById('finance-content');
+    if (!financeContent) return;
+
+    // Set default date range (current month)
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    
+    document.getElementById('start-date').value = firstDay.toISOString().split('T')[0];
+    document.getElementById('end-date').value = today.toISOString().split('T')[0];
+    
+    // Load initial data
+    loadRevenueData();
+}
+
+function loadRevenueData() {
+    const startDate = document.getElementById('start-date').value;
+    const endDate = document.getElementById('end-date').value;
+    
+    if (!startDate || !endDate) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Perhatian',
+            text: 'Silakan pilih tanggal mulai dan selesai'
+        });
+        return;
+    }
+    
+    if (new Date(startDate) > new Date(endDate)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Tanggal mulai tidak boleh lebih besar dari tanggal selesai'
+        });
+        return;
+    }
+    
+    // Show loading
+    const tbody = document.getElementById('revenue-tbody');
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;"><div class="loading">Memuat data...</div></td></tr>';
+    
+    // Reset pagination
+    revenueCurrentPage = 1;
+    document.getElementById('revenue-pagination').style.display = 'none';
+    
+    // Build URL dengan parameter
+    const params = new URLSearchParams({
+        start_date: startDate,
+        end_date: endDate
+    });
+    
+    fetch(`php/api/get-revenue.php?${params}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                revenueAllTransactions = data.data; // Simpan semua data
+                updateRevenueSummary(data.summary);
+                renderRevenueTableWithPagination(); // Render dengan pagination
+            } else {
+                showRevenueError('Gagal memuat data: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showRevenueError('Terjadi kesalahan saat memuat data');
+        });
+}
+
+function renderRevenueTableWithPagination() {
+    const tbody = document.getElementById('revenue-tbody');
+    const paginationContainer = document.getElementById('revenue-pagination');
+    
+    if (revenueAllTransactions.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 40px;">
+                    <div class="empty-state">Tidak ada data transaksi pada periode ini</div>
+                </td>
+            </tr>
+        `;
+        paginationContainer.style.display = 'none';
+        return;
+    }
+    
+    // Calculate pagination
+    const totalItems = revenueAllTransactions.length;
+    const totalPages = Math.ceil(totalItems / revenueEntriesPerPage);
+    const startIndex = (revenueCurrentPage - 1) * revenueEntriesPerPage;
+    const endIndex = startIndex + revenueEntriesPerPage;
+    const currentPageData = revenueAllTransactions.slice(startIndex, endIndex);
+    
+    // Render table data
+    renderRevenueData(currentPageData);
+    
+    // Show/hide pagination
+    if (totalPages > 1) {
+        renderRevenuePagination(totalPages, totalItems, startIndex, endIndex);
+        paginationContainer.style.display = 'flex';
+    } else {
+        paginationContainer.style.display = 'none';
+    }
+}
+
+function renderRevenueData(transactions) {
+    const tbody = document.getElementById('revenue-tbody');
+    
+    let html = '';
+    transactions.forEach(transaction => {
+        // Truncate items jika terlalu panjang
+        let items = transaction.items;
+        if (items.length > 40) {
+            items = items.substring(0, 40) + '...';
+        }
+        
+        html += `
+            <tr>
+                <td>${formatDate(transaction.order_date)}</td>
+                <td>
+                    <code style="font-size: 12px; background: #f3f4f6; padding: 2px 4px; border-radius: 3px;">
+                        ${transaction.order_id}
+                    </code>
+                </td>
+                <td>${transaction.nama}</td>
+                <td title="${transaction.items}">${items}</td>
+                <td style="font-weight: 600; color: #16A34A;">
+                    Rp ${parseInt(transaction.total).toLocaleString()}
+                </td>
+            </tr>
+        `;
+    });
+    
+    tbody.innerHTML = html;
+}
+
+function renderRevenuePagination(totalPages, totalItems, startIndex, endIndex) {
+    const paginationContainer = document.getElementById('revenue-pagination');
+    
+    let paginationHTML = `
+        <div class="revenue-pagination-info">
+            Menampilkan ${startIndex + 1} - ${Math.min(endIndex, totalItems)} dari ${totalItems} transaksi
+        </div>
+        <div class="revenue-pagination-buttons">
+    `;
+    
+    // Previous button
+    if (revenueCurrentPage > 1) {
+        paginationHTML += `
+            <button class="revenue-pagination-btn" onclick="goToRevenuePage(${revenueCurrentPage - 1})">
+                ‹ Prev
+            </button>
+        `;
+    }
+    
+    // Page numbers
+    const maxButtons = 5;
+    let startPage = Math.max(1, revenueCurrentPage - 2);
+    let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+    
+    if (endPage - startPage < maxButtons - 1) {
+        startPage = Math.max(1, endPage - maxButtons + 1);
+    }
+    
+    // First page + ellipsis
+    if (startPage > 1) {
+        paginationHTML += `
+            <button class="revenue-pagination-btn" onclick="goToRevenuePage(1)">1</button>
+        `;
+        if (startPage > 2) {
+            paginationHTML += `<span style="padding: 6px 4px; color: #666;">...</span>`;
+        }
+    }
+    
+    // Page numbers
+    for (let i = startPage; i <= endPage; i++) {
+        const activeClass = i === revenueCurrentPage ? 'active' : '';
+        paginationHTML += `
+            <button class="revenue-pagination-btn ${activeClass}" onclick="goToRevenuePage(${i})">
+                ${i}
+            </button>
+        `;
+    }
+    
+    // Last page + ellipsis
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            paginationHTML += `<span style="padding: 6px 4px; color: #666;">...</span>`;
+        }
+        paginationHTML += `
+            <button class="revenue-pagination-btn" onclick="goToRevenuePage(${totalPages})">${totalPages}</button>
+        `;
+    }
+    
+    // Next button
+    if (revenueCurrentPage < totalPages) {
+        paginationHTML += `
+            <button class="revenue-pagination-btn" onclick="goToRevenuePage(${revenueCurrentPage + 1})">
+                Next ›
+            </button>
+        `;
+    }
+    
+    paginationHTML += `
+        </div>
+    `;
+    
+    paginationContainer.innerHTML = paginationHTML;
+}
+
+// Fungsi untuk pindah halaman revenue
+function goToRevenuePage(page) {
+    revenueCurrentPage = page;
+    renderRevenueTableWithPagination();
+}
+
+// Fungsi untuk mengubah jumlah entri per halaman
+function changeEntriesPerPage() {
+    const select = document.getElementById('entries-per-page');
+    revenueEntriesPerPage = parseInt(select.value);
+    revenueCurrentPage = 1; // Reset ke halaman pertama
+    renderRevenueTableWithPagination();
+}
+
+// Update existing functions...
+function updateRevenueSummary(summary) {
+    // Update total revenue
+    document.getElementById('total-revenue').textContent = 
+        'Rp ' + parseInt(summary.total_revenue).toLocaleString();
+    
+    // Update total transactions
+    document.getElementById('total-transactions').textContent = summary.total_transactions;
+    
+    // Update average per transaction
+    const average = summary.total_transactions > 0 ? 
+        Math.round(summary.total_revenue / summary.total_transactions) : 0;
+    document.getElementById('average-transaction').textContent = 
+        'Rp ' + average.toLocaleString();
+    
+    // Update period
+    const startDate = document.getElementById('start-date').value;
+    const endDate = document.getElementById('end-date').value;
+    const periodText = `${formatDateId(startDate)} - ${formatDateId(endDate)}`;
+    document.getElementById('revenue-period').textContent = periodText;
+}
+
+function resetDateFilter() {
+    // Set to current month
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    
+    document.getElementById('start-date').value = firstDay.toISOString().split('T')[0];
+    document.getElementById('end-date').value = today.toISOString().split('T')[0];
+    
+    // Reset entries per page ke default
+    document.getElementById('entries-per-page').value = '10';
+    revenueEntriesPerPage = 10;
+    
+    // Reload data
+    loadRevenueData();
+}
+
+function showRevenueError(message) {
+    const tbody = document.getElementById('revenue-tbody');
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="5" style="text-align: center; padding: 40px;">
+                <div style="color: #dc2626;">❌ ${message}</div>
+                <button onclick="loadRevenueData()" style="margin-top: 10px; padding: 8px 16px; background: #16A34A; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Coba Lagi
+                </button>
+            </td>
+        </tr>
+    `;
+    
+    // Hide pagination on error
+    document.getElementById('revenue-pagination').style.display = 'none';
+    
+    // Reset summary
+    document.getElementById('total-revenue').textContent = 'Rp 0';
+    document.getElementById('total-transactions').textContent = '0';
+    document.getElementById('average-transaction').textContent = 'Rp 0';
+    document.getElementById('revenue-period').textContent = 'Error';
+}
+
+// Pastikan fungsi global tersedia
+window.goToRevenuePage = goToRevenuePage;
+window.changeEntriesPerPage = changeEntriesPerPage;

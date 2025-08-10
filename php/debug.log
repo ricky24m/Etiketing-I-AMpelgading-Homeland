@@ -1,0 +1,15 @@
+2025-08-09 03:00:20 - PlaceOrder.php started
+2025-08-09 03:00:20 - Midtrans config set
+2025-08-09 03:00:20 - POST data received: {"nama":"halo","email":"mangihutricky@gmail.com","nik":"3172042411030007","phone":"081387214342","emergency":"08138173856","tanggal":"2025-08-14T17:00:00.000Z","items":"Paket Wisata Alam x 1","total":"10000"}
+2025-08-09 03:00:20 - Generated order_id: TKT-20250809030020-3152
+2025-08-09 03:00:20 - Error: No database selected
+2025-08-09 03:00:34 - PlaceOrder.php started
+2025-08-09 03:00:34 - Midtrans config set
+2025-08-09 03:00:34 - POST data received: {"nama":"halo","email":"mangihutricky@gmail.com","nik":"3172042411030007","phone":"081387214342","emergency":"08138173856","tanggal":"2025-08-14T17:00:00.000Z","items":"Paket Wisata Alam x 1","total":"10000"}
+2025-08-09 03:00:34 - Generated order_id: TKT-20250809030034-4348
+2025-08-09 03:00:34 - Error: No database selected
+2025-08-09 03:01:04 - PlaceOrder.php started
+2025-08-09 03:01:04 - Midtrans config set
+2025-08-09 03:01:04 - POST data received: {"nama":"halo","email":"mangihutricky@gmail.com","nik":"3172042411030007","phone":"081387214342","emergency":"08138173856","tanggal":"2025-08-15T17:00:00.000Z","items":"Paket Wisata Alam x 1","total":"10000"}
+2025-08-09 03:01:04 - Generated order_id: TKT-20250809030104-1049
+2025-08-09 03:01:04 - Error: No database selected

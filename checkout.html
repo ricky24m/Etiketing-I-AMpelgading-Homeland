@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Tiket I'AMpel GADING Homeland</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/checkout.css">
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="Mid-client-4jG5J7NcpPb6-WmO"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <img src="images/Logoo.png" alt="Logo" class="logo-img">
+    </nav>
+
+    <div class="checkout-hero">
+        <img src="images/camping.jpg" alt="Checkout Image" class="checkout-hero-img">
+        <div class="checkout-hero-overlay">
+            <div class="header-center">
+                <h1>Checkout</h1>
+                <nav class="breadcrumb">
+                    <a href="index.html">Beranda</a>
+                    <span>&gt;</span>
+                    <a href="katalog.html">Booking</a>
+                    <span>&gt;</span>
+                    <span>Checkout</span>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="booking-container">
+        <!-- Calendar Section -->
+        <div class="calendar-section">
+            <div class="calendar-card">
+                <h3>Pilih Tanggal Booking</h3>
+                <div class="calendar-wrapper">
+                    <div class="calendar-header">
+                        <button id="prev-month" class="calendar-nav">&lt;</button>
+                        <span id="current-month"></span>
+                        <button id="next-month" class="calendar-nav">&gt;</button>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-weekdays">
+                            <div>MIN</div>
+                            <div>SEN</div>
+                            <div>SEL</div>
+                            <div>RAB</div>
+                            <div>KAM</div>
+                            <div>JUM</div>
+                            <div>SAB</div>
+                        </div>
+                        <div id="calendar-days" class="calendar-days"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Form Section -->
+        <div class="form-section">
+            <div class="form-card">
+                <h2>INFORMASI BOOKING</h2>
+                <div class="selected-date-info">
+                    <p>Tanggal Booking: <strong id="selected-date-display">Belum dipilih</strong></p>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary-checkout">
+                    <h3>Pesanan Anda</h3>
+                    <div id="cart-items-summary">
+                        <p>Memuat pesanan...</p>
+                    </div>
+                    <div class="total-amount" id="total-amount"></div>
+                </div>
+
+                <form id="checkout-form" class="booking-form">
+                    <div class="form-grid">
+                        <input type="text" id="checkout-nama" placeholder="Nama Pembooking" required>
+                        <input type="text" id="checkout-nik" placeholder="NIK" required>
+                        <input type="tel" id="checkout-phone" placeholder="No. Telepon" required>
+                        <input type="tel" id="checkout-emergency" placeholder="No. Telepon Darurat" required>
+                        <input type="email" id="checkout-email" placeholder="Email" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Lanjut ke Pembayaran</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="YOUR_CLIENT_KEY_HERE"></script>
+    <script src="src/checkout.js"></script>
+    <script>feather.replace();</script>
+</body>
+
+</html>
