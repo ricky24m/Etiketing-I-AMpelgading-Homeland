@@ -89,7 +89,7 @@ try {
     require_once $midtransPath;
     require_once 'sendTicketEmail.php';
 
-    \Midtrans\Config::$serverKey = 'Mid-server-lusC-k_patB1Qk6xiWSIWPbY';
+   \Midtrans\Config::$serverKey = $_ENV['MIDTRANS_SERVER_KEY'];
     \Midtrans\Config::$isProduction = false;
 
     logWebhook("Creating Midtrans Notification object...");

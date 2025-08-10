@@ -16,7 +16,7 @@ try {
     require_once dirname(__FILE__) . '/midtrans-php-master/Midtrans.php';
     
     // Config Midtrans
-    \Midtrans\Config::$serverKey = 'Mid-server-lusC-k_patB1Qk6xiWSIWPbY';
+    \Midtrans\Config::$serverKey = $_ENV['MIDTRANS_SERVER_KEY'];
     \Midtrans\Config::$isProduction = false;
     \Midtrans\Config::$isSanitized = true;
     \Midtrans\Config::$is3ds = true;
