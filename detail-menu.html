@@ -1,15 +1,46 @@
 <!-- detail-menu.html -->
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Detail Menu</title>
+    <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="src/detail-menu.js"></script>
+    <link rel="stylesheet" href="css/wisata-alam.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
+
 <body>
+    <!-- Navbar tanpa search bar -->
+    <nav class="navbar navbar-booking">
+        <img src="images/Logoo.png" alt="Logo" class="logo-img">
+        <div class="navbar-nav">
+            <a href="index.html">Beranda</a>
+            <a href="katalog.html">Booking</a>
+            <a href="Panduan.html">Panduan Booking</a>
+        </div>
+        <div class="navbar-extra">
+            <a href="#" class="navbar-icon" data-cart id="cart-btn">
+                <i data-feather="shopping-cart"></i>
+            </a>
+            <div id="cart-popup" class="cart-popup">
+                <div id="cart-content"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section dan konten detail dinamis -->
     <div id="detail-container"></div>
+
+    <script src="src/detail-menu.js"></script>
     <script src="src/footer.js"></script>
     <script src="src/cart.js"></script>
+    <script>
+        feather.replace();
+    </script>
 </body>
+
 </html>

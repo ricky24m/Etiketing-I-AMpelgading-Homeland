@@ -47,6 +47,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('menu-content').style.display = 'block';
                 loadMenuManagement();
                 break;
+
+            case 'alat-camping-management':
+                pageTitle.textContent = 'Kelola Alat Camping';
+                document.getElementById('alat-camping-content').style.display = 'block';
+                loadAlatCampingManagement(); // Buat fungsi ini di JS
+                break;
         }
     }
 
@@ -452,7 +458,7 @@ function showBookingDetailModal(booking) {
 // Tambahkan fungsi untuk load menu management
 function loadMenuManagement() {
     console.log('🔧 loadMenuManagement() called');
-    
+
     const menuContent = document.getElementById('menu-content');
     if (!menuContent) {
         console.error('❌ Element #menu-content not found!');
@@ -483,7 +489,7 @@ function loadMenuManagement() {
         .then(response => {
             clearTimeout(timeoutId);
             console.log('📡 Response status:', response.status);
-            
+
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
@@ -491,13 +497,13 @@ function loadMenuManagement() {
         })
         .then(data => {
             console.log('📦 API Response:', data);
-            
+
             if (data.success) {
                 console.log('✅ Menu data loaded successfully:', data.data);
-                
+
                 // Set global variable
                 window.menuData = data.data;
-                
+
                 // Check if render function exists
                 if (typeof renderAdminMenuTable === 'function') {
                     renderAdminMenuTable(data.data);
@@ -636,7 +642,7 @@ function showEditMenuForm(menuId) {
 function showMenuForm(menuData = null) {
     const isEdit = menuData !== null;
     const title = isEdit ? 'Edit Menu' : 'Tambah Menu Baru';
-    
+
     Swal.fire({
         title: title,
         html: `
@@ -714,18 +720,18 @@ function showMenuForm(menuData = null) {
 function submitMenuForm() {
     const form = document.getElementById('menu-form');
     const formData = new FormData(form);
-    
+
     // Validasi
     const namaMenu = formData.get('nama_menu');
     const kategori = formData.get('kategori');
     const waktu = formData.get('waktu');
     const harga = formData.get('harga');
-    
+
     if (!namaMenu || !kategori || !waktu || !harga) {
         Swal.showValidationMessage('Mohon lengkapi semua field yang wajib diisi');
         return false;
     }
-    
+
     // Show loading
     Swal.fire({
         title: 'Menyimpan...',
@@ -734,34 +740,34 @@ function submitMenuForm() {
             Swal.showLoading();
         }
     });
-    
+
     return fetch('php/api/save-menu.php', {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: data.message,
+                    confirmButtonColor: '#16A34A'
+                }).then(() => {
+                    loadMenuManagement(); // Refresh table
+                });
+            } else {
+                throw new Error(data.message);
+            }
+        })
+        .catch(error => {
             Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: data.message,
-                confirmButtonColor: '#16A34A'
-            }).then(() => {
-                loadMenuManagement(); // Refresh table
+                icon: 'error',
+                title: 'Error!',
+                text: error.message,
+                confirmButtonColor: '#dc2626'
             });
-        } else {
-            throw new Error(data.message);
-        }
-    })
-    .catch(error => {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: error.message,
-            confirmButtonColor: '#dc2626'
         });
-    });
 }
 
 function deleteMenu(menuId) {
@@ -778,34 +784,34 @@ function deleteMenu(menuId) {
         if (result.isConfirmed) {
             const formData = new FormData();
             formData.append('menu_id', menuId);
-            
+
             fetch('php/api/delete-menu.php', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: data.message,
+                            confirmButtonColor: '#16A34A'
+                        }).then(() => {
+                            loadMenuManagement(); // Refresh table
+                        });
+                    } else {
+                        throw new Error(data.message);
+                    }
+                })
+                .catch(error => {
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil!',
-                        text: data.message,
-                        confirmButtonColor: '#16A34A'
-                    }).then(() => {
-                        loadMenuManagement(); // Refresh table
+                        icon: 'error',
+                        title: 'Error!',
+                        text: error.message,
+                        confirmButtonColor: '#dc2626'
                     });
-                } else {
-                    throw new Error(data.message);
-                }
-            })
-            .catch(error => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: error.message,
-                    confirmButtonColor: '#dc2626'
                 });
-            });
         }
     });
 }
@@ -826,10 +832,10 @@ function loadFinanceData() {
     // Set default date range (current month)
     const today = new Date();
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    
+
     document.getElementById('start-date').value = firstDay.toISOString().split('T')[0];
     document.getElementById('end-date').value = today.toISOString().split('T')[0];
-    
+
     // Load initial data
     loadRevenueData();
 }
@@ -837,7 +843,7 @@ function loadFinanceData() {
 function loadRevenueData() {
     const startDate = document.getElementById('start-date').value;
     const endDate = document.getElementById('end-date').value;
-    
+
     if (!startDate || !endDate) {
         Swal.fire({
             icon: 'warning',
@@ -846,7 +852,7 @@ function loadRevenueData() {
         });
         return;
     }
-    
+
     if (new Date(startDate) > new Date(endDate)) {
         Swal.fire({
             icon: 'error',
@@ -855,17 +861,17 @@ function loadRevenueData() {
         });
         return;
     }
-    
+
     // Show loading
     const tbody = document.getElementById('revenue-tbody');
     tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;"><div class="loading">Memuat data...</div></td></tr>';
-    
+
     // Build URL dengan parameter
     const params = new URLSearchParams({
         start_date: startDate,
         end_date: endDate
     });
-    
+
     fetch(`php/api/get-revenue.php?${params}`)
         .then(response => response.json())
         .then(data => {
@@ -884,7 +890,7 @@ function loadRevenueData() {
 
 function renderRevenueData(transactions) {
     const tbody = document.getElementById('revenue-tbody');
-    
+
     if (transactions.length === 0) {
         tbody.innerHTML = `
             <tr>
@@ -895,7 +901,7 @@ function renderRevenueData(transactions) {
         `;
         return;
     }
-    
+
     let html = '';
     transactions.forEach(transaction => {
         // Truncate items jika terlalu panjang
@@ -903,7 +909,7 @@ function renderRevenueData(transactions) {
         if (items.length > 40) {
             items = items.substring(0, 40) + '...';
         }
-        
+
         html += `
             <tr>
                 <td>${formatDate(transaction.order_date)}</td>
@@ -920,24 +926,24 @@ function renderRevenueData(transactions) {
             </tr>
         `;
     });
-    
+
     tbody.innerHTML = html;
 }
 
 function updateRevenueSummary(summary) {
     // Update total revenue
-    document.getElementById('total-revenue').textContent = 
+    document.getElementById('total-revenue').textContent =
         'Rp ' + parseInt(summary.total_revenue).toLocaleString();
-    
+
     // Update total transactions
     document.getElementById('total-transactions').textContent = summary.total_transactions;
-    
+
     // Update average per transaction
-    const average = summary.total_transactions > 0 ? 
+    const average = summary.total_transactions > 0 ?
         Math.round(summary.total_revenue / summary.total_transactions) : 0;
-    document.getElementById('average-transaction').textContent = 
+    document.getElementById('average-transaction').textContent =
         'Rp ' + average.toLocaleString();
-    
+
     // Update period
     const startDate = document.getElementById('start-date').value;
     const endDate = document.getElementById('end-date').value;
@@ -949,14 +955,14 @@ function resetDateFilter() {
     // Set to current month
     const today = new Date();
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    
+
     document.getElementById('start-date').value = firstDay.toISOString().split('T')[0];
     document.getElementById('end-date').value = today.toISOString().split('T')[0];
-    
+
     // Reset entries per page ke default
     document.getElementById('entries-per-page').value = '10';
     revenueEntriesPerPage = 10;
-    
+
     // Reload data
     loadRevenueData();
 }
@@ -973,10 +979,10 @@ function showRevenueError(message) {
             </td>
         </tr>
     `;
-    
+
     // Hide pagination on error
     document.getElementById('revenue-pagination').style.display = 'none';
-    
+
     // Reset summary
     document.getElementById('total-revenue').textContent = 'Rp 0';
     document.getElementById('total-transactions').textContent = '0';
@@ -1018,10 +1024,10 @@ function loadFinanceData() {
     // Set default date range (current month)
     const today = new Date();
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    
+
     document.getElementById('start-date').value = firstDay.toISOString().split('T')[0];
     document.getElementById('end-date').value = today.toISOString().split('T')[0];
-    
+
     // Load initial data
     loadRevenueData();
 }
@@ -1029,7 +1035,7 @@ function loadFinanceData() {
 function loadRevenueData() {
     const startDate = document.getElementById('start-date').value;
     const endDate = document.getElementById('end-date').value;
-    
+
     if (!startDate || !endDate) {
         Swal.fire({
             icon: 'warning',
@@ -1038,7 +1044,7 @@ function loadRevenueData() {
         });
         return;
     }
-    
+
     if (new Date(startDate) > new Date(endDate)) {
         Swal.fire({
             icon: 'error',
@@ -1047,21 +1053,21 @@ function loadRevenueData() {
         });
         return;
     }
-    
+
     // Show loading
     const tbody = document.getElementById('revenue-tbody');
     tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;"><div class="loading">Memuat data...</div></td></tr>';
-    
+
     // Reset pagination
     revenueCurrentPage = 1;
     document.getElementById('revenue-pagination').style.display = 'none';
-    
+
     // Build URL dengan parameter
     const params = new URLSearchParams({
         start_date: startDate,
         end_date: endDate
     });
-    
+
     fetch(`php/api/get-revenue.php?${params}`)
         .then(response => response.json())
         .then(data => {
@@ -1082,7 +1088,7 @@ function loadRevenueData() {
 function renderRevenueTableWithPagination() {
     const tbody = document.getElementById('revenue-tbody');
     const paginationContainer = document.getElementById('revenue-pagination');
-    
+
     if (revenueAllTransactions.length === 0) {
         tbody.innerHTML = `
             <tr>
@@ -1094,17 +1100,17 @@ function renderRevenueTableWithPagination() {
         paginationContainer.style.display = 'none';
         return;
     }
-    
+
     // Calculate pagination
     const totalItems = revenueAllTransactions.length;
     const totalPages = Math.ceil(totalItems / revenueEntriesPerPage);
     const startIndex = (revenueCurrentPage - 1) * revenueEntriesPerPage;
     const endIndex = startIndex + revenueEntriesPerPage;
     const currentPageData = revenueAllTransactions.slice(startIndex, endIndex);
-    
+
     // Render table data
     renderRevenueData(currentPageData);
-    
+
     // Show/hide pagination
     if (totalPages > 1) {
         renderRevenuePagination(totalPages, totalItems, startIndex, endIndex);
@@ -1116,7 +1122,7 @@ function renderRevenueTableWithPagination() {
 
 function renderRevenueData(transactions) {
     const tbody = document.getElementById('revenue-tbody');
-    
+
     let html = '';
     transactions.forEach(transaction => {
         // Truncate items jika terlalu panjang
@@ -1124,7 +1130,7 @@ function renderRevenueData(transactions) {
         if (items.length > 40) {
             items = items.substring(0, 40) + '...';
         }
-        
+
         html += `
             <tr>
                 <td>${formatDate(transaction.order_date)}</td>
@@ -1141,20 +1147,20 @@ function renderRevenueData(transactions) {
             </tr>
         `;
     });
-    
+
     tbody.innerHTML = html;
 }
 
 function renderRevenuePagination(totalPages, totalItems, startIndex, endIndex) {
     const paginationContainer = document.getElementById('revenue-pagination');
-    
+
     let paginationHTML = `
         <div class="revenue-pagination-info">
             Menampilkan ${startIndex + 1} - ${Math.min(endIndex, totalItems)} dari ${totalItems} transaksi
         </div>
         <div class="revenue-pagination-buttons">
     `;
-    
+
     // Previous button
     if (revenueCurrentPage > 1) {
         paginationHTML += `
@@ -1163,16 +1169,16 @@ function renderRevenuePagination(totalPages, totalItems, startIndex, endIndex) {
             </button>
         `;
     }
-    
+
     // Page numbers
     const maxButtons = 5;
     let startPage = Math.max(1, revenueCurrentPage - 2);
     let endPage = Math.min(totalPages, startPage + maxButtons - 1);
-    
+
     if (endPage - startPage < maxButtons - 1) {
         startPage = Math.max(1, endPage - maxButtons + 1);
     }
-    
+
     // First page + ellipsis
     if (startPage > 1) {
         paginationHTML += `
@@ -1182,7 +1188,7 @@ function renderRevenuePagination(totalPages, totalItems, startIndex, endIndex) {
             paginationHTML += `<span style="padding: 6px 4px; color: #666;">...</span>`;
         }
     }
-    
+
     // Page numbers
     for (let i = startPage; i <= endPage; i++) {
         const activeClass = i === revenueCurrentPage ? 'active' : '';
@@ -1192,7 +1198,7 @@ function renderRevenuePagination(totalPages, totalItems, startIndex, endIndex) {
             </button>
         `;
     }
-    
+
     // Last page + ellipsis
     if (endPage < totalPages) {
         if (endPage < totalPages - 1) {
@@ -1202,7 +1208,7 @@ function renderRevenuePagination(totalPages, totalItems, startIndex, endIndex) {
             <button class="revenue-pagination-btn" onclick="goToRevenuePage(${totalPages})">${totalPages}</button>
         `;
     }
-    
+
     // Next button
     if (revenueCurrentPage < totalPages) {
         paginationHTML += `
@@ -1211,11 +1217,11 @@ function renderRevenuePagination(totalPages, totalItems, startIndex, endIndex) {
             </button>
         `;
     }
-    
+
     paginationHTML += `
         </div>
     `;
-    
+
     paginationContainer.innerHTML = paginationHTML;
 }
 
@@ -1248,6 +1254,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('❌ Critical functions missing!');
         return;
     }
-    
+
     // ... rest of your code
 });

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const pathPrefix = isSubfolder ? '../' : '';
 
     const footerHTML = `
-    <footer class="custom-footer-v2">
+    <footer class="custom-footer-v2" style="position:relative; width:100%; min-height:350px; margin-top:48px; overflow:hidden;">
       <div class="footer-bg"></div>
       <div class="footer-content">
         <div class="footer-brand">
@@ -48,17 +48,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.body.insertAdjacentHTML('beforeend', footerHTML);
 
-    // Tambahkan background image dan gradient via JS agar path dinamis
-    const footerBg = document.querySelector('.footer-bg');
-    if (footerBg) {
+    // Pastikan .footer-bg hanya mengisi area footer, bukan body
+    const footer = document.querySelector('.custom-footer-v2');
+    const footerBg = footer ? footer.querySelector('.footer-bg') : null;
+    if (footer && footerBg) {
+        footer.style.position = 'relative';
         footerBg.style.background = `url('${pathPrefix}images/footer.jpg') center/cover no-repeat`;
         footerBg.style.position = 'absolute';
         footerBg.style.inset = '0';
         footerBg.style.width = '100%';
         footerBg.style.height = '100%';
         footerBg.style.zIndex = '0';
+        footerBg.style.pointerEvents = 'none';
     }
-    // Gradient overlay via pseudo-element sudah di CSS
 
     // Feather icons (jika ada di footer)
     if (typeof feather !== 'undefined') {

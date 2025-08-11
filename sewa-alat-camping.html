@@ -59,117 +59,7 @@
 
         <!-- Container untuk daftar alat camping -->
         <div class="camping-items-container">
-            <div class="camping-item">
-                <img src="images/tenda-2.png" alt="Tenda 2 Orang">
-                <h3>Tenda 2 Orang</h3>
-                <p class="price">Rp 50.000/hari</p>
-                <div class="quantity-control">
-                    <button class="btn-qty minus" data-item="tenda-2">-</button>
-                    <span class="qty-display" data-item="tenda-2">0</span>
-                    <button class="btn-qty plus" data-item="tenda-2">+</button>
-                </div>
-            </div>
-
-            <div class="camping-item">
-                <img src="images/tenda-4.jpg" alt="Tenda 4 Orang">
-                <h3>Tenda 4 Orang</h3>
-                <p class="price">Rp 85.000/hari</p>
-                <div class="quantity-control">
-                    <button class="btn-qty minus" data-item="tenda-4">-</button>
-                    <span class="qty-display" data-item="tenda-4">0</span>
-                    <button class="btn-qty plus" data-item="tenda-4">+</button>
-                </div>
-            </div>
-
-            <div class="camping-item">
-                <img src="images/tenda-4.jpg" alt="Tenda 4 Orang">
-                <h3>Tenda 6-8 Orang</h3>
-                <p class="price">Rp 115.000/hari</p>
-                <div class="quantity-control">
-                    <button class="btn-qty minus" data-item="tenda-6">-</button>
-                    <span class="qty-display" data-item="tenda-6">0</span>
-                    <button class="btn-qty plus" data-item="tenda-6">+</button>
-                </div>
-            </div>
-
-            <div class="camping-item">
-                <img src="images/kompor.jpg" alt="Kompor Portable">
-                <h3>Kompor Portable</h3>
-                <p class="price">Rp 30.000/hari</p>
-                <div class="quantity-control">
-                    <button class="btn-qty minus" data-item="kompor">-</button>
-                    <span class="qty-display" data-item="kompor">0</span>
-                    <button class="btn-qty plus" data-item="kompor">+</button>
-                </div>
-            </div>
-
-            <div class="camping-item">
-                <img src="images/sleepingbag.jpg" alt="Sleeping Bag">
-                <h3>Sleeping Bag</h3>
-                <p class="price">Rp 15.000/hari</p>
-                <div class="quantity-control">
-                    <button class="btn-qty minus" data-item="sleeping-bag">-</button>
-                    <span class="qty-display" data-item="sleeping-bag">0</span>
-                    <button class="btn-qty plus" data-item="sleeping-bag">+</button>
-                </div>
-            </div>
-
-            <div class="camping-item">
-                <img src="images/nesting.jpg" alt="Nesting">
-                <h3>Nesting</h3>
-                <p class="price">Rp 15.000/hari</p>
-                <div class="quantity-control">
-                    <button class="btn-qty minus" data-item="nesting">-</button>
-                    <span class="qty-display" data-item="nesting">0</span>
-                    <button class="btn-qty plus" data-item="nesting">+</button>
-                </div>
-            </div>
-
-            <div class="camping-item">
-                <img src="images/teapot.jpg" alt="Teapot">
-                <h3>Teapot</h3>
-                <p class="price">Rp 15.000/hari</p>
-                <div class="quantity-control">
-                    <button class="btn-qty minus" data-item="teapot">-</button>
-                    <span class="qty-display" data-item="teapot">0</span>
-                    <button class="btn-qty plus" data-item="teapot">+</button>
-                </div>
-            </div>
-
-            <div class="camping-item">
-                <img src="images/teapot.jpg" alt="Meja Lipat">
-                <h3>Meja Lipat</h3>
-                <p class="price">Rp 25.000/hari</p>
-                <div class="quantity-control">
-                    <button class="btn-qty minus" data-item="meja-lipat">-</button>
-                    <span class="qty-display" data-item="meja-lipat">0</span>
-                    <button class="btn-qty plus" data-item="meja-lipat">+</button>
-                </div>
-            </div>
-
-            <div class="camping-item">
-                <img src="images/kursi.jpg" alt="Kursi Lipat">
-                <h3>Kursi Lipat</h3>
-                <p class="price">Rp 20.000/hari</p>
-                <div class="quantity-control">
-                    <button class="btn-qty minus" data-item="kursi-lipat">-</button>
-                    <span class="qty-display" data-item="kursi-lipat">0</span>
-                    <button class="btn-qty plus" data-item="kursi-lipat">+</button>
-                </div>
-            </div>
-
-            <div class="camping-item">
-                <img src="images/lampu.jpg" alt="Lampu Tenda">
-                <h3>Lampu Tenda</h3>
-                <p class="price">Rp 10.000/hari</p>
-                <div class="quantity-control">
-                    <button class="btn-qty minus" data-item="lampu-tenda">-</button>
-                    <span class="qty-display" data-item="lampu-tenda">0</span>
-                    <button class="btn-qty plus" data-item="lampu-tenda">+</button>
-                </div>
-            </div>
-
-            <!-- Tambahkan item lainnya -->
+            <!-- Item akan diisi oleh JavaScript -->
         </div>
 
         <div class="cart-summary">
@@ -179,7 +69,32 @@
     <script src="src/navbar-scroll.js"></script>
     <script src="src/cart.js"></script>
     <script src="src/camping-handler.js"></script>
-    <script>feather.replace();</script>
+    <script>
+        feather.replace();
+
+        fetch('php/api/get-alat-camping.php')
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) renderCampingItems(data.data);
+            });
+
+        function renderCampingItems(items) {
+            const container = document.querySelector('.camping-items-container');
+            container.innerHTML = items.map(item => `
+      <div class="camping-item">
+        <img src="${item.gambar_url}" alt="${item.nama_alat}">
+        <h3>${item.nama_alat}</h3>
+        <p class="price">Rp ${item.harga.toLocaleString()}/${item.satuan}</p>
+        <div class="quantity-control">
+          <button class="btn-qty minus" data-item="${item.id}">-</button>
+          <span class="qty-display" data-item="${item.id}">0</span>
+          <button class="btn-qty plus" data-item="${item.id}">+</button>
+        </div>
+      </div>
+    `).join('');
+            // lanjutkan dengan event handler qty & add to cart
+        }
+    </script>
 </body>
 
 </html>

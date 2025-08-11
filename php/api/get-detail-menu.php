@@ -29,7 +29,7 @@ try {
                 $menu['gambar_url'] = 'images/' . $imagePath;
             } 
             else {
-                $menu['gambar_url'] = 'images/placeholder.jpg';
+                $menu['gambar_url'] = 'images/placeholder.svg';
             }
         } else {
             $menu['gambar_url'] = $imagePath;
@@ -37,7 +37,7 @@ try {
         
         // Validasi file exists
         if (!file_exists("../" . $menu['gambar_url'])) {
-            $menu['gambar_url'] = 'images/placeholder.jpg';
+            $menu['gambar_url'] = 'images/placeholder.svg';
         }
         
         echo json_encode(['success' => true, 'data' => $menu]);
