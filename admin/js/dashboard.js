@@ -790,7 +790,7 @@ function deleteMenu(menuId) {
                 body: formData
             })
                 .then(response => response.json())
-                .then(data => {
+                .then((data) => {
                     if (data.success) {
                         Swal.fire({
                             icon: 'success',
@@ -1248,12 +1248,210 @@ function ensureFunctionsAvailable() {
     return true;
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Check functions availability
-    if (!ensureFunctionsAvailable()) {
-        console.error('❌ Critical functions missing!');
-        return;
-    }
+function loadAlatCampingManagement() {
+    const content = document.getElementById('alat-camping-content');
+    content.innerHTML = `
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #16A34A; margin: 0;">⛺ Kelola Alat Camping</h2>
+                <button onclick="showAddAlatCampingForm()" style="background: #16A34A; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                    + Tambah Alat
+                </button>
+            </div>
+            <div id="alat-camping-table-container" style="margin-top: 20px; overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; min-width: 800px;">
+                    <thead>
+                        <tr style="background: #f8f9fa;">
+                            <th style="padding: 12px; border: 1px solid #ddd;">Gambar</th>
+                            <th style="padding: 12px; border: 1px solid #ddd;">Nama Alat</th>
+                            <th style="padding: 12px; border: 1px solid #ddd;">Harga</th>
+                            <th style="padding: 12px; border: 1px solid #ddd;">Satuan</th>
+                            <th style="padding: 12px; border: 1px solid #ddd;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alat-camping-table-body">
+                        <!-- Data alat camping akan diisi via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+    fetch('../php/api/get-alat-camping.php')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) renderAlatCampingTable(data.data);
+        });
+}
 
-    // ... rest of your code
-});
+function renderAlatCampingTable(data) {
+    const tbody = document.getElementById('alat-camping-table-body');
+    tbody.innerHTML = data.map(item => `
+        <tr>
+            <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">
+                <img src="../${item.gambar_url}" alt="${item.nama_alat}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;">
+            </td>
+            <td style="padding: 12px; border: 1px solid #ddd;">${item.nama_alat}</td>
+            <td style="padding: 12px; border: 1px solid #ddd;">Rp ${Number(item.harga).toLocaleString()}</td>
+            <td style="padding: 12px; border: 1px solid #ddd;">${item.satuan}</td>
+            <td style="padding: 12px; border: 1px solid #ddd;">
+                <button onclick="showEditAlatCampingForm(${item.id})" style="background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-right: 5px;">✏️ Edit</button>
+                <button onclick="deleteAlatCamping(${item.id})" style="background: #dc2626; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">🗑️ Hapus</button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// Tambahkan fungsi-fungsi untuk alat camping
+function showAddAlatCampingForm() {
+    showAlatCampingForm();
+}
+
+function showEditAlatCampingForm(alatId) {
+    // Load data alat terlebih dahulu
+    fetch(`../php/api/get-alat-camping.php`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const alat = data.data.find(a => a.id == alatId);
+                if (alat) {
+                    showAlatCampingForm(alat);
+                } else {
+                    Swal.fire('Error', 'Alat tidak ditemukan', 'error');
+                }
+            }
+        })
+        .catch(error => {
+            Swal.fire('Error', 'Gagal memuat data alat', 'error');
+        });
+}
+
+function showAlatCampingForm(alatData = null) {
+    const isEdit = alatData !== null;
+    const title = isEdit ? 'Edit Alat Camping' : 'Tambah Alat Camping Baru';
+
+    Swal.fire({
+        title: title,
+        html: `
+            <form id="alat-camping-form" enctype="multipart/form-data" style="text-align: left;">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Nama Alat:</label>
+                    <input type="text" id="nama_alat" name="nama_alat" value="${alatData?.nama_alat || ''}" 
+                           required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Gambar:</label>
+                    <input type="file" id="gambar" name="gambar" accept="image/*" 
+                           ${!isEdit ? 'required' : ''} style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    ${isEdit ? '<small style="color: #666;">Kosongkan jika tidak ingin mengubah gambar</small>' : ''}
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Harga:</label>
+                    <input type="number" id="harga" name="harga" value="${alatData?.harga || ''}" 
+                           required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Satuan:</label>
+                    <input type="text" id="satuan" name="satuan" value="${alatData?.satuan || 'per hari'}" 
+                           required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Keterangan:</label>
+                    <textarea id="keterangan" name="keterangan" rows="3" 
+                              style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">${alatData?.keterangan || ''}</textarea>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Status:</label>
+                    <select id="status" name="status" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        <option value="aktif" ${alatData?.status === 'aktif' ? 'selected' : ''}>Aktif</option>
+                        <option value="nonaktif" ${alatData?.status === 'nonaktif' ? 'selected' : ''}>Non Aktif</option>
+                    </select>
+                </div>
+                
+                ${isEdit ? `<input type="hidden" id="alat_id" name="id" value="${alatData.id}">` : ''}
+            </form>
+        `,
+        width: '500px',
+        showCancelButton: true,
+        confirmButtonText: isEdit ? 'Update Alat' : 'Simpan Alat',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#16A34A',
+        preConfirm: () => {
+            return submitAlatCampingForm();
+        }
+    });
+}
+
+function submitAlatCampingForm() {
+    const form = document.getElementById('alat-camping-form');
+    const formData = new FormData(form);
+
+    return fetch('php/api/save-alat-camping.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data alat camping berhasil disimpan',
+                confirmButtonColor: '#16A34A'
+            }).then(() => {
+                loadAlatCampingManagement(); // Refresh table
+            });
+        } else {
+            throw new Error(data.message);
+        }
+    })
+    .catch(error => {
+        Swal.fire('Error', 'Gagal menyimpan: ' + error.message, 'error');
+        return false;
+    });
+}
+
+function deleteAlatCamping(alatId) {
+    Swal.fire({
+        title: 'Konfirmasi Hapus',
+        text: 'Apakah Anda yakin ingin menghapus alat ini?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc2626',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const formData = new FormData();
+            formData.append('id', alatId);
+
+            fetch('php/api/delete-alat-camping.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: 'Alat berhasil dihapus',
+                        confirmButtonColor: '#16A34A'
+                    }).then(() => {
+                        loadAlatCampingManagement(); // Refresh table
+                    });
+                } else {
+                    Swal.fire('Error', data.message, 'error');
+                }
+            })
+            .catch(error => {
+                Swal.fire('Error', 'Gagal menghapus alat', 'error');
+            });
+        }
+    });
+}

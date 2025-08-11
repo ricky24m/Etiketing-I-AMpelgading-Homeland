@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // State untuk menyimpan quantity setiap item
-    const itemQuantities = {};
+    let itemQuantities = {};
     
     // Initialize quantities
     Object.keys(campingItems).forEach(itemKey => {
@@ -97,4 +97,88 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    fetch('php/api/get-alat-camping.php')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) renderCampingItems(data.data);
+        });
+
+    function renderCampingItems(items) {
+        const container = document.querySelector('.camping-items-container');
+        itemQuantities = {};
+        container.innerHTML = items.map(item => {
+            itemQuantities[item.id] = 0;
+            return `
+                <div class="camping-item">
+                    <img src="${item.gambar_url}" alt="${item.nama_alat}">
+                    <h3>${item.nama_alat}</h3>
+                    <p class="price">Rp ${item.harga.toLocaleString()}/${item.satuan}</p>
+                    <div class="quantity-control">
+                        <button class="btn-qty minus" data-item="${item.id}">-</button>
+                        <span class="qty-display" data-item="${item.id}">0</span>
+                        <button class="btn-qty plus" data-item="${item.id}">+</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // Event listeners untuk tombol plus/minus
+        container.querySelectorAll('.btn-qty').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const itemId = this.getAttribute('data-item');
+                const isPlus = this.classList.contains('plus');
+                if (isPlus) {
+                    itemQuantities[itemId]++;
+                } else if (itemQuantities[itemId] > 0) {
+                    itemQuantities[itemId]--;
+                }
+                container.querySelector(`.qty-display[data-item="${itemId}"]`).textContent = itemQuantities[itemId];
+            });
+        });
+    }
+
+    // Tombol simpan semua ke keranjang
+    document.getElementById('add-all-to-cart').addEventListener('click', function() {
+        let hasItems = false;
+        let addedItems = [];
+        fetch('php/api/get-alat-camping.php')
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    data.data.forEach(item => {
+                        const qty = itemQuantities[item.id] || 0;
+                        if (qty > 0 && window.addToCart) {
+                            window.addToCart({
+                                name: item.nama_alat,
+                                price: item.harga,
+                                qty: qty
+                            });
+                            addedItems.push(`${item.nama_alat} (${qty}x)`);
+                            hasItems = true;
+                        }
+                    });
+                    if (hasItems) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil Ditambahkan!',
+                            html: `Item berhasil ditambahkan ke keranjang:<br><br><strong>${addedItems.join('<br>')}</strong>`,
+                            confirmButtonText: 'Tutup',
+                            confirmButtonColor: '#16A34A'
+                        });
+                        // Reset qty
+                        Object.keys(itemQuantities).forEach(id => itemQuantities[id] = 0);
+                        document.querySelectorAll('.qty-display').forEach(span => span.textContent = '0');
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Perhatian!',
+                            text: 'Pilih minimal satu item untuk ditambahkan ke keranjang!',
+                            confirmButtonText: 'Mengerti',
+                            confirmButtonColor: '#D97706'
+                        });
+                    }
+                }
+            });
+    });
 });

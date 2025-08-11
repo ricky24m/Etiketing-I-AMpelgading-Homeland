@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
     if (!id) return;
@@ -7,14 +7,143 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                renderDetailMenu(data.data);
+                // Cek apakah ini menu "Sewa Alat Camping"
+                if (data.data.nama_menu.toLowerCase().includes('sewa alat camping') ||
+                    data.data.kategori.toLowerCase() === 'camping') {
+                    renderSewaAlatCamping(data.data);
+                } else {
+                    renderDetailMenu(data.data);
+                }
             } else {
                 document.getElementById('detail-container').innerHTML = '<p>Menu tidak ditemukan.</p>';
             }
         });
 });
 
+function renderSewaAlatCamping(menu) {
+    document.getElementById('detail-container').innerHTML = `
+        <div class="wisata-hero">
+            <img src="${menu.gambar_url}" alt="${menu.nama_menu}" class="wisata-hero-img">
+            <div class="wisata-hero-overlay">
+                <div class="header-center">
+                    <h1>${menu.nama_menu}</h1>
+                    <nav class="breadcrumb">
+                        <a href="index.html">Beranda</a>
+                        <span>&gt;</span>
+                        <a href="katalog.html">Booking</a>
+                        <span>&gt;</span>
+                        <span>${menu.nama_menu}</span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        
+        <div class="keterangan1">
+            <h1 style="font-size: 24px; text-align: center; margin-bottom: 20px;">Pilih Alat Camping yang Anda Butuhkan</h1>
+            <p style="text-align: center;">Semua alat berkualitas dan terawat dengan baik</p>
+        </div>
+
+        <!-- Container untuk daftar alat camping -->
+        <div class="camping-items-container">
+            <!-- Item akan diisi oleh JavaScript -->
+        </div>
+
+        <div class="cart-summary">
+            <button id="add-all-to-cart" class="btn-cart-summary">Tambahkan ke Keranjang</button>
+        </div>
+    `;
+
+    // Load alat camping dinamis
+    loadAlatCampingItems();
+}
+
+function loadAlatCampingItems() {
+    let itemQuantities = {};
+
+    fetch('php/api/get-alat-camping.php')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const container = document.querySelector('.camping-items-container');
+                itemQuantities = {};
+
+                container.innerHTML = data.data.map(item => {
+                    itemQuantities[item.id] = 0;
+                    return `
+                        <div class="camping-item">
+                            <img src="${item.gambar_url}" alt="${item.nama_alat}">
+                            <h3>${item.nama_alat}</h3>
+                            <p class="price">Rp ${item.harga.toLocaleString()}/${item.satuan}</p>
+                            <div class="quantity-control">
+                                <button class="btn-qty minus" data-item="${item.id}">-</button>
+                                <span class="qty-display" data-item="${item.id}">0</span>
+                                <button class="btn-qty plus" data-item="${item.id}">+</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                // Event listeners untuk tombol plus/minus
+                container.querySelectorAll('.btn-qty').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const itemId = this.getAttribute('data-item');
+                        const isPlus = this.classList.contains('plus');
+                        if (isPlus) {
+                            itemQuantities[itemId]++;
+                        } else if (itemQuantities[itemId] > 0) {
+                            itemQuantities[itemId]--;
+                        }
+                        container.querySelector(`.qty-display[data-item="${itemId}"]`).textContent = itemQuantities[itemId];
+                    });
+                });
+
+                // Tombol simpan semua ke keranjang
+                document.getElementById('add-all-to-cart').addEventListener('click', function () {
+                    let hasItems = false;
+                    let addedItems = [];
+
+                    data.data.forEach(item => {
+                        const qty = itemQuantities[item.id] || 0;
+                        if (qty > 0 && window.addToCart) {
+                            window.addToCart({
+                                name: item.nama_alat,
+                                price: item.harga,
+                                qty: qty
+                            });
+                            addedItems.push(`${item.nama_alat} (${qty}x)`);
+                            hasItems = true;
+                        }
+                    });
+
+                    if (hasItems) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil Ditambahkan!',
+                            html: `Item berhasil ditambahkan ke keranjang:<br><br><strong>${addedItems.join('<br>')}</strong>`,
+                            confirmButtonText: 'Tutup',
+                            confirmButtonColor: '#16A34A'
+                        });
+                        // Reset qty
+                        Object.keys(itemQuantities).forEach(id => itemQuantities[id] = 0);
+                        document.querySelectorAll('.qty-display').forEach(span => span.textContent = '0');
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Perhatian!',
+                            text: 'Pilih minimal satu item untuk ditambahkan ke keranjang!',
+                            confirmButtonText: 'Mengerti',
+                            confirmButtonColor: '#D97706'
+                        });
+                    }
+                });
+            }
+        });
+}
+
 function renderDetailMenu(menu) {
+    // Ubah \n atau \r\n menjadi <br>
+    const keteranganHTML = (menu.keterangan || '').replace(/(?:\r\n|\r|\n)/g, '<br>');
+
     document.getElementById('detail-container').innerHTML = `
         <div class="wisata-hero">
             <img src="${menu.gambar_url}" alt="${menu.nama_menu}" class="wisata-hero-img">
@@ -61,7 +190,7 @@ function renderDetailMenu(menu) {
             </div>
             <div class="keterangan">
                 <h1 style="font-size: 17px;">${menu.nama_menu}</h1>
-                <p>${menu.keterangan || ''}</p>
+                <p>${keteranganHTML}</p>
             </div>
         </main>
     `;

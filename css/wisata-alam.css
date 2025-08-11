@@ -78,8 +78,9 @@
 }
 .keterangan{
     margin-top: 2rem;
-     margin-left: 10rem;
+    margin-left: 10rem;
 }
+
 .keterangan ul {
     list-style: none;
     padding-left: 0;
@@ -104,7 +105,7 @@
 .quantity-control {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 12px;
     margin-top: 6px;
 }

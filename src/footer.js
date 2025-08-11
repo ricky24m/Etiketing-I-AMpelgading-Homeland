@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const pathPrefix = isSubfolder ? '../' : '';
 
     const footerHTML = `
-    <footer class="custom-footer-v2" style="position:relative; width:100%; min-height:350px; margin-top:48px; overflow:hidden;">
+    <footer class="custom-footer-v2" style="position:relative; width:100%; min-height:350px; margin-top:250px; overflow:hidden;">
       <div class="footer-bg"></div>
       <div class="footer-content">
         <div class="footer-brand">
