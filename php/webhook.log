@@ -724,3 +724,152 @@
 [2025-08-10 08:51:02] Raw Input Length: 0
 [2025-08-10 08:51:02] Raw Input: 
 [2025-08-10 08:51:02] Browser access detected - showing status page
+[2025-08-11 01:27:33] === NEW WEBHOOK REQUEST ===
+[2025-08-11 01:27:33] Timestamp: 2025-08-11 01:27:33
+[2025-08-11 01:27:33] Request Method: GET
+[2025-08-11 01:27:33] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 01:27:33] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 01:27:33] Content Type: not set
+[2025-08-11 01:27:33] Content Length: not set
+[2025-08-11 01:27:33] === HEADERS ===
+[2025-08-11 01:27:33] Header Host: ce9a7089a234.ngrok-free.app
+[2025-08-11 01:27:33] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 01:27:33] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 01:27:33] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 01:27:33] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 01:27:33] Header Cookie: abuse_interstitial=ce9a7089a234.ngrok-free.app
+[2025-08-11 01:27:33] Header Priority: u=0, i
+[2025-08-11 01:27:33] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 01:27:33] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 01:27:33] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 01:27:33] Header Sec-Fetch-Dest: document
+[2025-08-11 01:27:33] Header Sec-Fetch-Mode: navigate
+[2025-08-11 01:27:33] Header Sec-Fetch-Site: none
+[2025-08-11 01:27:33] Header Sec-Fetch-User: ?1
+[2025-08-11 01:27:33] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 01:27:33] Header X-Forwarded-For: 2404:8000:1038:81b:fd59:7293:36f8:63
+[2025-08-11 01:27:33] Header X-Forwarded-Host: ce9a7089a234.ngrok-free.app
+[2025-08-11 01:27:33] Header X-Forwarded-Proto: https
+[2025-08-11 01:27:33] === RAW POST DATA ===
+[2025-08-11 01:27:33] Raw Input Length: 0
+[2025-08-11 01:27:33] Raw Input: 
+[2025-08-11 01:27:33] Browser access detected - showing status page
+[2025-08-11 04:04:36] === NEW WEBHOOK REQUEST ===
+[2025-08-11 04:04:36] Timestamp: 2025-08-11 04:04:36
+[2025-08-11 04:04:36] Request Method: GET
+[2025-08-11 04:04:36] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 04:04:36] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 04:04:36] Content Type: not set
+[2025-08-11 04:04:36] Content Length: not set
+[2025-08-11 04:04:36] === HEADERS ===
+[2025-08-11 04:04:36] Header Host: 8cd9361a2bcf.ngrok-free.app
+[2025-08-11 04:04:36] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 04:04:36] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 04:04:36] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 04:04:36] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 04:04:36] Header Cookie: abuse_interstitial=8cd9361a2bcf.ngrok-free.app
+[2025-08-11 04:04:36] Header Priority: u=0, i
+[2025-08-11 04:04:36] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 04:04:36] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 04:04:36] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 04:04:36] Header Sec-Fetch-Dest: document
+[2025-08-11 04:04:36] Header Sec-Fetch-Mode: navigate
+[2025-08-11 04:04:36] Header Sec-Fetch-Site: none
+[2025-08-11 04:04:36] Header Sec-Fetch-User: ?1
+[2025-08-11 04:04:36] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 04:04:36] Header X-Forwarded-For: 2404:8000:1038:81b:fd59:7293:36f8:63
+[2025-08-11 04:04:36] Header X-Forwarded-Host: 8cd9361a2bcf.ngrok-free.app
+[2025-08-11 04:04:36] Header X-Forwarded-Proto: https
+[2025-08-11 04:04:36] === RAW POST DATA ===
+[2025-08-11 04:04:36] Raw Input Length: 0
+[2025-08-11 04:04:36] Raw Input: 
+[2025-08-11 04:04:36] Browser access detected - showing status page
+[2025-08-11 04:04:58] === NEW WEBHOOK REQUEST ===
+[2025-08-11 04:04:58] Timestamp: 2025-08-11 04:04:58
+[2025-08-11 04:04:58] Request Method: POST
+[2025-08-11 04:04:58] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 04:04:58] User Agent: Veritrans
+[2025-08-11 04:04:58] Content Type: application/json
+[2025-08-11 04:04:58] Content Length: 586
+[2025-08-11 04:04:58] === HEADERS ===
+[2025-08-11 04:04:58] Header Host: 8cd9361a2bcf.ngrok-free.app
+[2025-08-11 04:04:58] Header User-Agent: Veritrans
+[2025-08-11 04:04:58] Header Content-Length: 586
+[2025-08-11 04:04:58] Header Content-Type: application/json
+[2025-08-11 04:04:58] Header X-Forwarded-For: 147.139.206.250
+[2025-08-11 04:04:58] Header X-Forwarded-Host: 8cd9361a2bcf.ngrok-free.app
+[2025-08-11 04:04:58] Header X-Forwarded-Proto: https
+[2025-08-11 04:04:58] Header Accept-Encoding: gzip
+[2025-08-11 04:04:58] === RAW POST DATA ===
+[2025-08-11 04:04:58] Raw Input Length: 586
+[2025-08-11 04:04:58] Raw Input: {"transaction_time":"2023-11-15 18:45:13","transaction_status":"settlement","transaction_id":"513f1f01-c9da-474c-9fc9-d5c64364b709","status_message":"midtrans payment notification","status_code":"200","signature_key":"d589b0d65fedff0a6f55b1319dee1d7d067b2bf545b0b3a50b3f92768847fd1b828a762857418f63212211c3a3722e37942c084dd6964278bfd47ed77541efe2","settlement_time":"2023-11-15 22:45:13","payment_type":"gopay","order_id":"payment_notif_test_G924457252_269e28dc-1c0b-43e2-862f-4dd81fe740b6","merchant_id":"G924457252","gross_amount":"105000.00","fraud_status":"accept","currency":"IDR"}
+[2025-08-11 04:04:58] === PROCESSING WEBHOOK ===
+[2025-08-11 04:04:59] Creating Midtrans Notification object...
+[2025-08-11 04:04:59] CRITICAL ERROR: The ServerKey/ClientKey is null, You need to set the server-key from Config. Please double-check Config and ServerKey key. You can check from the Midtrans Dashboard. See https://docs.midtrans.com/en/midtrans-account/overview?id=retrieving-api-access-keys for the details or contact support at support@midtrans.com if you have any questions.
+[2025-08-11 04:04:59] Error file: C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php
+[2025-08-11 04:04:59] Error line: 71
+[2025-08-11 04:04:59] Stack trace: #0 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php(25): Midtrans\ApiRequestor::remoteCall('https://api.san...', NULL, false, 'GET')
+#1 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Transaction.php(25): Midtrans\ApiRequestor::get('https://api.san...', NULL, false)
+#2 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Notification.php(26): Midtrans\Transaction::status('513f1f01-c9da-4...')
+#3 C:\xampp\htdocs\etiket-coba\php\notification.php(96): Midtrans\Notification->__construct()
+#4 {main}
+[2025-08-11 05:15:33] === NEW WEBHOOK REQUEST ===
+[2025-08-11 05:15:33] Timestamp: 2025-08-11 05:15:33
+[2025-08-11 05:15:33] Request Method: GET
+[2025-08-11 05:15:33] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 05:15:33] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 05:15:33] Content Type: not set
+[2025-08-11 05:15:33] Content Length: not set
+[2025-08-11 05:15:33] === HEADERS ===
+[2025-08-11 05:15:33] Header Host: 68085a8736b1.ngrok-free.app
+[2025-08-11 05:15:33] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 05:15:33] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 05:15:33] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 05:15:33] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 05:15:33] Header Cookie: abuse_interstitial=68085a8736b1.ngrok-free.app
+[2025-08-11 05:15:33] Header Priority: u=0, i
+[2025-08-11 05:15:33] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 05:15:33] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 05:15:33] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 05:15:33] Header Sec-Fetch-Dest: document
+[2025-08-11 05:15:33] Header Sec-Fetch-Mode: navigate
+[2025-08-11 05:15:33] Header Sec-Fetch-Site: none
+[2025-08-11 05:15:33] Header Sec-Fetch-User: ?1
+[2025-08-11 05:15:33] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 05:15:33] Header X-Forwarded-For: 2404:8000:1038:81b:c7b:52be:87de:9879
+[2025-08-11 05:15:33] Header X-Forwarded-Host: 68085a8736b1.ngrok-free.app
+[2025-08-11 05:15:33] Header X-Forwarded-Proto: https
+[2025-08-11 05:15:33] === RAW POST DATA ===
+[2025-08-11 05:15:33] Raw Input Length: 0
+[2025-08-11 05:15:33] Raw Input: 
+[2025-08-11 05:15:33] Browser access detected - showing status page
+[2025-08-11 08:38:44] === NEW WEBHOOK REQUEST ===
+[2025-08-11 08:38:44] Timestamp: 2025-08-11 08:38:44
+[2025-08-11 08:38:44] Request Method: GET
+[2025-08-11 08:38:44] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 08:38:44] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 08:38:44] Content Type: not set
+[2025-08-11 08:38:44] Content Length: not set
+[2025-08-11 08:38:44] === HEADERS ===
+[2025-08-11 08:38:44] Header Host: 4880ed7562fa.ngrok-free.app
+[2025-08-11 08:38:44] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 08:38:44] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 08:38:44] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 08:38:44] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 08:38:44] Header Cookie: abuse_interstitial=4880ed7562fa.ngrok-free.app
+[2025-08-11 08:38:44] Header Priority: u=0, i
+[2025-08-11 08:38:44] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 08:38:44] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 08:38:44] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 08:38:44] Header Sec-Fetch-Dest: document
+[2025-08-11 08:38:44] Header Sec-Fetch-Mode: navigate
+[2025-08-11 08:38:44] Header Sec-Fetch-Site: none
+[2025-08-11 08:38:44] Header Sec-Fetch-User: ?1
+[2025-08-11 08:38:44] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 08:38:44] Header X-Forwarded-For: 2404:8000:1038:81b:3537:145a:a07b:f57a
+[2025-08-11 08:38:44] Header X-Forwarded-Host: 4880ed7562fa.ngrok-free.app
+[2025-08-11 08:38:44] Header X-Forwarded-Proto: https
+[2025-08-11 08:38:44] === RAW POST DATA ===
+[2025-08-11 08:38:44] Raw Input Length: 0
+[2025-08-11 08:38:44] Raw Input: 
+[2025-08-11 08:38:44] Browser access detected - showing status page

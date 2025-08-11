@@ -161,7 +161,7 @@ function renderBookingsTable(bookings, pagination) {
                             <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Email</th>
                             <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Telepon</th>
                             <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Pesanan</th>
-                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Total</th>
+                            <th style="padding: 12px; border: 1px solid #ddd; text-align:
                             <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Tanggal Booking</th>
                             <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Status</th>
                             <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Aksi</th>
@@ -365,6 +365,7 @@ function showBookingDetail(bookingId) {
     Swal.fire({
         title: 'Memuat detail...',
         allowOutsideClick: false,
+        showConfirmButton: false,
         didOpen: () => {
             Swal.showLoading();
         }
@@ -450,8 +451,15 @@ function showBookingDetailModal(booking) {
 
 // Tambahkan fungsi untuk load menu management
 function loadMenuManagement() {
+    console.log('🔧 loadMenuManagement() called');
+    
     const menuContent = document.getElementById('menu-content');
-    if (!menuContent) return;
+    if (!menuContent) {
+        console.error('❌ Element #menu-content not found!');
+        return;
+    }
+
+    console.log('✅ Found menu-content element:', menuContent);
 
     menuContent.innerHTML = `
         <div class="loading">
@@ -460,19 +468,52 @@ function loadMenuManagement() {
         </div>
     `;
 
-    // Load real data untuk admin
-    fetch('php/api/get-admin-menu.php') // API khusus admin yang include deskripsi dan harga
-        .then(response => response.json())
+    console.log('🔄 Fetching menu data...');
+
+    // Clear previous data
+    window.menuData = null;
+
+    // Load data menu dengan timeout
+    const timeoutId = setTimeout(() => {
+        console.error('⏰ Request timeout');
+        showAdminMenuError('Request timeout - coba lagi');
+    }, 10000); // 10 detik timeout
+
+    fetch('php/api/get-admin-menu.php')
+        .then(response => {
+            clearTimeout(timeoutId);
+            console.log('📡 Response status:', response.status);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log('📦 API Response:', data);
+            
             if (data.success) {
-                renderAdminMenuTable(data.data);
+                console.log('✅ Menu data loaded successfully:', data.data);
+                
+                // Set global variable
+                window.menuData = data.data;
+                
+                // Check if render function exists
+                if (typeof renderAdminMenuTable === 'function') {
+                    renderAdminMenuTable(data.data);
+                } else {
+                    console.error('❌ renderAdminMenuTable function not found!');
+                    showAdminMenuError('Rendering function tidak ditemukan');
+                }
             } else {
+                console.error('❌ API returned error:', data.message);
                 throw new Error(data.message);
             }
         })
         .catch(error => {
-            console.error('Error loading admin menu:', error);
-            showAdminMenuError();
+            clearTimeout(timeoutId);
+            console.error('💥 Error loading admin menu:', error);
+            showAdminMenuError('Error: ' + error.message);
         });
 }
 
@@ -483,24 +524,28 @@ function renderAdminMenuTable(menuData) {
         <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h2 style="color: #16A34A; margin: 0;">🍽️ Kelola Menu Katalog</h2>
-                <button onclick="addNewMenu()" style="background: #16A34A; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">
+                <button onclick="showAddMenuForm()" style="background: #16A34A; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 600;">
                     + Tambah Menu
                 </button>
             </div>
             
             <div style="margin-bottom: 20px; padding: 15px; background: #f0f9ff; border-radius: 8px;">
-                <p><strong>✅ Menu katalog disederhanakan</strong></p>
-                <p>Halaman katalog hanya menampilkan nama menu dan gambar. Deskripsi dan harga ditampilkan di halaman detail.</p>
+                <p><strong>📝 Informasi:</strong></p>
+                <p>• Kelola menu yang akan ditampilkan di halaman katalog</p>
+                <p>• Data disimpan di 2 tabel: <code>katalog_menu</code> dan <code>detail_menu</code></p>
+                <p>• Upload gambar dengan format JPG, PNG, atau GIF (max 2MB)</p>
             </div>
             
             <div id="menu-table-container" style="margin-top: 20px; overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; min-width: 800px;">
+                <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; min-width: 1000px;">
                     <thead>
                         <tr style="background: #f8f9fa;">
+                            <th style="padding: 12px; border: 1px solid #ddd;">Gambar</th>
                             <th style="padding: 12px; border: 1px solid #ddd;">Nama Menu</th>
                             <th style="padding: 12px; border: 1px solid #ddd;">Kategori</th>
-                            <th style="padding: 12px; border: 1px solid #ddd;">Harga</th>
                             <th style="padding: 12px; border: 1px solid #ddd;">Status</th>
+                            <th style="padding: 12px; border: 1px solid #ddd;">Waktu</th>
+                            <th style="padding: 12px; border: 1px solid #ddd;">Harga</th>
                             <th style="padding: 12px; border: 1px solid #ddd;">Aksi</th>
                         </tr>
                     </thead>
@@ -508,25 +553,34 @@ function renderAdminMenuTable(menuData) {
     `;
 
     menuData.forEach(menu => {
-        const hargaDisplay = menu.harga ? `Rp ${Number(menu.harga).toLocaleString()}` : 'Gratis';
+        const hargaDisplay = menu.harga ? `Rp ${Number(menu.harga).toLocaleString()}` : 'Belum diset';
         const statusColor = menu.status === 'aktif' ? '#16A34A' : '#dc2626';
+        const waktuDisplay = menu.waktu || 'Belum diset';
 
         tableHTML += `
             <tr>
+                <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">
+                    <img src="${menu.gambar_url}" alt="${menu.nama_menu}" 
+                         style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div style="display: none; width: 60px; height: 40px; background: #f3f4f6; border: 1px dashed #d1d5db; border-radius: 4px; align-items: center; justify-content: center; font-size: 10px; color: #666;">
+                        No Image
+                    </div>
+                </td>
                 <td style="padding: 12px; border: 1px solid #ddd;">
-                    <strong>${menu.nama_menu}</strong><br>
-                    <small style="color: #666;">${menu.deskripsi || 'Tidak ada deskripsi'}</small>
+                    <strong>${menu.nama_menu}</strong>
                 </td>
                 <td style="padding: 12px; border: 1px solid #ddd;">${menu.kategori}</td>
-                <td style="padding: 12px; border: 1px solid #ddd;">${hargaDisplay}</td>
                 <td style="padding: 12px; border: 1px solid #ddd;">
                     <span style="background: ${statusColor}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">
                         ${menu.status.charAt(0).toUpperCase() + menu.status.slice(1)}
                     </span>
                 </td>
+                <td style="padding: 12px; border: 1px solid #ddd;">${waktuDisplay}</td>
+                <td style="padding: 12px; border: 1px solid #ddd; font-weight: 600;">${hargaDisplay}</td>
                 <td style="padding: 12px; border: 1px solid #ddd;">
-                    <button onclick="editMenu(${menu.id})" style="background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-right: 5px;">Edit</button>
-                    <button onclick="deleteMenu(${menu.id})" style="background: #dc2626; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Hapus</button>
+                    <button onclick="showEditMenuForm(${menu.id})" style="background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-right: 5px;">✏️ Edit</button>
+                    <button onclick="deleteMenu(${menu.id})" style="background: #dc2626; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">🗑️ Hapus</button>
                 </td>
             </tr>
         `;
@@ -542,20 +596,224 @@ function renderAdminMenuTable(menuData) {
     menuContent.innerHTML = tableHTML;
 }
 
-// Placeholder functions untuk menu management
-window.addNewMenu = function () {
-    alert('Fitur tambah menu akan dikembangkan. Akan membuka form untuk tambah menu baru.');
+function showAdminMenuError() {
+    const menuContent = document.getElementById('menu-content');
+    menuContent.innerHTML = `
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center;">
+            <h3 style="color: #dc2626;">❌ Error</h3>
+            <p>Gagal memuat data menu. Silakan refresh halaman.</p>
+            <button onclick="loadMenuManagement()" style="background: #16A34A; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">
+                Coba Lagi
+            </button>
+        </div>
+    `;
 }
 
-window.editMenu = function (id) {
-    alert('Fitur edit menu akan dikembangkan. Akan membuka form edit untuk menu ID: ' + id);
+// Form functions
+function showAddMenuForm() {
+    showMenuForm();
 }
 
-window.deleteMenu = function (id) {
-    if (confirm('Apakah Anda yakin ingin menghapus menu ini?')) {
-        alert('Menu akan dihapus. ID: ' + id);
+function showEditMenuForm(menuId) {
+    // Load data menu terlebih dahulu
+    fetch(`php/api/get-admin-menu.php`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const menu = data.data.find(m => m.id == menuId);
+                if (menu) {
+                    showMenuForm(menu);
+                } else {
+                    Swal.fire('Error', 'Menu tidak ditemukan', 'error');
+                }
+            }
+        })
+        .catch(error => {
+            Swal.fire('Error', 'Gagal memuat data menu', 'error');
+        });
+}
+
+function showMenuForm(menuData = null) {
+    const isEdit = menuData !== null;
+    const title = isEdit ? 'Edit Menu' : 'Tambah Menu Baru';
+    
+    Swal.fire({
+        title: title,
+        html: `
+            <form id="menu-form" enctype="multipart/form-data" style="text-align: left;">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Nama Menu:</label>
+                    <input type="text" id="nama_menu" name="nama_menu" value="${menuData?.nama_menu || ''}" 
+                           required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Gambar:</label>
+                    <input type="file" id="gambar" name="gambar" accept="image/*" 
+                           ${!isEdit ? 'required' : ''} style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    ${isEdit ? '<small style="color: #666;">Kosongkan jika tidak ingin mengubah gambar</small>' : ''}
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Kategori:</label>
+                    <input type="text" id="kategori" name="kategori" value="${menuData?.kategori || ''}" 
+                           required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"
+                           placeholder="Contoh: jeep, wisata, camping, outbond">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Status:</label>
+                    <select id="status" name="status" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        <option value="aktif" ${menuData?.status === 'aktif' ? 'selected' : ''}>Aktif</option>
+                        <option value="nonaktif" ${menuData?.status === 'nonaktif' ? 'selected' : ''}>Non Aktif</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Waktu:</label>
+                    <input type="text" id="waktu" name="waktu" value="${menuData?.waktu || ''}" 
+                           required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"
+                           placeholder="Contoh: 06.00 - 18.00">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Harga:</label>
+                    <input type="number" id="harga" name="harga" value="${menuData?.harga || ''}" 
+                           required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"
+                           placeholder="Contoh: 50000">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Satuan:</label>
+                    <input type="text" id="satuan" name="satuan" value="${menuData?.satuan || ''}" 
+                           required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"
+                           placeholder="Contoh: per orang, per jeep">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Keterangan:</label>
+                    <textarea id="keterangan" name="keterangan" rows="4" required 
+                              style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; resize: vertical;"
+                              placeholder="Deskripsi detail menu...">${menuData?.keterangan || ''}</textarea>
+                </div>
+                
+                ${isEdit ? `<input type="hidden" id="menu_id" name="menu_id" value="${menuData.id}">` : ''}
+            </form>
+        `,
+        width: '600px',
+        showCancelButton: true,
+        confirmButtonText: isEdit ? 'Update Menu' : 'Simpan Menu',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#16A34A',
+        preConfirm: () => {
+            return submitMenuForm();
+        }
+    });
+}
+
+function submitMenuForm() {
+    const form = document.getElementById('menu-form');
+    const formData = new FormData(form);
+    
+    // Validasi
+    const namaMenu = formData.get('nama_menu');
+    const kategori = formData.get('kategori');
+    const waktu = formData.get('waktu');
+    const harga = formData.get('harga');
+    
+    if (!namaMenu || !kategori || !waktu || !harga) {
+        Swal.showValidationMessage('Mohon lengkapi semua field yang wajib diisi');
+        return false;
     }
+    
+    // Show loading
+    Swal.fire({
+        title: 'Menyimpan...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+    
+    return fetch('php/api/save-menu.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: data.message,
+                confirmButtonColor: '#16A34A'
+            }).then(() => {
+                loadMenuManagement(); // Refresh table
+            });
+        } else {
+            throw new Error(data.message);
+        }
+    })
+    .catch(error => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: error.message,
+            confirmButtonColor: '#dc2626'
+        });
+    });
 }
+
+function deleteMenu(menuId) {
+    Swal.fire({
+        title: 'Konfirmasi Hapus',
+        text: 'Apakah Anda yakin ingin menghapus menu ini? Data tidak dapat dikembalikan!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc2626',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const formData = new FormData();
+            formData.append('menu_id', menuId);
+            
+            fetch('php/api/delete-menu.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: data.message,
+                        confirmButtonColor: '#16A34A'
+                    }).then(() => {
+                        loadMenuManagement(); // Refresh table
+                    });
+                } else {
+                    throw new Error(data.message);
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: error.message,
+                    confirmButtonColor: '#dc2626'
+                });
+            });
+        }
+    });
+}
+
+// Global functions
+window.showAddMenuForm = showAddMenuForm;
+window.showEditMenuForm = showEditMenuForm;
+window.deleteMenu = deleteMenu;
 
 // Pastikan fungsi ini dideklarasikan di global scope
 window.loadBookingsTable = loadBookingsTable;
@@ -695,6 +953,10 @@ function resetDateFilter() {
     document.getElementById('start-date').value = firstDay.toISOString().split('T')[0];
     document.getElementById('end-date').value = today.toISOString().split('T')[0];
     
+    // Reset entries per page ke default
+    document.getElementById('entries-per-page').value = '10';
+    revenueEntriesPerPage = 10;
+    
     // Reload data
     loadRevenueData();
 }
@@ -711,6 +973,9 @@ function showRevenueError(message) {
             </td>
         </tr>
     `;
+    
+    // Hide pagination on error
+    document.getElementById('revenue-pagination').style.display = 'none';
     
     // Reset summary
     document.getElementById('total-revenue').textContent = 'Rp 0';
@@ -968,67 +1233,21 @@ function changeEntriesPerPage() {
     renderRevenueTableWithPagination();
 }
 
-// Update existing functions...
-function updateRevenueSummary(summary) {
-    // Update total revenue
-    document.getElementById('total-revenue').textContent = 
-        'Rp ' + parseInt(summary.total_revenue).toLocaleString();
-    
-    // Update total transactions
-    document.getElementById('total-transactions').textContent = summary.total_transactions;
-    
-    // Update average per transaction
-    const average = summary.total_transactions > 0 ? 
-        Math.round(summary.total_revenue / summary.total_transactions) : 0;
-    document.getElementById('average-transaction').textContent = 
-        'Rp ' + average.toLocaleString();
-    
-    // Update period
-    const startDate = document.getElementById('start-date').value;
-    const endDate = document.getElementById('end-date').value;
-    const periodText = `${formatDateId(startDate)} - ${formatDateId(endDate)}`;
-    document.getElementById('revenue-period').textContent = periodText;
+// Pastikan semua functions tersedia sebelum DOMContentLoaded
+function ensureFunctionsAvailable() {
+    if (typeof renderAdminMenuTable !== 'function') {
+        console.error('❌ renderAdminMenuTable function not defined!');
+        return false;
+    }
+    return true;
 }
 
-function resetDateFilter() {
-    // Set to current month
-    const today = new Date();
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+document.addEventListener('DOMContentLoaded', function () {
+    // Check functions availability
+    if (!ensureFunctionsAvailable()) {
+        console.error('❌ Critical functions missing!');
+        return;
+    }
     
-    document.getElementById('start-date').value = firstDay.toISOString().split('T')[0];
-    document.getElementById('end-date').value = today.toISOString().split('T')[0];
-    
-    // Reset entries per page ke default
-    document.getElementById('entries-per-page').value = '10';
-    revenueEntriesPerPage = 10;
-    
-    // Reload data
-    loadRevenueData();
-}
-
-function showRevenueError(message) {
-    const tbody = document.getElementById('revenue-tbody');
-    tbody.innerHTML = `
-        <tr>
-            <td colspan="5" style="text-align: center; padding: 40px;">
-                <div style="color: #dc2626;">❌ ${message}</div>
-                <button onclick="loadRevenueData()" style="margin-top: 10px; padding: 8px 16px; background: #16A34A; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                    Coba Lagi
-                </button>
-            </td>
-        </tr>
-    `;
-    
-    // Hide pagination on error
-    document.getElementById('revenue-pagination').style.display = 'none';
-    
-    // Reset summary
-    document.getElementById('total-revenue').textContent = 'Rp 0';
-    document.getElementById('total-transactions').textContent = '0';
-    document.getElementById('average-transaction').textContent = 'Rp 0';
-    document.getElementById('revenue-period').textContent = 'Error';
-}
-
-// Pastikan fungsi global tersedia
-window.goToRevenuePage = goToRevenuePage;
-window.changeEntriesPerPage = changeEntriesPerPage;
+    // ... rest of your code
+});

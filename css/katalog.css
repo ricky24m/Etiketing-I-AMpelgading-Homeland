@@ -59,7 +59,7 @@
 
 .menu-item {
     display: flex;
-    width: 360px;
+    width: 400px;
     padding-bottom: 15px; /* Reduced padding karena konten lebih sedikit */
     flex-direction: column;
     align-items: flex-start;
@@ -83,14 +83,14 @@
     border-top-right-radius: 12px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    height: 260px;
+    height: 300px;
     object-fit: cover;
     display: block;
 }
 
 /* 🎯 SIMPLIFIED: Hanya styling untuk nama menu dan tombol */
 .menu-item h3 {
-    padding: 15px 15px 10px 15px; /* Increased top padding */
+    padding: 15px 15px 0 15px; /* Increased top padding */
     color: black;
     font-size: 1.3rem;
     margin: 0;
@@ -98,7 +98,6 @@
 }
 
 .menu-item p {
-    padding: 0 15px 10px 15px;
     color: black;
     font-size: 0.85rem;
     margin: 0;
@@ -122,6 +121,13 @@
     background: #059669;
     color: white;
     transform: scale(1.05);
+}
+
+/* Tambahkan ini atau ubah jika sudah ada */
+.menu-item .button {
+    margin-left: 15px;
+    margin-top: 8px;
+    margin-bottom: 0;
 }
 
 /* Loading States */
@@ -190,4 +196,12 @@
         font-size: 0.9rem;
         margin-right: 8px;
     }
+}
+
+.detail-hint {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+    margin-left: 15px;
+    margin-top: 4px;
 }
