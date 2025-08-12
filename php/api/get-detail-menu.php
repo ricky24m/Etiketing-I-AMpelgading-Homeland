@@ -10,7 +10,6 @@ if (!$id) {
 }
 
 try {
-    // Query dari tabel tunggal
     $stmt = $conn->prepare("SELECT * FROM katalog_menu_fix WHERE id = ? AND status = 'aktif'");
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -18,25 +17,23 @@ try {
     $menu = $result->fetch_assoc();
 
     if ($menu) {
-        // Proses gambar
-        $imagePath = $menu['gambar'];
+        $gambarDb = $menu['gambar'];
         
-        if (!str_starts_with($imagePath, 'images/')) {
-            if (file_exists("../images/menu/" . $imagePath)) {
-                $menu['gambar_url'] = 'images/menu/' . $imagePath;
-            } 
-            elseif (file_exists("../images/" . $imagePath)) {
-                $menu['gambar_url'] = 'images/' . $imagePath;
-            } 
+        // ✅ PERBAIKAN: Set gambar_url berdasarkan path yang benar-benar ada
+        if (!empty($gambarDb)) {
+            // Cek file di folder menu dulu
+            if (file_exists("../../images/menu/" . $gambarDb)) {
+                $menu['gambar_url'] = 'images/menu/' . $gambarDb;
+            }
+            // Jika tidak ada, cek di folder images
+            elseif (file_exists("../../images/" . $gambarDb)) {
+                $menu['gambar_url'] = 'images/' . $gambarDb;
+            }
+            // Jika tetap tidak ada, gunakan placeholder
             else {
                 $menu['gambar_url'] = 'images/placeholder.svg';
             }
         } else {
-            $menu['gambar_url'] = $imagePath;
-        }
-        
-        // Validasi file exists
-        if (!file_exists("../" . $menu['gambar_url'])) {
             $menu['gambar_url'] = 'images/placeholder.svg';
         }
         

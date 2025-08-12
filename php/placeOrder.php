@@ -12,6 +12,11 @@ try {
     error_log("Raw input: " . file_get_contents('php://input'));
     error_log("========================");
 
+    // Load environment variables
+    require_once __DIR__ . '/../vendor/autoload.php';
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+    $dotenv->load();
+
     // Path ke Midtrans library
     require_once dirname(__FILE__) . '/midtrans-php-master/Midtrans.php';
     

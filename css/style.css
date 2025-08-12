@@ -28,8 +28,9 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.4rem 7%;
-    background-color: rgba(4, 79, 58, 0.95);
+    padding: 0.65rem 7%;
+    /* ✅ DEFAULT: Transparan untuk beranda */
+    background-color: transparent;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
@@ -40,14 +41,25 @@ html, body {
     transition: background-color 0.3s ease;
 }
 
-/* Effect saat scroll - navbar menjadi lebih solid */
+/* ✅ KONDISI 1: Navbar untuk halaman booking & panduan booking - selalu solid */
+.navbar-booking {
+    background-color: rgba(4, 79, 58, 0.95) !important;
+}
+
+/* ✅ KONDISI 2: Navbar beranda setelah scroll - menjadi solid */
 .navbar.scrolled {
-    background-color: rgba(4, 79, 58, 0.98);
+    background-color: rgba(4, 79, 58, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ PENTING: Navbar booking tetap solid meskipun di-scroll */
+.navbar-booking.scrolled {
+    background-color: rgba(4, 79, 58, 0.95) !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo-img {
-    height: 60px;      /* Atur tinggi logo sesuai kebutuhan */
+    height: 60px;
     width: auto;
     display: block;
 }
@@ -57,7 +69,7 @@ html, body {
     justify-content: space-between;
     align-items: center;
     gap: 32px;
-    margin-left: auto; /* Dorong ke kanan */
+    margin-left: auto;
 }
 
 .navbar-nav a {
@@ -74,7 +86,7 @@ html, body {
 
 /* Tambahkan padding top pada body untuk mengkompensasi fixed navbar */
 body {
-    padding-top: 70px; /* Sesuaikan dengan min-height navbar */
+    padding-top: 70px;
     font-family: 'Poppins', sans-serif;
 }
 

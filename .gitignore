@@ -1,1 +1,14 @@
+# .gitignore
 .env
+vendor/
+node_modules/
+.qodo/
+.vscode/
+*.log
+*.bak
+*.tmp
+php_error.log
+.DS_Store
+# File upload sementara
+images/menu/*
+!images/menu/.gitkeep

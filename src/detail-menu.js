@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
     if (!id) return;
@@ -7,23 +7,31 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                // Cek apakah ini menu "Sewa Alat Camping"
-                if (data.data.nama_menu.toLowerCase().includes('sewa alat camping') ||
-                    data.data.kategori.toLowerCase() === 'camping') {
+                // ✅ PERBAIKAN: Kondisi yang lebih spesifik
+                // Hanya menu dengan nama yang mengandung "sewa alat camping" yang akan render khusus
+                if (data.data.nama_menu.toLowerCase().includes('sewa alat camping')) {
                     renderSewaAlatCamping(data.data);
                 } else {
+                    // Semua menu lainnya (termasuk "Camping" biasa) akan render sebagai detail menu normal
                     renderDetailMenu(data.data);
                 }
-            } else {
+            } else {    
                 document.getElementById('detail-container').innerHTML = '<p>Menu tidak ditemukan.</p>';
             }
         });
 });
 
+// ✅ PERBAIKAN: Gunakan gambar dari database untuk hero
 function renderSewaAlatCamping(menu) {
+    // Gunakan fallback yang sama seperti katalog
+    const heroImageUrl = menu.gambar_url || 'images/placeholder.svg';
+    
     document.getElementById('detail-container').innerHTML = `
         <div class="wisata-hero">
-            <img src="${menu.gambar_url}" alt="${menu.nama_menu}" class="wisata-hero-img">
+            <img src="${heroImageUrl}" 
+                 alt="${menu.nama_menu}" 
+                 class="wisata-hero-img"
+                 onerror="this.src='images/placeholder.svg'; this.onerror=null;">
             <div class="wisata-hero-overlay">
                 <div class="header-center">
                     <h1>${menu.nama_menu}</h1>
@@ -40,7 +48,7 @@ function renderSewaAlatCamping(menu) {
         
         <div class="keterangan1">
             <h1 style="font-size: 24px; text-align: center; margin-bottom: 20px;">Pilih Alat Camping yang Anda Butuhkan</h1>
-            <p style="text-align: center;">Semua alat berkualitas dan terawat dengan baik</p>
+            <p style="text-align: center; margin-bottom: 30px;">Semua alat berkualitas dan terawat dengan baik</p>
         </div>
 
         <!-- Container untuk daftar alat camping -->
@@ -52,11 +60,12 @@ function renderSewaAlatCamping(menu) {
             <button id="add-all-to-cart" class="btn-cart-summary">Tambahkan ke Keranjang</button>
         </div>
     `;
-
+    
     // Load alat camping dinamis
     loadAlatCampingItems();
 }
 
+// ✅ TIDAK ADA PERUBAHAN pada fungsi loadAlatCampingItems
 function loadAlatCampingItems() {
     let itemQuantities = {};
 
@@ -140,13 +149,20 @@ function loadAlatCampingItems() {
         });
 }
 
+// ✅ PERBAIKAN: Gunakan gambar dari database untuk hero
 function renderDetailMenu(menu) {
     // Ubah \n atau \r\n menjadi <br>
     const keteranganHTML = (menu.keterangan || '').replace(/(?:\r\n|\r|\n)/g, '<br>');
+    
+    // Gunakan fallback yang sama seperti katalog
+    const heroImageUrl = menu.gambar_url || 'images/placeholder.svg';
 
     document.getElementById('detail-container').innerHTML = `
         <div class="wisata-hero">
-            <img src="${menu.gambar_url}" alt="${menu.nama_menu}" class="wisata-hero-img">
+            <img src="${heroImageUrl}" 
+                 alt="${menu.nama_menu}" 
+                 class="wisata-hero-img"
+                 onerror="this.src='images/placeholder.svg'; this.onerror=null;">
             <div class="wisata-hero-overlay">
                 <div class="header-center">
                     <h1>${menu.nama_menu}</h1>
@@ -197,6 +213,7 @@ function renderDetailMenu(menu) {
     setupQtyEvent(menu);
 }
 
+// ✅ TIDAK ADA PERUBAHAN pada setupQtyEvent
 function setupQtyEvent(menu) {
     let qty = 0;
     const minusBtn = document.getElementById('minus-btn');

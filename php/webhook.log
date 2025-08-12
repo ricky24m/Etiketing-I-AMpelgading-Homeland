@@ -873,3 +873,835 @@
 [2025-08-11 08:38:44] Raw Input Length: 0
 [2025-08-11 08:38:44] Raw Input: 
 [2025-08-11 08:38:44] Browser access detected - showing status page
+[2025-08-11 21:04:26] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:04:26] Timestamp: 2025-08-11 21:04:26
+[2025-08-11 21:04:26] Request Method: GET
+[2025-08-11 21:04:26] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:04:26] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:04:26] Content Type: not set
+[2025-08-11 21:04:26] Content Length: not set
+[2025-08-11 21:04:26] === HEADERS ===
+[2025-08-11 21:04:26] Header Host: 126d445cdd77.ngrok-free.app
+[2025-08-11 21:04:26] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:04:26] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 21:04:26] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 21:04:26] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 21:04:26] Header Cookie: abuse_interstitial=126d445cdd77.ngrok-free.app; PHPSESSID=brlauk6tcrc8oic6bcbrv7mo85
+[2025-08-11 21:04:26] Header Priority: u=0, i
+[2025-08-11 21:04:26] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 21:04:26] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 21:04:26] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 21:04:26] Header Sec-Fetch-Dest: document
+[2025-08-11 21:04:26] Header Sec-Fetch-Mode: navigate
+[2025-08-11 21:04:26] Header Sec-Fetch-Site: none
+[2025-08-11 21:04:26] Header Sec-Fetch-User: ?1
+[2025-08-11 21:04:26] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 21:04:26] Header X-Forwarded-For: 103.124.138.60
+[2025-08-11 21:04:26] Header X-Forwarded-Host: 126d445cdd77.ngrok-free.app
+[2025-08-11 21:04:26] Header X-Forwarded-Proto: https
+[2025-08-11 21:04:26] === RAW POST DATA ===
+[2025-08-11 21:04:26] Raw Input Length: 0
+[2025-08-11 21:04:26] Raw Input: 
+[2025-08-11 21:04:26] Browser access detected - showing status page
+[2025-08-11 21:05:32] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:05:32] Timestamp: 2025-08-11 21:05:32
+[2025-08-11 21:05:32] Request Method: POST
+[2025-08-11 21:05:32] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:05:32] User Agent: Veritrans
+[2025-08-11 21:05:32] Content Type: application/json
+[2025-08-11 21:05:32] Content Length: 560
+[2025-08-11 21:05:32] === HEADERS ===
+[2025-08-11 21:05:32] Header Host: 126d445cdd77.ngrok-free.app
+[2025-08-11 21:05:32] Header User-Agent: Veritrans
+[2025-08-11 21:05:32] Header Content-Length: 560
+[2025-08-11 21:05:32] Header Content-Type: application/json
+[2025-08-11 21:05:32] Header X-Forwarded-For: 149.129.227.68
+[2025-08-11 21:05:32] Header X-Forwarded-Host: 126d445cdd77.ngrok-free.app
+[2025-08-11 21:05:32] Header X-Forwarded-Proto: https
+[2025-08-11 21:05:32] Header Accept-Encoding: gzip
+[2025-08-11 21:05:32] === RAW POST DATA ===
+[2025-08-11 21:05:32] Raw Input Length: 560
+[2025-08-11 21:05:32] Raw Input: {"transaction_type":"off-us","transaction_time":"2025-08-12 02:06:59","transaction_status":"pending","transaction_id":"be5fd914-95e8-45a4-b976-884b8e320ff5","status_message":"midtrans payment notification","status_code":"201","signature_key":"d2d067ae9b2927ea58c39d4064350a50a6e3ad85ff88cae5e36c61bee3448e3b1ab3358d35d51e99cf8335ce06a1b49140676d016b624230a151c5ab30db3a42","payment_type":"qris","order_id":"ORDER_1754939130_1215","merchant_id":"G924457252","gross_amount":"10000.00","fraud_status":"accept","expiry_time":"2025-08-12 02:21:59","currency":"IDR"}
+[2025-08-11 21:05:32] === PROCESSING WEBHOOK ===
+[2025-08-11 21:05:32] Creating Midtrans Notification object...
+[2025-08-11 21:05:32] CRITICAL ERROR: The ServerKey/ClientKey is null, You need to set the server-key from Config. Please double-check Config and ServerKey key. You can check from the Midtrans Dashboard. See https://docs.midtrans.com/en/midtrans-account/overview?id=retrieving-api-access-keys for the details or contact support at support@midtrans.com if you have any questions.
+[2025-08-11 21:05:32] Error file: C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php
+[2025-08-11 21:05:32] Error line: 71
+[2025-08-11 21:05:32] Stack trace: #0 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php(25): Midtrans\ApiRequestor::remoteCall('https://api.san...', NULL, false, 'GET')
+#1 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Transaction.php(25): Midtrans\ApiRequestor::get('https://api.san...', NULL, false)
+#2 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Notification.php(26): Midtrans\Transaction::status('be5fd914-95e8-4...')
+#3 C:\xampp\htdocs\etiket-coba\php\notification.php(96): Midtrans\Notification->__construct()
+#4 {main}
+[2025-08-11 21:05:43] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:05:43] Timestamp: 2025-08-11 21:05:43
+[2025-08-11 21:05:43] Request Method: POST
+[2025-08-11 21:05:43] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:05:43] User Agent: Veritrans
+[2025-08-11 21:05:43] Content Type: application/json
+[2025-08-11 21:05:43] Content Length: 707
+[2025-08-11 21:05:43] === HEADERS ===
+[2025-08-11 21:05:43] Header Host: 126d445cdd77.ngrok-free.app
+[2025-08-11 21:05:43] Header User-Agent: Veritrans
+[2025-08-11 21:05:43] Header Content-Length: 707
+[2025-08-11 21:05:43] Header Content-Type: application/json
+[2025-08-11 21:05:43] Header X-Forwarded-For: 147.139.206.250
+[2025-08-11 21:05:43] Header X-Forwarded-Host: 126d445cdd77.ngrok-free.app
+[2025-08-11 21:05:43] Header X-Forwarded-Proto: https
+[2025-08-11 21:05:43] Header Accept-Encoding: gzip
+[2025-08-11 21:05:43] === RAW POST DATA ===
+[2025-08-11 21:05:43] Raw Input Length: 707
+[2025-08-11 21:05:43] Raw Input: {"transaction_type":"on-us","transaction_time":"2025-08-12 02:06:59","transaction_status":"settlement","transaction_id":"be5fd914-95e8-45a4-b976-884b8e320ff5","status_message":"midtrans payment notification","status_code":"200","signature_key":"bddb67ae5088ad86290946540e43757d59d46da0cdbd645998283801dfbeeeb383d04178407a7297dd7cd6cb2347449d4c24f9766e4868bc8e30f5c57bed1e48","settlement_time":"2025-08-12 02:07:09","payment_type":"qris","order_id":"ORDER_1754939130_1215","merchant_id":"G924457252","merchant_cross_reference_id":"7aa0b8e4-f4cf-41c0-8b24-e38f6d035389","issuer":"gopay","gross_amount":"10000.00","fraud_status":"accept","expiry_time":"2025-08-12 02:21:59","currency":"IDR","acquirer":"gopay"}
+[2025-08-11 21:05:43] === PROCESSING WEBHOOK ===
+[2025-08-11 21:05:43] Creating Midtrans Notification object...
+[2025-08-11 21:05:43] CRITICAL ERROR: The ServerKey/ClientKey is null, You need to set the server-key from Config. Please double-check Config and ServerKey key. You can check from the Midtrans Dashboard. See https://docs.midtrans.com/en/midtrans-account/overview?id=retrieving-api-access-keys for the details or contact support at support@midtrans.com if you have any questions.
+[2025-08-11 21:05:43] Error file: C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php
+[2025-08-11 21:05:43] Error line: 71
+[2025-08-11 21:05:43] Stack trace: #0 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php(25): Midtrans\ApiRequestor::remoteCall('https://api.san...', NULL, false, 'GET')
+#1 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Transaction.php(25): Midtrans\ApiRequestor::get('https://api.san...', NULL, false)
+#2 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Notification.php(26): Midtrans\Transaction::status('be5fd914-95e8-4...')
+#3 C:\xampp\htdocs\etiket-coba\php\notification.php(96): Midtrans\Notification->__construct()
+#4 {main}
+[2025-08-11 21:06:54] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:06:54] Timestamp: 2025-08-11 21:06:54
+[2025-08-11 21:06:54] Request Method: POST
+[2025-08-11 21:06:54] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:06:54] User Agent: Veritrans
+[2025-08-11 21:06:54] Content Type: application/json
+[2025-08-11 21:06:54] Content Length: 586
+[2025-08-11 21:06:54] === HEADERS ===
+[2025-08-11 21:06:54] Header Host: 126d445cdd77.ngrok-free.app
+[2025-08-11 21:06:54] Header User-Agent: Veritrans
+[2025-08-11 21:06:54] Header Content-Length: 586
+[2025-08-11 21:06:54] Header Content-Type: application/json
+[2025-08-11 21:06:54] Header X-Forwarded-For: 8.215.21.228
+[2025-08-11 21:06:54] Header X-Forwarded-Host: 126d445cdd77.ngrok-free.app
+[2025-08-11 21:06:54] Header X-Forwarded-Proto: https
+[2025-08-11 21:06:54] Header Accept-Encoding: gzip
+[2025-08-11 21:06:54] === RAW POST DATA ===
+[2025-08-11 21:06:54] Raw Input Length: 586
+[2025-08-11 21:06:54] Raw Input: {"transaction_time":"2023-11-15 18:45:13","transaction_status":"settlement","transaction_id":"513f1f01-c9da-474c-9fc9-d5c64364b709","status_message":"midtrans payment notification","status_code":"200","signature_key":"22f3ad15c64ca1830b156583cbf8fbba4d7ac3a1ccd1576160cf0f9a038ec26317a7e30c275f4e1604778e432a2261cae728d8b79e1bdc722a823d34b4bb54c8","settlement_time":"2023-11-15 22:45:13","payment_type":"gopay","order_id":"payment_notif_test_G924457252_557078f0-d798-400e-bfea-c177702eaeae","merchant_id":"G924457252","gross_amount":"105000.00","fraud_status":"accept","currency":"IDR"}
+[2025-08-11 21:06:54] === PROCESSING WEBHOOK ===
+[2025-08-11 21:06:54] Creating Midtrans Notification object...
+[2025-08-11 21:06:54] CRITICAL ERROR: The ServerKey/ClientKey is null, You need to set the server-key from Config. Please double-check Config and ServerKey key. You can check from the Midtrans Dashboard. See https://docs.midtrans.com/en/midtrans-account/overview?id=retrieving-api-access-keys for the details or contact support at support@midtrans.com if you have any questions.
+[2025-08-11 21:06:54] Error file: C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php
+[2025-08-11 21:06:54] Error line: 71
+[2025-08-11 21:06:54] Stack trace: #0 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php(25): Midtrans\ApiRequestor::remoteCall('https://api.san...', NULL, false, 'GET')
+#1 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Transaction.php(25): Midtrans\ApiRequestor::get('https://api.san...', NULL, false)
+#2 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Notification.php(26): Midtrans\Transaction::status('513f1f01-c9da-4...')
+#3 C:\xampp\htdocs\etiket-coba\php\notification.php(96): Midtrans\Notification->__construct()
+#4 {main}
+[2025-08-11 21:09:15] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:09:15] Timestamp: 2025-08-11 21:09:15
+[2025-08-11 21:09:15] Request Method: GET
+[2025-08-11 21:09:15] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:09:15] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:09:15] Content Type: not set
+[2025-08-11 21:09:15] Content Length: not set
+[2025-08-11 21:09:15] === HEADERS ===
+[2025-08-11 21:09:15] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:09:15] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:09:15] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 21:09:15] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 21:09:15] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 21:09:15] Header Cookie: abuse_interstitial=f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:09:15] Header Priority: u=0, i
+[2025-08-11 21:09:15] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 21:09:15] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 21:09:15] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 21:09:15] Header Sec-Fetch-Dest: document
+[2025-08-11 21:09:15] Header Sec-Fetch-Mode: navigate
+[2025-08-11 21:09:15] Header Sec-Fetch-Site: none
+[2025-08-11 21:09:15] Header Sec-Fetch-User: ?1
+[2025-08-11 21:09:15] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 21:09:15] Header X-Forwarded-For: 103.124.138.60
+[2025-08-11 21:09:15] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:09:15] Header X-Forwarded-Proto: https
+[2025-08-11 21:09:15] === RAW POST DATA ===
+[2025-08-11 21:09:15] Raw Input Length: 0
+[2025-08-11 21:09:15] Raw Input: 
+[2025-08-11 21:09:15] Browser access detected - showing status page
+[2025-08-11 21:09:24] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:09:24] Timestamp: 2025-08-11 21:09:24
+[2025-08-11 21:09:24] Request Method: POST
+[2025-08-11 21:09:24] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:09:24] User Agent: Veritrans
+[2025-08-11 21:09:24] Content Type: application/json
+[2025-08-11 21:09:24] Content Length: 586
+[2025-08-11 21:09:24] === HEADERS ===
+[2025-08-11 21:09:24] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:09:24] Header User-Agent: Veritrans
+[2025-08-11 21:09:24] Header Content-Length: 586
+[2025-08-11 21:09:24] Header Content-Type: application/json
+[2025-08-11 21:09:24] Header X-Forwarded-For: 147.139.206.250
+[2025-08-11 21:09:24] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:09:24] Header X-Forwarded-Proto: https
+[2025-08-11 21:09:24] Header Accept-Encoding: gzip
+[2025-08-11 21:09:24] === RAW POST DATA ===
+[2025-08-11 21:09:24] Raw Input Length: 586
+[2025-08-11 21:09:24] Raw Input: {"transaction_time":"2023-11-15 18:45:13","transaction_status":"settlement","transaction_id":"513f1f01-c9da-474c-9fc9-d5c64364b709","status_message":"midtrans payment notification","status_code":"200","signature_key":"6547686325ac136c47b5f6c091a3d5f0b8e0fcb3608655c8195940f607cee55798c77ec239785200ccd7a7fe6fb5d321e67bbc7530d8b929c40b5262fe166d62","settlement_time":"2023-11-15 22:45:13","payment_type":"gopay","order_id":"payment_notif_test_G924457252_6f60edeb-5520-413b-8d9b-ecce43f378fb","merchant_id":"G924457252","gross_amount":"105000.00","fraud_status":"accept","currency":"IDR"}
+[2025-08-11 21:09:24] === PROCESSING WEBHOOK ===
+[2025-08-11 21:09:24] Creating Midtrans Notification object...
+[2025-08-11 21:09:24] CRITICAL ERROR: The ServerKey/ClientKey is null, You need to set the server-key from Config. Please double-check Config and ServerKey key. You can check from the Midtrans Dashboard. See https://docs.midtrans.com/en/midtrans-account/overview?id=retrieving-api-access-keys for the details or contact support at support@midtrans.com if you have any questions.
+[2025-08-11 21:09:24] Error file: C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php
+[2025-08-11 21:09:24] Error line: 71
+[2025-08-11 21:09:24] Stack trace: #0 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php(25): Midtrans\ApiRequestor::remoteCall('https://api.san...', NULL, false, 'GET')
+#1 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Transaction.php(25): Midtrans\ApiRequestor::get('https://api.san...', NULL, false)
+#2 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Notification.php(26): Midtrans\Transaction::status('513f1f01-c9da-4...')
+#3 C:\xampp\htdocs\etiket-coba\php\notification.php(96): Midtrans\Notification->__construct()
+#4 {main}
+[2025-08-11 21:11:00] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:11:00] Timestamp: 2025-08-11 21:11:00
+[2025-08-11 21:11:00] Request Method: POST
+[2025-08-11 21:11:00] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:11:00] User Agent: Veritrans
+[2025-08-11 21:11:00] Content Type: application/json
+[2025-08-11 21:11:00] Content Length: 560
+[2025-08-11 21:11:00] === HEADERS ===
+[2025-08-11 21:11:00] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:11:00] Header User-Agent: Veritrans
+[2025-08-11 21:11:00] Header Content-Length: 560
+[2025-08-11 21:11:00] Header Content-Type: application/json
+[2025-08-11 21:11:00] Header X-Forwarded-For: 147.139.132.215
+[2025-08-11 21:11:00] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:11:00] Header X-Forwarded-Proto: https
+[2025-08-11 21:11:00] Header Accept-Encoding: gzip
+[2025-08-11 21:11:00] === RAW POST DATA ===
+[2025-08-11 21:11:00] Raw Input Length: 560
+[2025-08-11 21:11:00] Raw Input: {"transaction_type":"off-us","transaction_time":"2025-08-12 02:12:26","transaction_status":"pending","transaction_id":"da570f65-64ca-4ed5-945a-569369fdd97b","status_message":"midtrans payment notification","status_code":"201","signature_key":"fc2124d454f4f98642dfb208076b91e467bd96c83a2c63e9502128ccac6baaaa3e9e16409c9b8e7f27733971773221d955634187ebf4e41511d115bc1562af4e","payment_type":"qris","order_id":"ORDER_1754939458_6974","merchant_id":"G924457252","gross_amount":"40000.00","fraud_status":"accept","expiry_time":"2025-08-12 02:27:26","currency":"IDR"}
+[2025-08-11 21:11:00] === PROCESSING WEBHOOK ===
+[2025-08-11 21:11:00] Creating Midtrans Notification object...
+[2025-08-11 21:11:00] CRITICAL ERROR: The ServerKey/ClientKey is null, You need to set the server-key from Config. Please double-check Config and ServerKey key. You can check from the Midtrans Dashboard. See https://docs.midtrans.com/en/midtrans-account/overview?id=retrieving-api-access-keys for the details or contact support at support@midtrans.com if you have any questions.
+[2025-08-11 21:11:00] Error file: C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php
+[2025-08-11 21:11:00] Error line: 71
+[2025-08-11 21:11:00] Stack trace: #0 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php(25): Midtrans\ApiRequestor::remoteCall('https://api.san...', NULL, false, 'GET')
+#1 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Transaction.php(25): Midtrans\ApiRequestor::get('https://api.san...', NULL, false)
+#2 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Notification.php(26): Midtrans\Transaction::status('da570f65-64ca-4...')
+#3 C:\xampp\htdocs\etiket-coba\php\notification.php(96): Midtrans\Notification->__construct()
+#4 {main}
+[2025-08-11 21:11:09] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:11:09] Timestamp: 2025-08-11 21:11:09
+[2025-08-11 21:11:09] Request Method: POST
+[2025-08-11 21:11:09] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:11:09] User Agent: Veritrans
+[2025-08-11 21:11:09] Content Type: application/json
+[2025-08-11 21:11:09] Content Length: 707
+[2025-08-11 21:11:09] === HEADERS ===
+[2025-08-11 21:11:09] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:11:09] Header User-Agent: Veritrans
+[2025-08-11 21:11:09] Header Content-Length: 707
+[2025-08-11 21:11:09] Header Content-Type: application/json
+[2025-08-11 21:11:09] Header X-Forwarded-For: 149.129.227.68
+[2025-08-11 21:11:09] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:11:09] Header X-Forwarded-Proto: https
+[2025-08-11 21:11:09] Header Accept-Encoding: gzip
+[2025-08-11 21:11:09] === RAW POST DATA ===
+[2025-08-11 21:11:09] Raw Input Length: 707
+[2025-08-11 21:11:09] Raw Input: {"transaction_type":"on-us","transaction_time":"2025-08-12 02:12:26","transaction_status":"settlement","transaction_id":"da570f65-64ca-4ed5-945a-569369fdd97b","status_message":"midtrans payment notification","status_code":"200","signature_key":"0bce48a35229fd9c767070dd2376e1a6230a0febe14d900d7f92535b0d8cc1e9e695eb7bc7be61059e334a550149733eaafe1d08a1941e8275c0f6aa728a24ec","settlement_time":"2025-08-12 02:12:35","payment_type":"qris","order_id":"ORDER_1754939458_6974","merchant_id":"G924457252","merchant_cross_reference_id":"7aa0b8e4-f4cf-41c0-8b24-e38f6d035389","issuer":"gopay","gross_amount":"40000.00","fraud_status":"accept","expiry_time":"2025-08-12 02:27:26","currency":"IDR","acquirer":"gopay"}
+[2025-08-11 21:11:09] === PROCESSING WEBHOOK ===
+[2025-08-11 21:11:09] Creating Midtrans Notification object...
+[2025-08-11 21:11:09] CRITICAL ERROR: The ServerKey/ClientKey is null, You need to set the server-key from Config. Please double-check Config and ServerKey key. You can check from the Midtrans Dashboard. See https://docs.midtrans.com/en/midtrans-account/overview?id=retrieving-api-access-keys for the details or contact support at support@midtrans.com if you have any questions.
+[2025-08-11 21:11:09] Error file: C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php
+[2025-08-11 21:11:09] Error line: 71
+[2025-08-11 21:11:09] Stack trace: #0 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php(25): Midtrans\ApiRequestor::remoteCall('https://api.san...', NULL, false, 'GET')
+#1 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Transaction.php(25): Midtrans\ApiRequestor::get('https://api.san...', NULL, false)
+#2 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Notification.php(26): Midtrans\Transaction::status('da570f65-64ca-4...')
+#3 C:\xampp\htdocs\etiket-coba\php\notification.php(96): Midtrans\Notification->__construct()
+#4 {main}
+[2025-08-11 21:17:58] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:17:58] Timestamp: 2025-08-11 21:17:58
+[2025-08-11 21:17:58] Request Method: GET
+[2025-08-11 21:17:58] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:17:58] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:17:58] Content Type: not set
+[2025-08-11 21:17:58] Content Length: not set
+[2025-08-11 21:17:58] === HEADERS ===
+[2025-08-11 21:17:58] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:17:58] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:17:58] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 21:17:58] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 21:17:58] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 21:17:58] Header Cache-Control: max-age=0
+[2025-08-11 21:17:58] Header Cookie: abuse_interstitial=f8b8d0adae09.ngrok-free.app; PHPSESSID=ng6ro3qqfr9o9reqmncu9f563i
+[2025-08-11 21:17:58] Header Priority: u=0, i
+[2025-08-11 21:17:58] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 21:17:58] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 21:17:58] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 21:17:58] Header Sec-Fetch-Dest: document
+[2025-08-11 21:17:58] Header Sec-Fetch-Mode: navigate
+[2025-08-11 21:17:58] Header Sec-Fetch-Site: none
+[2025-08-11 21:17:58] Header Sec-Fetch-User: ?1
+[2025-08-11 21:17:58] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 21:17:58] Header X-Forwarded-For: 103.124.138.60
+[2025-08-11 21:17:58] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:17:58] Header X-Forwarded-Proto: https
+[2025-08-11 21:17:58] === RAW POST DATA ===
+[2025-08-11 21:17:58] Raw Input Length: 0
+[2025-08-11 21:17:58] Raw Input: 
+[2025-08-11 21:17:58] Browser access detected - showing status page
+[2025-08-11 21:18:00] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:18:00] Timestamp: 2025-08-11 21:18:00
+[2025-08-11 21:18:00] Request Method: GET
+[2025-08-11 21:18:00] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:18:00] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:00] Content Type: not set
+[2025-08-11 21:18:00] Content Length: not set
+[2025-08-11 21:18:00] === HEADERS ===
+[2025-08-11 21:18:00] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:00] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:00] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 21:18:00] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 21:18:00] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 21:18:00] Header Cache-Control: max-age=0
+[2025-08-11 21:18:00] Header Cookie: abuse_interstitial=f8b8d0adae09.ngrok-free.app; PHPSESSID=ng6ro3qqfr9o9reqmncu9f563i
+[2025-08-11 21:18:00] Header Priority: u=0, i
+[2025-08-11 21:18:00] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 21:18:00] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 21:18:00] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 21:18:00] Header Sec-Fetch-Dest: document
+[2025-08-11 21:18:00] Header Sec-Fetch-Mode: navigate
+[2025-08-11 21:18:00] Header Sec-Fetch-Site: none
+[2025-08-11 21:18:00] Header Sec-Fetch-User: ?1
+[2025-08-11 21:18:00] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 21:18:00] Header X-Forwarded-For: 103.124.138.60
+[2025-08-11 21:18:00] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:00] Header X-Forwarded-Proto: https
+[2025-08-11 21:18:00] === RAW POST DATA ===
+[2025-08-11 21:18:00] Raw Input Length: 0
+[2025-08-11 21:18:00] Raw Input: 
+[2025-08-11 21:18:00] Browser access detected - showing status page
+[2025-08-11 21:18:00] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:18:00] Timestamp: 2025-08-11 21:18:00
+[2025-08-11 21:18:00] Request Method: GET
+[2025-08-11 21:18:00] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:18:00] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:00] Content Type: not set
+[2025-08-11 21:18:00] Content Length: not set
+[2025-08-11 21:18:00] === HEADERS ===
+[2025-08-11 21:18:00] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:00] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:00] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 21:18:00] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 21:18:00] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 21:18:00] Header Cache-Control: max-age=0
+[2025-08-11 21:18:00] Header Cookie: abuse_interstitial=f8b8d0adae09.ngrok-free.app; PHPSESSID=ng6ro3qqfr9o9reqmncu9f563i
+[2025-08-11 21:18:00] Header Priority: u=0, i
+[2025-08-11 21:18:00] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 21:18:00] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 21:18:00] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 21:18:00] Header Sec-Fetch-Dest: document
+[2025-08-11 21:18:00] Header Sec-Fetch-Mode: navigate
+[2025-08-11 21:18:00] Header Sec-Fetch-Site: none
+[2025-08-11 21:18:00] Header Sec-Fetch-User: ?1
+[2025-08-11 21:18:00] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 21:18:00] Header X-Forwarded-For: 103.124.138.60
+[2025-08-11 21:18:00] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:00] Header X-Forwarded-Proto: https
+[2025-08-11 21:18:00] === RAW POST DATA ===
+[2025-08-11 21:18:00] Raw Input Length: 0
+[2025-08-11 21:18:00] Raw Input: 
+[2025-08-11 21:18:00] Browser access detected - showing status page
+[2025-08-11 21:18:00] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:18:00] Timestamp: 2025-08-11 21:18:00
+[2025-08-11 21:18:00] Request Method: GET
+[2025-08-11 21:18:00] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:18:00] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:00] Content Type: not set
+[2025-08-11 21:18:00] Content Length: not set
+[2025-08-11 21:18:00] === HEADERS ===
+[2025-08-11 21:18:00] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:00] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:00] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 21:18:00] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 21:18:00] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 21:18:00] Header Cache-Control: max-age=0
+[2025-08-11 21:18:00] Header Cookie: abuse_interstitial=f8b8d0adae09.ngrok-free.app; PHPSESSID=ng6ro3qqfr9o9reqmncu9f563i
+[2025-08-11 21:18:00] Header Priority: u=0, i
+[2025-08-11 21:18:00] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 21:18:00] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 21:18:00] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 21:18:00] Header Sec-Fetch-Dest: document
+[2025-08-11 21:18:00] Header Sec-Fetch-Mode: navigate
+[2025-08-11 21:18:00] Header Sec-Fetch-Site: none
+[2025-08-11 21:18:00] Header Sec-Fetch-User: ?1
+[2025-08-11 21:18:00] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 21:18:00] Header X-Forwarded-For: 103.124.138.60
+[2025-08-11 21:18:00] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:00] Header X-Forwarded-Proto: https
+[2025-08-11 21:18:00] === RAW POST DATA ===
+[2025-08-11 21:18:00] Raw Input Length: 0
+[2025-08-11 21:18:00] Raw Input: 
+[2025-08-11 21:18:00] Browser access detected - showing status page
+[2025-08-11 21:18:01] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:18:01] Timestamp: 2025-08-11 21:18:01
+[2025-08-11 21:18:01] Request Method: GET
+[2025-08-11 21:18:01] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:18:01] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:01] Content Type: not set
+[2025-08-11 21:18:01] Content Length: not set
+[2025-08-11 21:18:01] === HEADERS ===
+[2025-08-11 21:18:01] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:01] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:01] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 21:18:01] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 21:18:01] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 21:18:01] Header Cache-Control: max-age=0
+[2025-08-11 21:18:01] Header Cookie: abuse_interstitial=f8b8d0adae09.ngrok-free.app; PHPSESSID=ng6ro3qqfr9o9reqmncu9f563i
+[2025-08-11 21:18:01] Header Priority: u=0, i
+[2025-08-11 21:18:01] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 21:18:01] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 21:18:01] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 21:18:01] Header Sec-Fetch-Dest: document
+[2025-08-11 21:18:01] Header Sec-Fetch-Mode: navigate
+[2025-08-11 21:18:01] Header Sec-Fetch-Site: none
+[2025-08-11 21:18:01] Header Sec-Fetch-User: ?1
+[2025-08-11 21:18:01] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 21:18:01] Header X-Forwarded-For: 103.124.138.60
+[2025-08-11 21:18:01] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:01] Header X-Forwarded-Proto: https
+[2025-08-11 21:18:01] === RAW POST DATA ===
+[2025-08-11 21:18:01] Raw Input Length: 0
+[2025-08-11 21:18:01] Raw Input: 
+[2025-08-11 21:18:01] Browser access detected - showing status page
+[2025-08-11 21:18:01] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:18:01] Timestamp: 2025-08-11 21:18:01
+[2025-08-11 21:18:01] Request Method: GET
+[2025-08-11 21:18:01] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:18:01] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:01] Content Type: not set
+[2025-08-11 21:18:01] Content Length: not set
+[2025-08-11 21:18:01] === HEADERS ===
+[2025-08-11 21:18:01] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:01] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:01] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 21:18:01] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 21:18:01] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 21:18:01] Header Cache-Control: max-age=0
+[2025-08-11 21:18:01] Header Cookie: abuse_interstitial=f8b8d0adae09.ngrok-free.app; PHPSESSID=ng6ro3qqfr9o9reqmncu9f563i
+[2025-08-11 21:18:01] Header Priority: u=0, i
+[2025-08-11 21:18:01] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 21:18:01] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 21:18:01] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 21:18:01] Header Sec-Fetch-Dest: document
+[2025-08-11 21:18:01] Header Sec-Fetch-Mode: navigate
+[2025-08-11 21:18:01] Header Sec-Fetch-Site: none
+[2025-08-11 21:18:01] Header Sec-Fetch-User: ?1
+[2025-08-11 21:18:01] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 21:18:01] Header X-Forwarded-For: 103.124.138.60
+[2025-08-11 21:18:01] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:01] Header X-Forwarded-Proto: https
+[2025-08-11 21:18:01] === RAW POST DATA ===
+[2025-08-11 21:18:01] Raw Input Length: 0
+[2025-08-11 21:18:01] Raw Input: 
+[2025-08-11 21:18:01] Browser access detected - showing status page
+[2025-08-11 21:18:01] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:18:01] Timestamp: 2025-08-11 21:18:01
+[2025-08-11 21:18:01] Request Method: GET
+[2025-08-11 21:18:01] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:18:01] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:01] Content Type: not set
+[2025-08-11 21:18:01] Content Length: not set
+[2025-08-11 21:18:01] === HEADERS ===
+[2025-08-11 21:18:01] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:01] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:01] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 21:18:01] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 21:18:01] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 21:18:01] Header Cache-Control: max-age=0
+[2025-08-11 21:18:01] Header Cookie: abuse_interstitial=f8b8d0adae09.ngrok-free.app; PHPSESSID=ng6ro3qqfr9o9reqmncu9f563i
+[2025-08-11 21:18:01] Header Priority: u=0, i
+[2025-08-11 21:18:01] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 21:18:01] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 21:18:01] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 21:18:01] Header Sec-Fetch-Dest: document
+[2025-08-11 21:18:01] Header Sec-Fetch-Mode: navigate
+[2025-08-11 21:18:01] Header Sec-Fetch-Site: none
+[2025-08-11 21:18:01] Header Sec-Fetch-User: ?1
+[2025-08-11 21:18:01] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 21:18:01] Header X-Forwarded-For: 103.124.138.60
+[2025-08-11 21:18:01] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:01] Header X-Forwarded-Proto: https
+[2025-08-11 21:18:01] === RAW POST DATA ===
+[2025-08-11 21:18:01] Raw Input Length: 0
+[2025-08-11 21:18:01] Raw Input: 
+[2025-08-11 21:18:01] Browser access detected - showing status page
+[2025-08-11 21:18:02] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:18:02] Timestamp: 2025-08-11 21:18:02
+[2025-08-11 21:18:02] Request Method: GET
+[2025-08-11 21:18:02] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:18:02] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:02] Content Type: not set
+[2025-08-11 21:18:02] Content Length: not set
+[2025-08-11 21:18:02] === HEADERS ===
+[2025-08-11 21:18:02] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:02] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:02] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 21:18:02] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 21:18:02] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 21:18:02] Header Cache-Control: max-age=0
+[2025-08-11 21:18:02] Header Cookie: abuse_interstitial=f8b8d0adae09.ngrok-free.app; PHPSESSID=ng6ro3qqfr9o9reqmncu9f563i
+[2025-08-11 21:18:02] Header Priority: u=0, i
+[2025-08-11 21:18:02] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 21:18:02] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 21:18:02] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 21:18:02] Header Sec-Fetch-Dest: document
+[2025-08-11 21:18:02] Header Sec-Fetch-Mode: navigate
+[2025-08-11 21:18:02] Header Sec-Fetch-Site: none
+[2025-08-11 21:18:02] Header Sec-Fetch-User: ?1
+[2025-08-11 21:18:02] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 21:18:02] Header X-Forwarded-For: 103.124.138.60
+[2025-08-11 21:18:02] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:02] Header X-Forwarded-Proto: https
+[2025-08-11 21:18:02] === RAW POST DATA ===
+[2025-08-11 21:18:02] Raw Input Length: 0
+[2025-08-11 21:18:02] Raw Input: 
+[2025-08-11 21:18:02] Browser access detected - showing status page
+[2025-08-11 21:18:03] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:18:03] Timestamp: 2025-08-11 21:18:03
+[2025-08-11 21:18:03] Request Method: GET
+[2025-08-11 21:18:03] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:18:03] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:03] Content Type: not set
+[2025-08-11 21:18:03] Content Length: not set
+[2025-08-11 21:18:03] === HEADERS ===
+[2025-08-11 21:18:03] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:03] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-11 21:18:03] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-11 21:18:03] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-11 21:18:03] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-11 21:18:03] Header Cache-Control: max-age=0
+[2025-08-11 21:18:03] Header Cookie: abuse_interstitial=f8b8d0adae09.ngrok-free.app; PHPSESSID=ng6ro3qqfr9o9reqmncu9f563i
+[2025-08-11 21:18:03] Header Priority: u=0, i
+[2025-08-11 21:18:03] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-11 21:18:03] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-11 21:18:03] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-11 21:18:03] Header Sec-Fetch-Dest: document
+[2025-08-11 21:18:03] Header Sec-Fetch-Mode: navigate
+[2025-08-11 21:18:03] Header Sec-Fetch-Site: none
+[2025-08-11 21:18:03] Header Sec-Fetch-User: ?1
+[2025-08-11 21:18:03] Header Upgrade-Insecure-Requests: 1
+[2025-08-11 21:18:03] Header X-Forwarded-For: 103.124.138.60
+[2025-08-11 21:18:03] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:03] Header X-Forwarded-Proto: https
+[2025-08-11 21:18:03] === RAW POST DATA ===
+[2025-08-11 21:18:03] Raw Input Length: 0
+[2025-08-11 21:18:03] Raw Input: 
+[2025-08-11 21:18:03] Browser access detected - showing status page
+[2025-08-11 21:18:21] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:18:21] Timestamp: 2025-08-11 21:18:21
+[2025-08-11 21:18:21] Request Method: POST
+[2025-08-11 21:18:21] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:18:21] User Agent: Veritrans
+[2025-08-11 21:18:21] Content Type: application/json
+[2025-08-11 21:18:21] Content Length: 560
+[2025-08-11 21:18:21] === HEADERS ===
+[2025-08-11 21:18:21] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:21] Header User-Agent: Veritrans
+[2025-08-11 21:18:21] Header Content-Length: 560
+[2025-08-11 21:18:21] Header Content-Type: application/json
+[2025-08-11 21:18:21] Header X-Forwarded-For: 8.215.21.228
+[2025-08-11 21:18:21] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:21] Header X-Forwarded-Proto: https
+[2025-08-11 21:18:21] Header Accept-Encoding: gzip
+[2025-08-11 21:18:21] === RAW POST DATA ===
+[2025-08-11 21:18:21] Raw Input Length: 560
+[2025-08-11 21:18:21] Raw Input: {"transaction_type":"off-us","transaction_time":"2025-08-12 02:19:47","transaction_status":"pending","transaction_id":"3d124904-b23b-4d5d-9f0a-ef1050f16b45","status_message":"midtrans payment notification","status_code":"201","signature_key":"ce20ed81931e1008a8cdeb32baaa8ca411155710e48dc093b0bb8e9e64e4c75e752cd8386691949560d9beb657a13208bbfe9e48ea7427b856d39a98c29fa9f2","payment_type":"qris","order_id":"ORDER_1754939899_8727","merchant_id":"G924457252","gross_amount":"40000.00","fraud_status":"accept","expiry_time":"2025-08-12 02:34:47","currency":"IDR"}
+[2025-08-11 21:18:21] === PROCESSING WEBHOOK ===
+[2025-08-11 21:18:21] Creating Midtrans Notification object...
+[2025-08-11 21:18:22] Notification object created successfully
+[2025-08-11 21:18:22] === NOTIFICATION DATA ===
+[2025-08-11 21:18:22] Order ID: ORDER_1754939899_8727
+[2025-08-11 21:18:22] Transaction Status: pending
+[2025-08-11 21:18:22] Fraud Status: accept
+[2025-08-11 21:18:22] Payment Type: qris
+[2025-08-11 21:18:22] Merchant ID: G924457252
+[2025-08-11 21:18:22] Gross Amount: 40000.00
+[2025-08-11 21:18:22] === PROCESSING TRANSACTION STATUS ===
+[2025-08-11 21:18:22] Processing: PENDING - Transaction waiting
+[2025-08-11 21:18:22] === UPDATING DATABASE STATUS ===
+[2025-08-11 21:18:22] Order ID: ORDER_1754939899_8727, New Status: pending
+[2025-08-11 21:18:22] Database update successful - Rows affected: 0
+[2025-08-11 21:18:22] WARNING: No rows updated - Order ID might not exist
+[2025-08-11 21:18:22] === WEBHOOK PROCESSING COMPLETED ===
+[2025-08-11 21:18:34] === NEW WEBHOOK REQUEST ===
+[2025-08-11 21:18:34] Timestamp: 2025-08-11 21:18:34
+[2025-08-11 21:18:34] Request Method: POST
+[2025-08-11 21:18:34] Request URI: /etiket-coba/php/notification.php
+[2025-08-11 21:18:34] User Agent: Veritrans
+[2025-08-11 21:18:34] Content Type: application/json
+[2025-08-11 21:18:34] Content Length: 707
+[2025-08-11 21:18:34] === HEADERS ===
+[2025-08-11 21:18:34] Header Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:34] Header User-Agent: Veritrans
+[2025-08-11 21:18:34] Header Content-Length: 707
+[2025-08-11 21:18:34] Header Content-Type: application/json
+[2025-08-11 21:18:34] Header X-Forwarded-For: 147.139.209.91
+[2025-08-11 21:18:34] Header X-Forwarded-Host: f8b8d0adae09.ngrok-free.app
+[2025-08-11 21:18:34] Header X-Forwarded-Proto: https
+[2025-08-11 21:18:34] Header Accept-Encoding: gzip
+[2025-08-11 21:18:34] === RAW POST DATA ===
+[2025-08-11 21:18:34] Raw Input Length: 707
+[2025-08-11 21:18:34] Raw Input: {"transaction_type":"on-us","transaction_time":"2025-08-12 02:19:47","transaction_status":"settlement","transaction_id":"3d124904-b23b-4d5d-9f0a-ef1050f16b45","status_message":"midtrans payment notification","status_code":"200","signature_key":"d03f7616ef08759043c64b8e1f4cf1bb89fef23b4b53b9435b57ae71793a2fb1d6cda3b5c8ec7cff071c37d790b17dc9594cb7ff7b28cffea3acbf0a8abf2bbb","settlement_time":"2025-08-12 02:20:00","payment_type":"qris","order_id":"ORDER_1754939899_8727","merchant_id":"G924457252","merchant_cross_reference_id":"7aa0b8e4-f4cf-41c0-8b24-e38f6d035389","issuer":"gopay","gross_amount":"40000.00","fraud_status":"accept","expiry_time":"2025-08-12 02:34:47","currency":"IDR","acquirer":"gopay"}
+[2025-08-11 21:18:34] === PROCESSING WEBHOOK ===
+[2025-08-11 21:18:34] Creating Midtrans Notification object...
+[2025-08-11 21:18:35] Notification object created successfully
+[2025-08-11 21:18:35] === NOTIFICATION DATA ===
+[2025-08-11 21:18:35] Order ID: ORDER_1754939899_8727
+[2025-08-11 21:18:35] Transaction Status: settlement
+[2025-08-11 21:18:35] Fraud Status: accept
+[2025-08-11 21:18:35] Payment Type: qris
+[2025-08-11 21:18:35] Merchant ID: G924457252
+[2025-08-11 21:18:35] Gross Amount: 40000.00
+[2025-08-11 21:18:35] === PROCESSING TRANSACTION STATUS ===
+[2025-08-11 21:18:35] Processing: SETTLEMENT - Payment successful
+[2025-08-11 21:18:35] === UPDATING DATABASE STATUS ===
+[2025-08-11 21:18:35] Order ID: ORDER_1754939899_8727, New Status: berhasil
+[2025-08-11 21:18:35] Database update successful - Rows affected: 1
+[2025-08-11 21:18:35] === SENDING EMAIL TICKET ===
+[2025-08-11 21:18:35] Processing email for order: ORDER_1754939899_8727
+[2025-08-11 21:18:35] === GETTING BOOKING DATA ===
+[2025-08-11 21:18:35] Searching for order: ORDER_1754939899_8727
+[2025-08-11 21:18:35] Database connection established
+[2025-08-12 05:06:20] === NEW WEBHOOK REQUEST ===
+[2025-08-12 05:06:20] Timestamp: 2025-08-12 05:06:20
+[2025-08-12 05:06:20] Request Method: GET
+[2025-08-12 05:06:20] Request URI: /etiket-coba/php/notification.php
+[2025-08-12 05:06:20] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-12 05:06:20] Content Type: not set
+[2025-08-12 05:06:20] Content Length: not set
+[2025-08-12 05:06:20] === HEADERS ===
+[2025-08-12 05:06:20] Header Host: fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:06:20] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-12 05:06:20] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-12 05:06:20] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-12 05:06:20] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-12 05:06:20] Header Cookie: abuse_interstitial=fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:06:20] Header Priority: u=0, i
+[2025-08-12 05:06:20] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-12 05:06:20] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-12 05:06:20] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-12 05:06:20] Header Sec-Fetch-Dest: document
+[2025-08-12 05:06:20] Header Sec-Fetch-Mode: navigate
+[2025-08-12 05:06:20] Header Sec-Fetch-Site: none
+[2025-08-12 05:06:20] Header Sec-Fetch-User: ?1
+[2025-08-12 05:06:20] Header Upgrade-Insecure-Requests: 1
+[2025-08-12 05:06:20] Header X-Forwarded-For: 103.124.138.60
+[2025-08-12 05:06:20] Header X-Forwarded-Host: fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:06:20] Header X-Forwarded-Proto: https
+[2025-08-12 05:06:20] === RAW POST DATA ===
+[2025-08-12 05:06:20] Raw Input Length: 0
+[2025-08-12 05:06:20] Raw Input: 
+[2025-08-12 05:06:20] Browser access detected - showing status page
+[2025-08-12 05:06:36] === NEW WEBHOOK REQUEST ===
+[2025-08-12 05:06:36] Timestamp: 2025-08-12 05:06:36
+[2025-08-12 05:06:36] Request Method: POST
+[2025-08-12 05:06:36] Request URI: /etiket-coba/php/notification.php
+[2025-08-12 05:06:36] User Agent: Veritrans
+[2025-08-12 05:06:36] Content Type: application/json
+[2025-08-12 05:06:36] Content Length: 586
+[2025-08-12 05:06:36] === HEADERS ===
+[2025-08-12 05:06:36] Header Host: fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:06:36] Header User-Agent: Veritrans
+[2025-08-12 05:06:36] Header Content-Length: 586
+[2025-08-12 05:06:36] Header Content-Type: application/json
+[2025-08-12 05:06:36] Header X-Forwarded-For: 147.139.206.250
+[2025-08-12 05:06:36] Header X-Forwarded-Host: fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:06:36] Header X-Forwarded-Proto: https
+[2025-08-12 05:06:36] Header Accept-Encoding: gzip
+[2025-08-12 05:06:36] === RAW POST DATA ===
+[2025-08-12 05:06:36] Raw Input Length: 586
+[2025-08-12 05:06:36] Raw Input: {"transaction_time":"2023-11-15 18:45:13","transaction_status":"settlement","transaction_id":"513f1f01-c9da-474c-9fc9-d5c64364b709","status_message":"midtrans payment notification","status_code":"200","signature_key":"2f72bb12b83683897b0d4db45703ce922e63b9952576a28b47ddd0d5f3b0f0cd4aa27af48252a5c29f39a32571e9bad820f90cc92ebcf201f1b5a9255461f0c3","settlement_time":"2023-11-15 22:45:13","payment_type":"gopay","order_id":"payment_notif_test_G924457252_5c997617-8686-416d-b6c4-c549f23e1219","merchant_id":"G924457252","gross_amount":"105000.00","fraud_status":"accept","currency":"IDR"}
+[2025-08-12 05:06:36] === PROCESSING WEBHOOK ===
+[2025-08-12 05:06:36] Creating Midtrans Notification object...
+[2025-08-12 05:06:37] CRITICAL ERROR: Midtrans API is returning API error. HTTP status code: 404 API response: {"status_code":"404","status_message":"Transaction doesn't exist.","id":"4e50e483-2518-4f9a-af67-56886a70dc0a"}
+[2025-08-12 05:06:37] Error file: C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php
+[2025-08-12 05:06:37] Error line: 165
+[2025-08-12 05:06:37] Stack trace: #0 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\ApiRequestor.php(25): Midtrans\ApiRequestor::remoteCall('https://api.san...', 'Mid-server-lusC...', false, 'GET')
+#1 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Transaction.php(25): Midtrans\ApiRequestor::get('https://api.san...', 'Mid-server-lusC...', false)
+#2 C:\xampp\htdocs\etiket-coba\php\midtrans-php-master\Midtrans\Notification.php(26): Midtrans\Transaction::status('513f1f01-c9da-4...')
+#3 C:\xampp\htdocs\etiket-coba\php\notification.php(101): Midtrans\Notification->__construct()
+#4 {main}
+[2025-08-12 05:08:55] === NEW WEBHOOK REQUEST ===
+[2025-08-12 05:08:55] Timestamp: 2025-08-12 05:08:55
+[2025-08-12 05:08:55] Request Method: POST
+[2025-08-12 05:08:55] Request URI: /etiket-coba/php/notification.php
+[2025-08-12 05:08:55] User Agent: Veritrans
+[2025-08-12 05:08:55] Content Type: application/json
+[2025-08-12 05:08:55] Content Length: 560
+[2025-08-12 05:08:55] === HEADERS ===
+[2025-08-12 05:08:55] Header Host: fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:08:55] Header User-Agent: Veritrans
+[2025-08-12 05:08:55] Header Content-Length: 560
+[2025-08-12 05:08:55] Header Content-Type: application/json
+[2025-08-12 05:08:55] Header X-Forwarded-For: 147.139.213.108
+[2025-08-12 05:08:55] Header X-Forwarded-Host: fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:08:55] Header X-Forwarded-Proto: https
+[2025-08-12 05:08:55] Header Accept-Encoding: gzip
+[2025-08-12 05:08:55] === RAW POST DATA ===
+[2025-08-12 05:08:55] Raw Input Length: 560
+[2025-08-12 05:08:55] Raw Input: {"transaction_type":"off-us","transaction_time":"2025-08-12 10:10:22","transaction_status":"pending","transaction_id":"ad5b11ed-fe2a-4914-ab85-27e8e61fbb75","status_message":"midtrans payment notification","status_code":"201","signature_key":"ab65b5760ae11d41ba9577a631c672428745743b0aba1ebbc8e35cd72f78fd365f30dfe8e99b8df9decbb5899fd9b1ea0a1d48ff89b3c8e840b51fdedc3c788a","payment_type":"qris","order_id":"ORDER_1754968133_5240","merchant_id":"G924457252","gross_amount":"10000.00","fraud_status":"accept","expiry_time":"2025-08-12 10:25:21","currency":"IDR"}
+[2025-08-12 05:08:55] === PROCESSING WEBHOOK ===
+[2025-08-12 05:08:55] Creating Midtrans Notification object...
+[2025-08-12 05:08:55] Notification object created successfully
+[2025-08-12 05:08:55] === NOTIFICATION DATA ===
+[2025-08-12 05:08:55] Order ID: ORDER_1754968133_5240
+[2025-08-12 05:08:55] Transaction Status: pending
+[2025-08-12 05:08:55] Fraud Status: accept
+[2025-08-12 05:08:55] Payment Type: qris
+[2025-08-12 05:08:55] Merchant ID: G924457252
+[2025-08-12 05:08:55] Gross Amount: 10000.00
+[2025-08-12 05:08:55] === PROCESSING TRANSACTION STATUS ===
+[2025-08-12 05:08:55] Processing: PENDING - Transaction waiting
+[2025-08-12 05:08:55] === UPDATING DATABASE STATUS ===
+[2025-08-12 05:08:55] Order ID: ORDER_1754968133_5240, New Status: pending
+[2025-08-12 05:08:55] Database update successful - Rows affected: 0
+[2025-08-12 05:08:55] WARNING: No rows updated - Order ID might not exist
+[2025-08-12 05:08:55] === WEBHOOK PROCESSING COMPLETED ===
+[2025-08-12 05:09:09] === NEW WEBHOOK REQUEST ===
+[2025-08-12 05:09:09] Timestamp: 2025-08-12 05:09:09
+[2025-08-12 05:09:09] Request Method: POST
+[2025-08-12 05:09:09] Request URI: /etiket-coba/php/notification.php
+[2025-08-12 05:09:09] User Agent: Veritrans
+[2025-08-12 05:09:09] Content Type: application/json
+[2025-08-12 05:09:09] Content Length: 707
+[2025-08-12 05:09:09] === HEADERS ===
+[2025-08-12 05:09:09] Header Host: fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:09:09] Header User-Agent: Veritrans
+[2025-08-12 05:09:09] Header Content-Length: 707
+[2025-08-12 05:09:09] Header Content-Type: application/json
+[2025-08-12 05:09:09] Header X-Forwarded-For: 149.129.227.68
+[2025-08-12 05:09:09] Header X-Forwarded-Host: fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:09:09] Header X-Forwarded-Proto: https
+[2025-08-12 05:09:09] Header Accept-Encoding: gzip
+[2025-08-12 05:09:09] === RAW POST DATA ===
+[2025-08-12 05:09:09] Raw Input Length: 707
+[2025-08-12 05:09:09] Raw Input: {"transaction_type":"on-us","transaction_time":"2025-08-12 10:10:22","transaction_status":"settlement","transaction_id":"ad5b11ed-fe2a-4914-ab85-27e8e61fbb75","status_message":"midtrans payment notification","status_code":"200","signature_key":"8df55544e010c9ade0c505341fb4b9012391a7785210d2ca87cffd01f295cf24413f34fe1447941ae569eed894564412a8d4fd7b67cad90e969647468bdac775","settlement_time":"2025-08-12 10:10:36","payment_type":"qris","order_id":"ORDER_1754968133_5240","merchant_id":"G924457252","merchant_cross_reference_id":"7aa0b8e4-f4cf-41c0-8b24-e38f6d035389","issuer":"gopay","gross_amount":"10000.00","fraud_status":"accept","expiry_time":"2025-08-12 10:25:21","currency":"IDR","acquirer":"gopay"}
+[2025-08-12 05:09:09] === PROCESSING WEBHOOK ===
+[2025-08-12 05:09:09] Creating Midtrans Notification object...
+[2025-08-12 05:09:09] Notification object created successfully
+[2025-08-12 05:09:09] === NOTIFICATION DATA ===
+[2025-08-12 05:09:09] Order ID: ORDER_1754968133_5240
+[2025-08-12 05:09:09] Transaction Status: settlement
+[2025-08-12 05:09:09] Fraud Status: accept
+[2025-08-12 05:09:09] Payment Type: qris
+[2025-08-12 05:09:09] Merchant ID: G924457252
+[2025-08-12 05:09:09] Gross Amount: 10000.00
+[2025-08-12 05:09:09] === PROCESSING TRANSACTION STATUS ===
+[2025-08-12 05:09:09] Processing: SETTLEMENT - Payment successful
+[2025-08-12 05:09:09] === UPDATING DATABASE STATUS ===
+[2025-08-12 05:09:09] Order ID: ORDER_1754968133_5240, New Status: berhasil
+[2025-08-12 05:09:09] Database update successful - Rows affected: 1
+[2025-08-12 05:09:09] === SENDING EMAIL TICKET ===
+[2025-08-12 05:09:09] Processing email for order: ORDER_1754968133_5240
+[2025-08-12 05:09:09] === GETTING BOOKING DATA ===
+[2025-08-12 05:09:09] Searching for order: ORDER_1754968133_5240
+[2025-08-12 05:09:09] Database connection established
+[2025-08-12 05:09:14] === NEW WEBHOOK REQUEST ===
+[2025-08-12 05:09:14] Timestamp: 2025-08-12 05:09:14
+[2025-08-12 05:09:14] Request Method: POST
+[2025-08-12 05:09:14] Request URI: /etiket-coba/php/notification.php
+[2025-08-12 05:09:14] User Agent: Veritrans
+[2025-08-12 05:09:14] Content Type: application/json
+[2025-08-12 05:09:14] Content Length: 707
+[2025-08-12 05:09:14] === HEADERS ===
+[2025-08-12 05:09:14] Header Host: fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:09:14] Header User-Agent: Veritrans
+[2025-08-12 05:09:14] Header Content-Length: 707
+[2025-08-12 05:09:14] Header Content-Type: application/json
+[2025-08-12 05:09:14] Header X-Forwarded-For: 147.139.173.83
+[2025-08-12 05:09:14] Header X-Forwarded-Host: fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:09:14] Header X-Forwarded-Proto: https
+[2025-08-12 05:09:14] Header Accept-Encoding: gzip
+[2025-08-12 05:09:14] === RAW POST DATA ===
+[2025-08-12 05:09:14] Raw Input Length: 707
+[2025-08-12 05:09:14] Raw Input: {"transaction_type":"on-us","transaction_time":"2025-08-12 10:10:22","transaction_status":"settlement","transaction_id":"ad5b11ed-fe2a-4914-ab85-27e8e61fbb75","status_message":"midtrans payment notification","status_code":"200","signature_key":"8df55544e010c9ade0c505341fb4b9012391a7785210d2ca87cffd01f295cf24413f34fe1447941ae569eed894564412a8d4fd7b67cad90e969647468bdac775","settlement_time":"2025-08-12 10:10:36","payment_type":"qris","order_id":"ORDER_1754968133_5240","merchant_id":"G924457252","merchant_cross_reference_id":"7aa0b8e4-f4cf-41c0-8b24-e38f6d035389","issuer":"gopay","gross_amount":"10000.00","fraud_status":"accept","expiry_time":"2025-08-12 10:25:21","currency":"IDR","acquirer":"gopay"}
+[2025-08-12 05:09:14] === PROCESSING WEBHOOK ===
+[2025-08-12 05:09:14] Creating Midtrans Notification object...
+[2025-08-12 05:09:14] Notification object created successfully
+[2025-08-12 05:09:14] === NOTIFICATION DATA ===
+[2025-08-12 05:09:14] Order ID: ORDER_1754968133_5240
+[2025-08-12 05:09:14] Transaction Status: settlement
+[2025-08-12 05:09:14] Fraud Status: accept
+[2025-08-12 05:09:14] Payment Type: qris
+[2025-08-12 05:09:14] Merchant ID: G924457252
+[2025-08-12 05:09:14] Gross Amount: 10000.00
+[2025-08-12 05:09:14] === PROCESSING TRANSACTION STATUS ===
+[2025-08-12 05:09:14] Processing: SETTLEMENT - Payment successful
+[2025-08-12 05:09:14] === UPDATING DATABASE STATUS ===
+[2025-08-12 05:09:14] Order ID: ORDER_1754968133_5240, New Status: berhasil
+[2025-08-12 05:09:14] Database update successful - Rows affected: 0
+[2025-08-12 05:09:14] WARNING: No rows updated - Order ID might not exist
+[2025-08-12 05:09:14] === SENDING EMAIL TICKET ===
+[2025-08-12 05:09:14] Processing email for order: ORDER_1754968133_5240
+[2025-08-12 05:09:14] === GETTING BOOKING DATA ===
+[2025-08-12 05:09:14] Searching for order: ORDER_1754968133_5240
+[2025-08-12 05:09:14] Database connection established
+[2025-08-12 05:09:18] === NEW WEBHOOK REQUEST ===
+[2025-08-12 05:09:18] Timestamp: 2025-08-12 05:09:18
+[2025-08-12 05:09:18] Request Method: POST
+[2025-08-12 05:09:18] Request URI: /etiket-coba/php/notification.php
+[2025-08-12 05:09:18] User Agent: Veritrans
+[2025-08-12 05:09:18] Content Type: application/json
+[2025-08-12 05:09:18] Content Length: 707
+[2025-08-12 05:09:18] === HEADERS ===
+[2025-08-12 05:09:18] Header Host: fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:09:18] Header User-Agent: Veritrans
+[2025-08-12 05:09:18] Header Content-Length: 707
+[2025-08-12 05:09:18] Header Content-Type: application/json
+[2025-08-12 05:09:18] Header X-Forwarded-For: 147.139.132.215
+[2025-08-12 05:09:18] Header X-Forwarded-Host: fd2fb98c9073.ngrok-free.app
+[2025-08-12 05:09:18] Header X-Forwarded-Proto: https
+[2025-08-12 05:09:18] Header Accept-Encoding: gzip
+[2025-08-12 05:09:18] === RAW POST DATA ===
+[2025-08-12 05:09:18] Raw Input Length: 707
+[2025-08-12 05:09:18] Raw Input: {"transaction_type":"on-us","transaction_time":"2025-08-12 10:10:22","transaction_status":"settlement","transaction_id":"ad5b11ed-fe2a-4914-ab85-27e8e61fbb75","status_message":"midtrans payment notification","status_code":"200","signature_key":"8df55544e010c9ade0c505341fb4b9012391a7785210d2ca87cffd01f295cf24413f34fe1447941ae569eed894564412a8d4fd7b67cad90e969647468bdac775","settlement_time":"2025-08-12 10:10:36","payment_type":"qris","order_id":"ORDER_1754968133_5240","merchant_id":"G924457252","merchant_cross_reference_id":"7aa0b8e4-f4cf-41c0-8b24-e38f6d035389","issuer":"gopay","gross_amount":"10000.00","fraud_status":"accept","expiry_time":"2025-08-12 10:25:21","currency":"IDR","acquirer":"gopay"}
+[2025-08-12 05:09:18] === PROCESSING WEBHOOK ===
+[2025-08-12 05:09:18] Creating Midtrans Notification object...
+[2025-08-12 05:09:19] Notification object created successfully
+[2025-08-12 05:09:19] === NOTIFICATION DATA ===
+[2025-08-12 05:09:19] Order ID: ORDER_1754968133_5240
+[2025-08-12 05:09:19] Transaction Status: settlement
+[2025-08-12 05:09:19] Fraud Status: accept
+[2025-08-12 05:09:19] Payment Type: qris
+[2025-08-12 05:09:19] Merchant ID: G924457252
+[2025-08-12 05:09:19] Gross Amount: 10000.00
+[2025-08-12 05:09:19] === PROCESSING TRANSACTION STATUS ===
+[2025-08-12 05:09:19] Processing: SETTLEMENT - Payment successful
+[2025-08-12 05:09:19] === UPDATING DATABASE STATUS ===
+[2025-08-12 05:09:19] Order ID: ORDER_1754968133_5240, New Status: berhasil
+[2025-08-12 05:09:19] Database update successful - Rows affected: 0
+[2025-08-12 05:09:19] WARNING: No rows updated - Order ID might not exist
+[2025-08-12 05:09:19] === SENDING EMAIL TICKET ===
+[2025-08-12 05:09:19] Processing email for order: ORDER_1754968133_5240
+[2025-08-12 05:09:19] === GETTING BOOKING DATA ===
+[2025-08-12 05:09:19] Searching for order: ORDER_1754968133_5240
+[2025-08-12 05:09:19] Database connection established
+[2025-08-12 05:18:33] === NEW WEBHOOK REQUEST ===
+[2025-08-12 05:18:33] Timestamp: 2025-08-12 05:18:33
+[2025-08-12 05:18:33] Request Method: GET
+[2025-08-12 05:18:33] Request URI: /etiket-coba/php/notification.php
+[2025-08-12 05:18:33] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-12 05:18:33] Content Type: not set
+[2025-08-12 05:18:33] Content Length: not set
+[2025-08-12 05:18:33] === HEADERS ===
+[2025-08-12 05:18:33] Header Host: 37ac230fa306.ngrok-free.app
+[2025-08-12 05:18:33] Header User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36
+[2025-08-12 05:18:33] Header Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+[2025-08-12 05:18:33] Header Accept-Encoding: gzip, deflate, br, zstd
+[2025-08-12 05:18:33] Header Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7
+[2025-08-12 05:18:33] Header Cookie: abuse_interstitial=37ac230fa306.ngrok-free.app
+[2025-08-12 05:18:33] Header Priority: u=0, i
+[2025-08-12 05:18:33] Header Sec-Ch-Ua: "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+[2025-08-12 05:18:33] Header Sec-Ch-Ua-Mobile: ?0
+[2025-08-12 05:18:33] Header Sec-Ch-Ua-Platform: "Windows"
+[2025-08-12 05:18:33] Header Sec-Fetch-Dest: document
+[2025-08-12 05:18:33] Header Sec-Fetch-Mode: navigate
+[2025-08-12 05:18:33] Header Sec-Fetch-Site: none
+[2025-08-12 05:18:33] Header Sec-Fetch-User: ?1
+[2025-08-12 05:18:33] Header Upgrade-Insecure-Requests: 1
+[2025-08-12 05:18:33] Header X-Forwarded-For: 103.124.138.60
+[2025-08-12 05:18:33] Header X-Forwarded-Host: 37ac230fa306.ngrok-free.app
+[2025-08-12 05:18:33] Header X-Forwarded-Proto: https
+[2025-08-12 05:18:33] === RAW POST DATA ===
+[2025-08-12 05:18:33] Raw Input Length: 0
+[2025-08-12 05:18:33] Raw Input: 
+[2025-08-12 05:18:33] Browser access detected - showing status page

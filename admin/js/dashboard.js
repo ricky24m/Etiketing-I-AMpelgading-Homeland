@@ -161,18 +161,18 @@ function renderBookingsTable(bookings, pagination) {
             <div style="overflow-x: auto;">
                 <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; min-width: 1000px;">
                     <thead>
-                        <tr style="background: #f8f9fa;">
-                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Order ID</th>
-                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Nama</th>
-                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Email</th>
-                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Telepon</th>
-                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Pesanan</th>
-                            <th style="padding: 12px; border: 1px solid #ddd; text-align:
-                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Tanggal Booking</th>
-                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Status</th>
-                            <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Aksi</th>
-                        </tr>
-                    </thead>
+<tr style="background: #f8f9fa;">
+    <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Order ID</th>
+    <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Nama</th>
+    <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Email</th>
+    <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Telepon</th>
+    <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Pesanan</th>
+    <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Tanggal Booking</th>
+    <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Waktu Booking</th>
+    <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Status</th>
+    <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Aksi</th>
+</tr>
+</thead>
                     <tbody>
                         ${renderBookingRows(bookings)}
                     </tbody>
@@ -220,8 +220,8 @@ function renderBookingRows(bookings) {
                 <td style="padding: 12px; border: 1px solid #ddd; max-width: 200px;">
                     <span title="${booking.items}">${booking.items_display}</span>
                 </td>
-                <td style="padding: 12px; border: 1px solid #ddd; font-weight: 600;">${booking.total_formatted}</td>
                 <td style="padding: 12px; border: 1px solid #ddd;">${booking.tanggal_booking_formatted}</td>
+                <td style="padding: 12px; border: 1px solid #ddd;">${booking.order_date_formatted}</td>
                 <td style="padding: 12px; border: 1px solid #ddd;">
                     <span style="background: ${statusColor}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">
                         ${statusText}
@@ -1394,25 +1394,25 @@ function submitAlatCampingForm() {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: 'Data alat camping berhasil disimpan',
-                confirmButtonColor: '#16A34A'
-            }).then(() => {
-                loadAlatCampingManagement(); // Refresh table
-            });
-        } else {
-            throw new Error(data.message);
-        }
-    })
-    .catch(error => {
-        Swal.fire('Error', 'Gagal menyimpan: ' + error.message, 'error');
-        return false;
-    });
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: 'Data alat camping berhasil disimpan',
+                    confirmButtonColor: '#16A34A'
+                }).then(() => {
+                    loadAlatCampingManagement(); // Refresh table
+                });
+            } else {
+                throw new Error(data.message);
+            }
+        })
+        .catch(error => {
+            Swal.fire('Error', 'Gagal menyimpan: ' + error.message, 'error');
+            return false;
+        });
 }
 
 function deleteAlatCamping(alatId) {
@@ -1434,24 +1434,24 @@ function deleteAlatCamping(alatId) {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil!',
-                        text: 'Alat berhasil dihapus',
-                        confirmButtonColor: '#16A34A'
-                    }).then(() => {
-                        loadAlatCampingManagement(); // Refresh table
-                    });
-                } else {
-                    Swal.fire('Error', data.message, 'error');
-                }
-            })
-            .catch(error => {
-                Swal.fire('Error', 'Gagal menghapus alat', 'error');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Alat berhasil dihapus',
+                            confirmButtonColor: '#16A34A'
+                        }).then(() => {
+                            loadAlatCampingManagement(); // Refresh table
+                        });
+                    } else {
+                        Swal.fire('Error', data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    Swal.fire('Error', 'Gagal menghapus alat', 'error');
+                });
         }
     });
 }

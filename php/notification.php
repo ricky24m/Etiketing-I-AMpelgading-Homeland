@@ -89,7 +89,12 @@ try {
     require_once $midtransPath;
     require_once 'sendTicketEmail.php';
 
-   \Midtrans\Config::$serverKey = $_ENV['MIDTRANS_SERVER_KEY'];
+    // Load environment variables
+    require_once __DIR__ . '/../vendor/autoload.php';
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+    $dotenv->load();
+
+    \Midtrans\Config::$serverKey = $_ENV['MIDTRANS_SERVER_KEY'];
     \Midtrans\Config::$isProduction = false;
 
     logWebhook("Creating Midtrans Notification object...");
@@ -163,17 +168,13 @@ function updateBookingStatus($order_id, $status)
 
         $stmt = $conn->prepare("UPDATE booking SET status = ? WHERE order_id = ?");
         $stmt->bind_param("ss", $status, $order_id);
+        $stmt->execute();
 
-        if ($stmt->execute()) {
-            $rowsAffected = $stmt->affected_rows;
-            logWebhook("Database update successful - Rows affected: {$rowsAffected}");
-            if ($rowsAffected == 0) {
-                logWebhook("WARNING: No rows updated - Order ID might not exist");
-            }
-        } else {
-            logWebhook("Database update failed: " . $stmt->error);
+        $rowsAffected = $stmt->affected_rows;
+        logWebhook("Database update successful - Rows affected: {$rowsAffected}");
+        if ($rowsAffected == 0) {
+            logWebhook("WARNING: No rows updated - Order ID might not exist");
         }
-
         $stmt->close();
         $conn->close();
     } catch (Exception $e) {
