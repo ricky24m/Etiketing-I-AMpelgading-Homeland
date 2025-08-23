@@ -14,8 +14,6 @@
     "busboy": "^1.6.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.1",
-    "midtrans-client": "^1.4.3",
-    "mysql2": "^3.14.3",
     "next": "15.4.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",

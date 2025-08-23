@@ -3,11 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Konfigurasi untuk Pages Router
   images: {
-    domains: ['localhost'],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'localhost',
+        hostname: 'tqqmdictqdmimanfajhi.supabase.co',
       },
     ],
   },
