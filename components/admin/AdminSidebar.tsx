@@ -123,6 +123,19 @@ export default function AdminSidebar({ active }: { active: string }) {
               Kelola Alat Camping
             </span>
           </Link>
+
+          <Link href="/admin/dashboard?tab=qris">
+            <span className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 ${
+              active === 'qris' 
+                ? 'bg-green-600 shadow-lg' 
+                : 'hover:bg-green-700/50'
+            }`}>
+              <svg className="h-5 w-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4h2m0-6V9a3 3 0 00-3-3H9m1.5-2-3 3 3 3" />
+              </svg>
+              QRIS
+            </span>
+          </Link>
         </nav>
 
         {/* Logout Button */}

@@ -9,6 +9,7 @@ import AdminGaleri from '../../components/admin/AdminGaleri';
 import AdminKelolaMenu from '../../components/admin/AdminKelolaMenu';
 import AdminKelolaAlatCamping from '../../components/admin/AdminKelolaAlatCamping';
 import AdminLogin from '../../components/admin/AdminLogin';
+import AdminQRIS from '../../components/admin/AdminQRIS';
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -50,6 +51,7 @@ export default function AdminDashboard() {
               {tab === 'galeri' && 'Kelola Galeri'}
               {tab === 'menu' && 'Kelola Menu'}
               {tab === 'alat' && 'Kelola Alat Camping'}
+              {tab === 'qris' && 'Kelola QRIS'}
             </h1>
             <p className="text-gray-600">
               Selamat datang, <span className="font-medium">{admin.nama_lengkap}</span>
@@ -64,6 +66,7 @@ export default function AdminDashboard() {
             {tab === 'galeri' && <AdminGaleri />}
             {tab === 'menu' && <AdminKelolaMenu />}
             {tab === 'alat' && <AdminKelolaAlatCamping />}
+            {tab === 'qris' && <AdminQRIS />}
           </div>
         </div>
       </main>

@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { useState } from 'react';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
@@ -7,6 +7,10 @@ export default function BookingTable() {
   const [page, setPage] = useState(1);
   const [showDetail, setShowDetail] = useState(false);
   const [detailData, setDetailData] = useState<any>(null);
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  const [newStatus, setNewStatus] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const { data, isLoading, error } = useSWR(`/api/admin/bookings?page=${page}&limit=10`, fetcher);
 
@@ -26,6 +30,48 @@ export default function BookingTable() {
   // Fungsi potong pesanan
   const truncate = (text: string, max: number) =>
     text.length > max ? text.slice(0, max) + '...' : text;
+
+  // Handle update status
+  const handleUpdateStatus = async () => {
+    if (!selectedOrder || !newStatus) return;
+
+    setLoading(true);
+    try {
+      const response = await fetch('/api/admin/update-booking-status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          order_id: selectedOrder.order_id,
+          status: newStatus
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert('Status booking berhasil diupdate!');
+        setShowStatusModal(false);
+        setSelectedOrder(null);
+        setNewStatus('');
+        // Refresh data
+        mutate(`/api/admin/bookings?page=${page}&limit=10`);
+      } else {
+        alert('Gagal update status: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Update status error:', error);
+      alert('Terjadi kesalahan saat update status');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Open status modal
+  const openStatusModal = (booking: any) => {
+    setSelectedOrder(booking);
+    setNewStatus(booking.status);
+    setShowStatusModal(true);
+  };
 
   return (
     <div>
@@ -57,13 +103,29 @@ export default function BookingTable() {
                   {truncate(b.items, 40)}
                 </td>
                 <td className="py-2 px-3">Rp {Number(b.total).toLocaleString()}</td>
-                <td className="py-2 px-3">{b.status}</td>
                 <td className="py-2 px-3">
+                  <span className={`px-2 py-1 rounded text-xs font-medium ${
+                    b.status === 'Terverifikasi' 
+                      ? 'bg-green-100 text-green-800' 
+                      : b.status === 'Dibatalkan'
+                      ? 'bg-red-100 text-red-800'
+                      : 'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    {b.status}
+                  </span>
+                </td>
+                <td className="py-2 px-3 space-x-2">
                   <button
-                    className="text-blue-600 underline"
+                    className="text-blue-600 underline text-xs"
                     onClick={() => { setDetailData(b); setShowDetail(true); }}
                   >
                     Detail
+                  </button>
+                  <button
+                    className="text-green-600 underline text-xs"
+                    onClick={() => openStatusModal(b)}
+                  >
+                    Update Status
                   </button>
                 </td>
               </tr>
@@ -71,6 +133,7 @@ export default function BookingTable() {
           </tbody>
         </table>
       </div>
+      
       {/* Pagination */}
       <div className="flex justify-end gap-2 mt-4">
         <button
@@ -94,12 +157,61 @@ export default function BookingTable() {
             <h4 className="text-lg font-bold mb-2">Detail Booking</h4>
             <div className="mb-2"><b>Order ID:</b> {detailData.order_id}</div>
             <div className="mb-2"><b>Nama:</b> {detailData.nama}</div>
+            <div className="mb-2"><b>NIK:</b> {detailData.nik}</div>
+            <div className="mb-2"><b>Nomor Telepon:</b> {detailData.nomor_telepon}</div>
+            <div className="mb-2"><b>Nomor Darurat:</b> {detailData.nomor_darurat}</div>
+            <div className="mb-2"><b>Email:</b> {detailData.email}</div>
             <div className="mb-2"><b>Tanggal Booking:</b> {formatTanggal(detailData.tanggal_booking)}</div>
             <div className="mb-2"><b>Tanggal Pesan:</b> {detailData.order_date_formatted || detailData.order_date}</div>
-            <div className="mb-2"><b>Email:</b> {detailData.email}</div>
             <div className="mb-2"><b>Pesanan:</b> {detailData.items}</div>
             <div className="mb-2"><b>Total:</b> Rp {Number(detailData.total).toLocaleString()}</div>
             <div className="mb-2"><b>Status:</b> {detailData.status}</div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Update Status */}
+      {showStatusModal && selectedOrder && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative">
+            <button className="absolute top-2 right-2 text-gray-400" onClick={() => setShowStatusModal(false)}>✕</button>
+            <h4 className="text-lg font-bold mb-4">Update Status Booking</h4>
+            
+            <div className="mb-4">
+              <p className="text-sm text-gray-600 mb-2">Order ID: {selectedOrder.order_id}</p>
+              <p className="text-sm text-gray-600 mb-2">Nama: {selectedOrder.nama}</p>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Status Baru
+              </label>
+              <select
+                value={newStatus}
+                onChange={(e) => setNewStatus(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              >
+                <option value="Belum terverifikasi">Belum terverifikasi</option>
+                <option value="Terverifikasi">Terverifikasi</option>
+                <option value="Dibatalkan">Dibatalkan</option>
+              </select>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={handleUpdateStatus}
+                disabled={loading || !newStatus}
+                className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
+              >
+                {loading ? 'Memperbarui...' : 'Update Status'}
+              </button>
+              <button
+                onClick={() => setShowStatusModal(false)}
+                className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
+              >
+                Batal
+              </button>
+            </div>
           </div>
         </div>
       )}

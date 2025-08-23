@@ -29,8 +29,13 @@ export default function Cart({ isOpen, onClose }: { isOpen: boolean; onClose: ()
 
   const handleCheckout = () => {
     if (!user) return;
-    router.push('/checkout');
+    
+    // Set flag bahwa user datang dari cart
+    sessionStorage.setItem('fromCart', 'true');
+    
+    // Close cart dan redirect ke checkout
     onClose();
+    window.location.href = '/checkout';
   };
 
   const totalPrice = cartItems.reduce((sum, item) => sum + (item.price * item.qty), 0);

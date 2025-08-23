@@ -14,11 +14,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const offset = (page - 1) * limit;
 
-    // Build filter
+    // Build filter - hanya yang status "Terverifikasi"
     let query = supabase
       .from('booking')
       .select('order_id, waktu_booking, nama, items, total', { count: 'exact' })
-      .eq('status', 'berhasil');
+      .eq('status', 'Terverifikasi'); // Changed from 'berhasil' to 'Terverifikasi'
 
     if (start) query = query.gte('waktu_booking', start);
     if (end) query = query.lte('waktu_booking', end);
@@ -29,11 +29,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (error) throw error;
 
-    // Summary
+    // Summary - hanya yang status "Terverifikasi"
     let summaryQuery = supabase
       .from('booking')
       .select('total', { count: 'exact' })
-      .eq('status', 'berhasil');
+      .eq('status', 'Terverifikasi'); // Changed from 'berhasil' to 'Terverifikasi'
+    
     if (start) summaryQuery = summaryQuery.gte('waktu_booking', start);
     if (end) summaryQuery = summaryQuery.lte('waktu_booking', end);
 
@@ -48,6 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Format tanggal
     const rows = (data || []).map((row: any) => ({
       ...row,
+      order_date: row.waktu_booking,
       order_date_formatted: row.waktu_booking
         ? new Date(row.waktu_booking).toLocaleString('id-ID', {
             day: '2-digit',

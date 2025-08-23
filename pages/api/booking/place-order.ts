@@ -1,15 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import db from '../../../lib/db';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { supabase } from '../../../lib/supabase';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ success: false, message: 'Method not allowed' });
   }
 
   try {
@@ -17,15 +11,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Validasi
     if (!nama || !email || !items || total <= 0) {
-      return res.status(400).json({ error: 'Data tidak valid' });
+      return res.status(400).json({ success: false, message: 'Data tidak valid' });
     }
 
     // Generate order ID
     const orderId = `ORDER_${Date.now()}_${Math.floor(Math.random() * 9000) + 1000}`;
     const bookingDate = new Date(tanggal).toISOString().split('T')[0];
 
-    // Simpan ke database (status = 'berhasil' langsung karena tidak ada payment gateway)
-    await supabase.from('booking').insert([{
+    // Simpan ke database dengan status "Belum terverifikasi"
+    const { error } = await supabase.from('booking').insert([{
       order_id: orderId,
       nama,
       nik,
@@ -35,8 +29,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       tanggal_booking: bookingDate,
       items,
       total,
-      status: 'berhasil'
+      status: 'Belum terverifikasi', // Status default
+      waktu_booking: new Date().toISOString()
     }]);
+
+    if (error) {
+      console.error('Database error:', error);
+      return res.status(500).json({ success: false, message: error.message });
+    }
 
     res.status(200).json({
       success: true,
@@ -46,6 +46,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   } catch (error) {
     console.error('Place order error:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ success: false, message: 'Server error' });
   }
 }
