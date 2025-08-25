@@ -152,9 +152,38 @@ export default function AdminKelolaAlatCamping() {
                 <td className="py-2 px-3">{a.status}</td>
                 <td className="py-2 px-3 max-w-xs">{a.keterangan.length > 30 ? a.keterangan.slice(0, 30) + '...' : a.keterangan}</td>
                 <td className="py-2 px-3 flex gap-2">
-                  <button className="text-blue-600 underline" onClick={() => handleOpen('detail', a)}>Detail</button>
-                  <button className="text-green-600 underline" onClick={() => handleOpen('edit', a)}>Edit</button>
-                  <button className="text-red-600 underline" onClick={() => handleDelete(a.id)}>Hapus</button>
+                  <button
+                    className="admin-action-btn bg-blue-100 text-blue-700 hover:bg-blue-200"
+                    title="Detail"
+                    onClick={() => handleOpen('detail', a)}
+                  >
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                    </svg>
+                    Detail
+                  </button>
+                  <button
+                    className="admin-action-btn bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
+                    title="Detail"
+                    onClick={() => handleOpen('edit', a)}
+                  >
+                    <svg className="w-4 h-4 mr-1 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                        d="M15.232 5.232l3.536 3.536M16.732 3.732a2.5 2.5 0 013.536 3.536L7.5 20.036H4v-3.5L16.732 3.732z" />
+                    </svg>
+                    Ubah
+                  </button>
+                  <button
+                    className="admin-action-btn bg-red-100 text-red-700 hover:bg-red-200"
+                    title="Detail"
+                    onClick={() => handleDelete(a.id)}
+                  >
+                    <svg className="w-4 h-4 mr-1 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3m-9 0h10" />
+                    </svg>
+                    Hapus
+                  </button>
                 </td>
               </tr>
             ))}

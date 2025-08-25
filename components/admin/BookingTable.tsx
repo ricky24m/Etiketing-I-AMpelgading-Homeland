@@ -104,28 +104,36 @@ export default function BookingTable() {
                 </td>
                 <td className="py-2 px-3">Rp {Number(b.total).toLocaleString()}</td>
                 <td className="py-2 px-3">
-                  <span className={`px-2 py-1 rounded text-xs font-medium ${
-                    b.status === 'Terverifikasi' 
-                      ? 'bg-green-100 text-green-800' 
+                  <span className={`px-2 py-1 rounded text-xs font-medium ${b.status === 'Terverifikasi'
+                      ? 'bg-green-100 text-green-800'
                       : b.status === 'Dibatalkan'
-                      ? 'bg-red-100 text-red-800'
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}>
+                        ? 'bg-red-100 text-red-800'
+                        : 'bg-yellow-100 text-yellow-800'
+                    }`}>
                     {b.status}
                   </span>
                 </td>
-                <td className="py-2 px-3 space-x-2">
+                <td className="py-2 px-3 flex gap-2">
                   <button
-                    className="text-blue-600 underline text-xs"
+                    className="admin-action-btn bg-blue-100 text-blue-700 hover:bg-blue-200"
+                    title="Detail"
                     onClick={() => { setDetailData(b); setShowDetail(true); }}
                   >
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                    </svg>
                     Detail
                   </button>
                   <button
-                    className="text-green-600 underline text-xs"
+                    className="admin-action-btn bg-green-100 text-green-700 hover:bg-green-200"
+                    title="Update Status"
                     onClick={() => openStatusModal(b)}
                   >
-                    Update Status
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v12m6-6H6" />
+</svg>
+
+                    Status
                   </button>
                 </td>
               </tr>
@@ -133,7 +141,7 @@ export default function BookingTable() {
           </tbody>
         </table>
       </div>
-      
+
       {/* Pagination */}
       <div className="flex justify-end gap-2 mt-4">
         <button
@@ -176,7 +184,7 @@ export default function BookingTable() {
           <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative">
             <button className="absolute top-2 right-2 text-gray-400" onClick={() => setShowStatusModal(false)}>✕</button>
             <h4 className="text-lg font-bold mb-4">Update Status Booking</h4>
-            
+
             <div className="mb-4">
               <p className="text-sm text-gray-600 mb-2">Order ID: {selectedOrder.order_id}</p>
               <p className="text-sm text-gray-600 mb-2">Nama: {selectedOrder.nama}</p>

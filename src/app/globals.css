@@ -262,6 +262,13 @@
     border: 2px solid #15803d;
     background: #16a34a;
   }
+
+  .admin-action-btn {
+    @apply flex items-center gap-1 px-3 py-1 rounded-lg font-medium text-xs transition-colors duration-200 shadow-sm border border-transparent;
+  }
+  .admin-action-btn svg {
+    @apply w-4 h-4;
+  }
 }
 
 /* Utilities Layer */
@@ -531,4 +538,40 @@
 .ticket-pattern {
   background-image: radial-gradient(circle at 25px 25px, rgba(255,255,255,0.1) 2px, transparent 2px);
   background-size: 50px 50px;
+}
+
+/* Admin Dashboard Styles */
+.admin-sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 20;
+}
+
+@media (min-width: 1024px) {
+  .admin-sidebar-overlay {
+    display: none;
+  }
+}
+
+/* Smooth transitions for sidebar */
+.sidebar-transition {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Header shadow animation */
+.header-shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.header-shadow:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 1024px) {
+  .admin-main-content {
+    margin-left: 0 !important;
+  }
 }

@@ -1,8 +1,13 @@
 import Link from 'next/link';
-import useAdminAuth from '../../hooks/useAdminAuth';
 import { useRouter } from 'next/router';
+import useAdminAuth from '../../hooks/useAdminAuth';
 
-export default function AdminSidebar({ active }: { active: string }) {
+interface AdminSidebarProps {
+  active: string;
+  isOpen: boolean;
+}
+
+export default function AdminSidebar({ active, isOpen }: AdminSidebarProps) {
   const { admin, logout } = useAdminAuth();
   const router = useRouter();
 
@@ -14,23 +19,12 @@ export default function AdminSidebar({ active }: { active: string }) {
   };
 
   return (
-    <aside className="bg-gradient-to-b from-green-800 to-green-900 text-white w-72 min-h-screen shadow-2xl">
-      <div className="p-6">
-        {/* Header */}
-        <div className="flex items-center mb-8">
-          <div className="h-12 w-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
-            <svg className="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-6m-4 0H3m2-16h10" />
-            </svg>
-          </div>
-          <div>
-            <h2 className="text-xl font-bold">Admin Panel</h2>
-            <p className="text-green-200 text-sm">I'AMpel GADING</p>
-          </div>
-        </div>
-
-        {/* Admin Info */}
-        <div className="bg-green-700/50 rounded-xl p-4 mb-6">
+    <aside className={`fixed left-0 top-0 z-30 h-full bg-gradient-to-b from-green-800 to-green-900 text-white transition-transform duration-300 ${
+      isOpen ? 'translate-x-0' : '-translate-x-full'
+    } w-72 shadow-2xl`}>
+      <div className="p-6 h-full flex flex-col">
+        {/* Admin Info - moved to top and updated spacing */}
+        <div className="bg-green-700/50 rounded-xl p-4 mb-6 mt-4">
           <div className="flex items-center">
             <div className="h-10 w-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
               <span className="text-green-600 font-semibold text-sm">
@@ -45,7 +39,7 @@ export default function AdminSidebar({ active }: { active: string }) {
         </div>
 
         {/* Navigation */}
-        <nav className="space-y-2">
+        <nav className="space-y-2 flex-1">
           <Link href="/admin/dashboard">
             <span className={`flex items-center px-4 py-3 rounded-xl transition-all duration-200 ${
               active === 'booking' 
@@ -105,7 +99,7 @@ export default function AdminSidebar({ active }: { active: string }) {
                 : 'hover:bg-green-700/50'
             }`}>
               <svg className="h-5 w-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
               </svg>
               Kelola Menu
             </span>

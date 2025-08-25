@@ -7,11 +7,12 @@ export default function FinanceReport() {
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
   const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const params = [];
   if (start) params.push(`start=${start}`);
   if (end) params.push(`end=${end}`);
-  params.push(`page=${page}&limit=10`);
+  params.push(`page=${page}&limit=${rowsPerPage}`);
   const query = params.length ? '?' + params.join('&') : '';
 
   const { data, isLoading, error } = useSWR(`/api/admin/revenue${query}`, fetcher);
@@ -36,10 +37,34 @@ export default function FinanceReport() {
           <input type="date" value={end} onChange={e => setEnd(e.target.value)} className="input-field" />
         </div>
       </div>
-      <div className="bg-green-50 rounded p-4 mb-4 flex flex-wrap gap-8">
-        <div><b>Total Penghasilan:</b> Rp {Number(summary.total_income || 0).toLocaleString()}</div>
-        <div><b>Total Transaksi:</b> {summary.total_transactions || 0}</div>
-        <div><b>Rata-rata Transaksi:</b> Rp {Number(summary.avg_transaction || 0).toLocaleString()}</div>
+      <div className="flex flex-wrap gap-6 mb-6">
+        <div className="flex-1 min-w-[180px] bg-gradient-to-br from-green-500 to-green-700 rounded-2xl shadow-lg p-6 flex flex-col items-center text-white">
+          <span className="text-lg font-semibold mb-1">Total Penghasilan</span>
+          <span className="text-2xl font-bold tracking-wide">Rp {Number(summary.total_income || 0).toLocaleString()}</span>
+        </div>
+        <div className="flex-1 min-w-[180px] bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl shadow-lg p-6 flex flex-col items-center text-white">
+          <span className="text-lg font-semibold mb-1">Total Transaksi</span>
+          <span className="text-2xl font-bold tracking-wide">{summary.total_transactions || 0}</span>
+        </div>
+        <div className="flex-1 min-w-[180px] bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl shadow-lg p-6 flex flex-col items-center text-white">
+          <span className="text-lg font-semibold mb-1">Rata-rata Transaksi</span>
+          <span className="text-2xl font-bold tracking-wide">Rp {Number(summary.avg_transaction || 0).toLocaleString()}</span>
+        </div>
+      </div>
+      <div className="flex items-center justify-between mb-2">
+        <div>
+          <label className="mr-2 text-sm text-gray-700">Rows per page:</label>
+          <select
+            value={rowsPerPage}
+            onChange={e => { setRowsPerPage(Number(e.target.value)); setPage(1); }}
+            className="border border-gray-300 rounded px-2 py-1 text-sm"
+          >
+            {[5, 10, 20, 50].map(n => (
+              <option key={n} value={n}>{n}</option>
+            ))}
+          </select>
+        </div>
+        {/* ...bisa tambahkan filter tanggal dsb di sini */}
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded shadow">
