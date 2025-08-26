@@ -28,12 +28,12 @@ export default function Cart({ isOpen, onClose }: { isOpen: boolean; onClose: ()
   };
 
   const handleCheckout = () => {
-    if (!user) return;
-    
-    // Set flag bahwa user datang dari cart
+    if (!user) {
+      setShowTooltip(true);
+      setTimeout(() => setShowTooltip(false), 2000);
+      return;
+    }
     sessionStorage.setItem('fromCart', 'true');
-    
-    // Close cart dan redirect ke checkout
     onClose();
     window.location.href = '/checkout';
   };
@@ -122,24 +122,25 @@ export default function Cart({ isOpen, onClose }: { isOpen: boolean; onClose: ()
         {/* Footer Actions */}
         {cartItems.length > 0 && (
           <div className="border-t border-gray-200 p-4 space-y-3">
-            <button 
-              onClick={handleCheckout}
-              disabled={!user}
-              onMouseEnter={() => !user && setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
-              className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-colors duration-200 ${
-                user 
-                  ? 'bg-green-600 hover:bg-green-700' 
-                  : 'bg-gray-400 cursor-not-allowed'
-              }`}
-            >
-              Checkout Sekarang
-            </button>
-            {/* Tooltip */}
-            {!user && showTooltip && (
-              <div className="text-xs text-center text-red-600 mt-1">login terlebih dahulu</div>
-            )}
-
+            <div className="relative">
+              <button 
+                onClick={handleCheckout}
+                disabled={false}
+                className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-colors duration-200 ${
+                  user 
+                    ? 'bg-green-600 hover:bg-green-700' 
+                    : 'bg-gray-400 cursor-not-allowed'
+                }`}
+                onMouseLeave={() => setShowTooltip(false)}
+              >
+                Checkout Sekarang
+              </button>
+              {!user && showTooltip && (
+                <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-red-600 text-white text-xs rounded px-3 py-2 shadow-lg z-10 whitespace-nowrap">
+                  harap login terlebih dahulu
+                </div>
+              )}
+            </div>
             <button 
               onClick={clearCart}
               className="w-full py-2 px-4 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-lg font-medium transition-colors duration-200"
