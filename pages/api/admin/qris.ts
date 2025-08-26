@@ -54,6 +54,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { data: oldData } = await supabase
       .from('qris')
       .select('gambar')
+      .eq('id', 1) // tambahkan WHERE id = 1
       .single();
 
     const gambarLama = oldData?.gambar;
@@ -61,7 +62,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Update QRIS
     const { error } = await supabase
       .from('qris')
-      .update({ gambar, updated_at: new Date().toISOString() });
+      .update({ gambar, updated_at: new Date().toISOString() })
+      .eq('id', 1); // tambahkan WHERE id = 1
 
     // Hapus gambar lama dari storage jika berbeda
     if (gambarLama && gambarLama !== gambar) {
@@ -78,7 +80,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (error) {
       return res.status(500).json({ success: false, message: error.message });
     }
-
     return res.status(200).json({ success: true });
   }
 
