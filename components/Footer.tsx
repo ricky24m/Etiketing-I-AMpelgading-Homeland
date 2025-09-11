@@ -58,7 +58,7 @@ export default function Footer() {
                   </h4>
                   <div className="w-12 h-0.5 bg-yellow-400 mb-4 max-w-xs"></div>
                   <p className="text-gray-200 text-sm leading-relaxed">
-                    Balai Dusun Ampelgading, <br />Kedung Wangen, Kenteng<br />
+                    Dusun Ampelgading, <br />Kenteng<br />
                     Bandungan, Kabupaten <br /> Semarang, Jawa Tengah
                   </p>
                 </div>
@@ -92,7 +92,7 @@ export default function Footer() {
                       </svg>
                     </a>
                     <a
-                      href="#"
+                      href="https://www.tiktok.com/@ampelgading.homeland"
                       className="text-gray-200 hover:text-blue-400 transition-colors duration-200 inline-flex items-center"
                     >
                       <span className="sr-only">TikTok</span>
