@@ -263,9 +263,11 @@
     background: #16a34a;
   }
 
+  /* Admin action buttons */
   .admin-action-btn {
     @apply flex items-center gap-1 px-3 py-1 rounded-lg font-medium text-xs transition-colors duration-200 shadow-sm border border-transparent;
   }
+
   .admin-action-btn svg {
     @apply w-4 h-4;
   }

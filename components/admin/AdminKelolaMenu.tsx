@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import useSWR, { mutate } from 'swr';
+import { cropImageTo4x3, needsCrop } from '../../lib/imageUtils';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -8,12 +9,35 @@ function AdminMenuImageUpload({ onUpload }: { onUpload: (url: string) => void })
   const [preview, setPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [processing, setProcessing] = useState(false);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0];
-    setFile(f || null);
-    setPreview(f ? URL.createObjectURL(f) : null);
-    setSuccess(false);
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (!selectedFile) return;
+
+    setProcessing(true);
+    
+    try {
+      // Cek apakah gambar perlu di-crop ke 4:3
+      const needsCropping = await needsCrop(selectedFile);
+      
+      let processedFile = selectedFile;
+      
+      if (needsCropping) {
+        // Auto crop ke 4:3 ratio
+        processedFile = await cropImageTo4x3(selectedFile);
+        console.log('Image auto-cropped to 4:3 aspect ratio');
+      }
+      
+      setFile(processedFile);
+      setPreview(URL.createObjectURL(processedFile));
+      setSuccess(false);
+    } catch (error) {
+      console.error('Error processing image:', error);
+      alert('Gagal memproses gambar. Silakan coba lagi.');
+    } finally {
+      setProcessing(false);
+    }
   };
 
   const handleUpload = async () => {
@@ -41,19 +65,44 @@ function AdminMenuImageUpload({ onUpload }: { onUpload: (url: string) => void })
 
   return (
     <div className="space-y-2">
-      <input type="file" accept="image/*" onChange={handleFileChange} disabled={success} />
-      {preview && (
-        <img src={preview} alt="Preview" className="w-32 h-32 object-cover rounded border" />
+      <input 
+        type="file" 
+        accept="image/*" 
+        onChange={handleFileChange} 
+        disabled={success || processing} 
+      />
+      
+      {processing && (
+        <div className="flex items-center gap-2 text-blue-600">
+          <div className="animate-spin w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+          <span className="text-sm">Memproses gambar ke rasio 4:3...</span>
+        </div>
       )}
-      {!success && (
+      
+      {preview && (
+        <div className="space-y-2">
+          <img 
+            src={preview} 
+            alt="Preview" 
+            className="w-64 h-48 object-cover rounded border"
+            style={{ aspectRatio: '4/3' }}
+          />
+          <p className="text-xs text-gray-500">
+            Preview gambar dengan rasio 4:3
+          </p>
+        </div>
+      )}
+      
+      {!success && file && !processing && (
         <button
           onClick={handleUpload}
           disabled={!file || uploading}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded disabled:opacity-50"
         >
           {uploading ? 'Uploading...' : 'Upload'}
         </button>
       )}
+      
       {success && (
         <div className="text-green-600 font-semibold">Upload berhasil!</div>
       )}
@@ -136,6 +185,7 @@ export default function AdminKelolaMenu() {
           Tambah Menu
         </button>
       </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded shadow text-sm">
           <thead>
@@ -154,7 +204,12 @@ export default function AdminKelolaMenu() {
             {menus.map((m: any) => (
               <tr key={m.id} className="border-b">
                 <td className="py-2 px-3">
-                  <img src={m.gambar} alt={m.nama_menu} className="w-16 h-16 object-cover rounded" />
+                  <img 
+                    src={m.gambar} 
+                    alt={m.nama_menu} 
+                    className="w-16 h-12 object-cover rounded"
+                    style={{ aspectRatio: '4/3' }}
+                  />
                 </td>
                 <td className="py-2 px-3">{truncate(m.nama_menu, 20)}</td>
                 <td className="py-2 px-3">Rp {Number(m.harga).toLocaleString()}</td>
@@ -169,16 +224,17 @@ export default function AdminKelolaMenu() {
                     onClick={() => handleOpen('detail', m)}
                   >
                     <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                     </svg>
                     Detail
                   </button>
                   <button
-                    className="admin-action-btn bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
-                    title="Detail"
+                    className="admin-action-btn bg-green-100 text-green-700 hover:bg-green-200"
+                    title="Edit"
                     onClick={() => handleOpen('edit', m)}
                   >
-                    <svg className="w-4 h-4 mr-1 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                         d="M15.232 5.232l3.536 3.536M16.732 3.732a2.5 2.5 0 013.536 3.536L7.5 20.036H4v-3.5L16.732 3.732z" />
                     </svg>
@@ -186,7 +242,7 @@ export default function AdminKelolaMenu() {
                   </button>
                   <button
                     className="admin-action-btn bg-red-100 text-red-700 hover:bg-red-200"
-                    title="Detail"
+                    title="Hapus"
                     onClick={() => handleDelete(m.id)}
                   >
                     <svg className="w-4 h-4 mr-1 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -210,7 +266,12 @@ export default function AdminKelolaMenu() {
             {modalType === 'detail' ? (
               <>
                 <h4 className="text-lg font-bold mb-2">Detail Menu</h4>
-                <img src={form.gambar} alt={form.nama_menu} className="w-32 h-32 object-cover rounded mb-2" />
+                <img 
+                  src={form.gambar} 
+                  alt={form.nama_menu} 
+                  className="w-32 h-24 object-cover rounded mb-2"
+                  style={{ aspectRatio: '4/3' }}
+                />
                 <div className="mb-2"><b>Nama Paket:</b> {form.nama_menu}</div>
                 <div className="mb-2"><b>Harga:</b> Rp {Number(form.harga).toLocaleString()}</div>
                 <div className="mb-2"><b>Kategori:</b> {form.kategori}</div>

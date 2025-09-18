@@ -167,11 +167,12 @@ export default function Katalog() {
                   className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group hover:-translate-y-1 w-full max-w-[420px] h-[350px] flex flex-col items-center"
                 >
                   {/* Image */}
-                  <div className="relative w-full h-[320px]">
+                  <div className="relative w-full h-[240px] bg-gradient-to-br from-gray-50 to-gray-100">
                     <img
                       src={menu.gambar_url || '/images/placeholder.svg'}
                       alt={menu.nama_menu}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover rounded-lg"
+                      style={{ aspectRatio: '4/3' }}
                       onError={(e) => {
                         e.currentTarget.src = '/images/placeholder.svg';
                         e.currentTarget.alt = 'Gambar tidak tersedia';
@@ -179,7 +180,7 @@ export default function Katalog() {
                       loading="lazy"
                     />
                     <div className="absolute top-3 right-3">
-                      <span className="bg-green-600 text-white text-xs px-3 py-1 rounded-full font-medium">
+                      <span className="bg-green-600 text-white text-xs px-3 py-1 rounded-full font-medium shadow-lg">
                         {menu.kategori || 'Paket'}
                       </span>
                     </div>
