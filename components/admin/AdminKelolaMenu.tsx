@@ -64,12 +64,13 @@ function AdminMenuImageUpload({ onUpload }: { onUpload: (url: string) => void })
   };
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <input 
         type="file" 
         accept="image/*" 
         onChange={handleFileChange} 
-        disabled={success || processing} 
+        disabled={success || processing}
+        className="w-full text-sm"
       />
       
       {processing && (
@@ -84,10 +85,10 @@ function AdminMenuImageUpload({ onUpload }: { onUpload: (url: string) => void })
           <img 
             src={preview} 
             alt="Preview" 
-            className="w-64 h-48 object-cover rounded border"
+            className="w-full h-32 object-cover rounded border"
             style={{ aspectRatio: '4/3' }}
           />
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 text-center">
             Preview gambar dengan rasio 4:3
           </p>
         </div>
@@ -97,14 +98,14 @@ function AdminMenuImageUpload({ onUpload }: { onUpload: (url: string) => void })
         <button
           onClick={handleUpload}
           disabled={!file || uploading}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded disabled:opacity-50"
+          className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm disabled:opacity-50"
         >
           {uploading ? 'Uploading...' : 'Upload'}
         </button>
       )}
       
       {success && (
-        <div className="text-green-600 font-semibold">Upload berhasil!</div>
+        <div className="text-green-600 font-semibold text-sm text-center">Upload berhasil!</div>
       )}
     </div>
   );
@@ -260,55 +261,134 @@ export default function AdminKelolaMenu() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative">
-            <button className="absolute top-2 right-2 text-gray-400" onClick={handleClose}>✕</button>
-            {modalType === 'detail' ? (
-              <>
-                <h4 className="text-lg font-bold mb-2">Detail Menu</h4>
-                <img 
-                  src={form.gambar} 
-                  alt={form.nama_menu} 
-                  className="w-32 h-24 object-cover rounded mb-2"
-                  style={{ aspectRatio: '4/3' }}
-                />
-                <div className="mb-2"><b>Nama Paket:</b> {form.nama_menu}</div>
-                <div className="mb-2"><b>Harga:</b> Rp {Number(form.harga).toLocaleString()}</div>
-                <div className="mb-2"><b>Kategori:</b> {form.kategori}</div>
-                <div className="mb-2"><b>Satuan:</b> {form.satuan}</div>
-                <div className="mb-2"><b>Status:</b> {form.status}</div>
-                <div className="mb-2"><b>Keterangan:</b> {form.keterangan}</div>
-              </>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <h4 className="text-lg font-bold">{modalType === 'add' ? 'Tambah' : 'Update'} Menu</h4>
-                <AdminMenuImageUpload onUpload={url => setForm((f: any) => ({ ...f, gambar: url }))} />
-                <input className="input-field w-full" placeholder="Nama Paket" name="nama_menu" value={form.nama_menu} onChange={e => setForm({ ...form, nama_menu: e.target.value })} required />
-                <input className="input-field w-full" placeholder="Harga" name="harga" type="number" value={form.harga} onChange={e => setForm({ ...form, harga: e.target.value })} required />
-                <input className="input-field w-full" placeholder="Kategori" name="kategori" value={form.kategori} onChange={e => setForm({ ...form, kategori: e.target.value })} required />
-                <input className="input-field w-full" placeholder="Satuan" name="satuan" value={form.satuan} onChange={e => setForm({ ...form, satuan: e.target.value })} required />
-                <select
-                  className="input-field w-full"
-                  name="status"
-                  value={form.status}
-                  onChange={e => setForm({ ...form, status: e.target.value })}
-                  required
-                >
-                  <option value="">Pilih Status</option>
-                  <option value="aktif">Aktif</option>
-                  <option value="tidak aktif">Tidak Aktif</option>
-                </select>
-                <textarea className="input-field w-full" placeholder="Keterangan" name="keterangan" value={form.keterangan} onChange={e => setForm({ ...form, keterangan: e.target.value })} required rows={3} />
-                <button
-                  type="submit"
-                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full"
-                  disabled={loading || !form.gambar}
-                >
-                  {loading ? 'Menyimpan...' : 'Simpan'}
-                </button>
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+          {/* Detail Modal (Portrait) */}
+          {modalType === 'detail' ? (
+            <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative max-h-[90vh] overflow-y-auto">
+              <button className="absolute top-2 right-2 text-gray-400 hover:text-gray-600" onClick={handleClose}>✕</button>
+              <h4 className="text-lg font-bold mb-4">Detail Menu</h4>
+              <img 
+                src={form.gambar} 
+                alt={form.nama_menu} 
+                className="w-full h-32 object-cover rounded mb-4"
+                style={{ aspectRatio: '4/3' }}
+              />
+              <div className="space-y-2 text-sm">
+                <div><b>Nama Paket:</b> {form.nama_menu}</div>
+                <div><b>Harga:</b> Rp {Number(form.harga).toLocaleString()}</div>
+                <div><b>Kategori:</b> {form.kategori}</div>
+                <div><b>Satuan:</b> {form.satuan}</div>
+                <div><b>Status:</b> {form.status}</div>
+                <div><b>Keterangan:</b> {form.keterangan}</div>
+              </div>
+            </div>
+          ) : (
+            /* Add/Edit Modal (Landscape) */
+            <div className="bg-white rounded-lg p-6 w-full max-w-4xl shadow-lg relative max-h-[90vh] overflow-y-auto">
+              <button className="absolute top-2 right-2 text-gray-400 hover:text-gray-600" onClick={handleClose}>✕</button>
+              
+              <form onSubmit={handleSubmit}>
+                <h4 className="text-xl font-bold mb-6">{modalType === 'add' ? 'Tambah' : 'Update'} Menu</h4>
+                
+                {/* Layout 2 Kolom */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Kolom Kiri - Upload Gambar */}
+                  <div className="space-y-4">
+                    <h5 className="font-semibold text-gray-700">Upload Gambar</h5>
+                    <AdminMenuImageUpload onUpload={url => setForm((f: any) => ({ ...f, gambar: url }))} />
+                  </div>
+                  
+                  {/* Kolom Kanan - Form Fields */}
+                  <div className="space-y-4">
+                    <h5 className="font-semibold text-gray-700">Informasi Menu</h5>
+                    
+                    {/* Row 1: Nama & Kategori */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <input 
+                        className="input-field w-full" 
+                        placeholder="Nama Paket" 
+                        name="nama_menu" 
+                        value={form.nama_menu} 
+                        onChange={e => setForm({ ...form, nama_menu: e.target.value })} 
+                        required 
+                      />
+                      <input 
+                        className="input-field w-full" 
+                        placeholder="Kategori" 
+                        name="kategori" 
+                        value={form.kategori} 
+                        onChange={e => setForm({ ...form, kategori: e.target.value })} 
+                        required 
+                      />
+                    </div>
+                    
+                    {/* Row 2: Harga & Satuan */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <input 
+                        className="input-field w-full" 
+                        placeholder="Harga" 
+                        name="harga" 
+                        type="number" 
+                        value={form.harga} 
+                        onChange={e => setForm({ ...form, harga: e.target.value })} 
+                        required 
+                      />
+                      <input 
+                        className="input-field w-full" 
+                        placeholder="Satuan" 
+                        name="satuan" 
+                        value={form.satuan} 
+                        onChange={e => setForm({ ...form, satuan: e.target.value })} 
+                        required 
+                      />
+                    </div>
+                    
+                    {/* Row 3: Status */}
+                    <select
+                      className="input-field w-full"
+                      name="status"
+                      value={form.status}
+                      onChange={e => setForm({ ...form, status: e.target.value })}
+                      required
+                    >
+                      <option value="">Pilih Status</option>
+                      <option value="aktif">Aktif</option>
+                      <option value="tidak aktif">Tidak Aktif</option>
+                    </select>
+                    
+                    {/* Row 4: Keterangan */}
+                    <textarea 
+                      className="input-field w-full" 
+                      placeholder="Keterangan" 
+                      name="keterangan" 
+                      value={form.keterangan} 
+                      onChange={e => setForm({ ...form, keterangan: e.target.value })} 
+                      required 
+                      rows={4}
+                    />
+                  </div>
+                </div>
+                
+                {/* Button Simpan - Full Width di bawah */}
+                <div className="mt-6 pt-4 border-t border-gray-200">
+                  <button
+                    type="submit"
+                    className="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold text-lg transition-colors duration-200 disabled:opacity-50"
+                    disabled={loading || !form.gambar}
+                  >
+                    {loading ? (
+                      <div className="flex items-center justify-center gap-2">
+                        <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div>
+                        Menyimpan...
+                      </div>
+                    ) : (
+                      'Simpan Menu'
+                    )}
+                  </button>
+                </div>
               </form>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
     </div>
