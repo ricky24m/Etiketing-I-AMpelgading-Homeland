@@ -40,22 +40,37 @@ function AdminAlatCampingUpload({ onUpload }: { onUpload: (url: string) => void 
   };
 
   return (
-    <div className="space-y-2">
-      <input type="file" accept="image/*" onChange={handleFileChange} disabled={success} />
+    <div className="space-y-3">
+      <input 
+        type="file" 
+        accept="image/*" 
+        onChange={handleFileChange} 
+        disabled={success}
+        className="w-full text-sm"
+      />
       {preview && (
-        <img src={preview} alt="Preview" className="w-32 h-32 object-cover rounded border" />
+        <div className="space-y-2">
+          <img 
+            src={preview} 
+            alt="Preview" 
+            className="w-full h-32 object-cover rounded border" 
+          />
+          <p className="text-xs text-gray-500 text-center">
+            Preview gambar alat camping
+          </p>
+        </div>
       )}
       {!success && (
         <button
           onClick={handleUpload}
           disabled={!file || uploading}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+          className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm disabled:opacity-50"
         >
           {uploading ? 'Uploading...' : 'Upload'}
         </button>
       )}
       {success && (
-        <div className="text-green-600 font-semibold">Upload berhasil!</div>
+        <div className="text-green-600 font-semibold text-sm text-center">Upload berhasil!</div>
       )}
     </div>
   );
@@ -85,6 +100,10 @@ export default function AdminKelolaAlatCamping() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    if (!form.gambar) {
+      alert('Gambar alat camping wajib di-upload!');
+      return;
+    }
     setLoading(true);
     if (modalType === 'add') {
       await fetch('/api/admin/alat-camping', {
@@ -105,16 +124,33 @@ export default function AdminKelolaAlatCamping() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Hapus alat camping ini?')) return;
-    await fetch('/api/admin/alat-camping', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id }),
-    });
-    mutate('/api/admin/alat-camping');
+    if (!confirm('Hapus alat camping ini? Gambar juga akan dihapus dari storage.')) return;
+    
+    try {
+      const response = await fetch('/api/admin/alat-camping', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        alert('Alat camping berhasil dihapus beserta gambarnya!');
+        mutate('/api/admin/alat-camping');
+      } else {
+        alert('Gagal menghapus alat camping: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error deleting alat camping:', error);
+      alert('Terjadi kesalahan saat menghapus alat camping');
+    }
   };
 
   const alatList = data?.data || [];
+
+  const truncate = (text: string, max: number) =>
+    text && text.length > max ? text.slice(0, max) + '...' : text;
 
   return (
     <div>
@@ -127,6 +163,7 @@ export default function AdminKelolaAlatCamping() {
           Tambah Alat Camping
         </button>
       </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded shadow text-sm">
           <thead>
@@ -146,11 +183,11 @@ export default function AdminKelolaAlatCamping() {
                 <td className="py-2 px-3">
                   <img src={a.gambar} alt={a.nama_alat} className="w-16 h-16 object-cover rounded" />
                 </td>
-                <td className="py-2 px-3">{a.nama_alat}</td>
+                <td className="py-2 px-3">{truncate(a.nama_alat, 20)}</td>
                 <td className="py-2 px-3">Rp {Number(a.harga).toLocaleString()}</td>
-                <td className="py-2 px-3">{a.satuan}</td>
-                <td className="py-2 px-3">{a.status}</td>
-                <td className="py-2 px-3 max-w-xs">{a.keterangan.length > 30 ? a.keterangan.slice(0, 30) + '...' : a.keterangan}</td>
+                <td className="py-2 px-3">{truncate(a.satuan, 10)}</td>
+                <td className="py-2 px-3">{truncate(a.status, 10)}</td>
+                <td className="py-2 px-3 max-w-xs">{truncate(a.keterangan, 30)}</td>
                 <td className="py-2 px-3 flex gap-2">
                   <button
                     className="admin-action-btn bg-blue-100 text-blue-700 hover:bg-blue-200"
@@ -158,16 +195,17 @@ export default function AdminKelolaAlatCamping() {
                     onClick={() => handleOpen('detail', a)}
                   >
                     <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                     </svg>
                     Detail
                   </button>
                   <button
-                    className="admin-action-btn bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
-                    title="Detail"
+                    className="admin-action-btn bg-green-100 text-green-700 hover:bg-green-200"
+                    title="Edit"
                     onClick={() => handleOpen('edit', a)}
                   >
-                    <svg className="w-4 h-4 mr-1 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                         d="M15.232 5.232l3.536 3.536M16.732 3.732a2.5 2.5 0 013.536 3.536L7.5 20.036H4v-3.5L16.732 3.732z" />
                     </svg>
@@ -175,7 +213,7 @@ export default function AdminKelolaAlatCamping() {
                   </button>
                   <button
                     className="admin-action-btn bg-red-100 text-red-700 hover:bg-red-200"
-                    title="Detail"
+                    title="Hapus"
                     onClick={() => handleDelete(a.id)}
                   >
                     <svg className="w-4 h-4 mr-1 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,48 +231,122 @@ export default function AdminKelolaAlatCamping() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative">
-            <button className="absolute top-2 right-2 text-gray-400" onClick={handleClose}>✕</button>
-            {modalType === 'detail' ? (
-              <>
-                <h4 className="text-lg font-bold mb-2">Detail Alat Camping</h4>
-                <img src={form.gambar} alt={form.nama_alat} className="w-32 h-32 object-cover rounded mb-2" />
-                <div className="mb-2"><b>Nama Alat:</b> {form.nama_alat}</div>
-                <div className="mb-2"><b>Harga:</b> Rp {Number(form.harga).toLocaleString()}</div>
-                <div className="mb-2"><b>Satuan:</b> {form.satuan}</div>
-                <div className="mb-2"><b>Status:</b> {form.status}</div>
-                <div className="mb-2"><b>Keterangan:</b> {form.keterangan}</div>
-              </>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <h4 className="text-lg font-bold">{modalType === 'add' ? 'Tambah' : 'Update'} Alat Camping</h4>
-                <AdminAlatCampingUpload onUpload={url => setForm((f: any) => ({ ...f, gambar: url }))} />
-                <input className="input-field w-full" placeholder="Nama Alat" name="nama_alat" value={form.nama_alat} onChange={e => setForm({ ...form, nama_alat: e.target.value })} required />
-                <input className="input-field w-full" placeholder="Harga" name="harga" type="number" value={form.harga} onChange={e => setForm({ ...form, harga: e.target.value })} required />
-                <input className="input-field w-full" placeholder="Satuan" name="satuan" value={form.satuan} onChange={e => setForm({ ...form, satuan: e.target.value })} required />
-                <select
-                  className="input-field w-full"
-                  name="status"
-                  value={form.status}
-                  onChange={e => setForm({ ...form, status: e.target.value })}
-                  required
-                >
-                  <option value="">Pilih Status</option>
-                  <option value="aktif">Aktif</option>
-                  <option value="tidak aktif">Tidak Aktif</option>
-                </select>
-                <textarea className="input-field w-full" placeholder="Keterangan" name="keterangan" value={form.keterangan} onChange={e => setForm({ ...form, keterangan: e.target.value })} required rows={3} />
-                <button
-                  type="submit"
-                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full"
-                  disabled={loading || !form.gambar}
-                >
-                  {loading ? 'Menyimpan...' : 'Simpan'}
-                </button>
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+          {/* Detail Modal (Portrait) */}
+          {modalType === 'detail' ? (
+            <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative max-h-[90vh] overflow-y-auto">
+              <button className="absolute top-2 right-2 text-gray-400 hover:text-gray-600" onClick={handleClose}>✕</button>
+              <h4 className="text-lg font-bold mb-4">Detail Alat Camping</h4>
+              <img 
+                src={form.gambar} 
+                alt={form.nama_alat} 
+                className="w-full h-32 object-cover rounded mb-4"
+              />
+              <div className="space-y-2 text-sm">
+                <div><b>Nama Alat:</b> {form.nama_alat}</div>
+                <div><b>Harga:</b> Rp {Number(form.harga).toLocaleString()}</div>
+                <div><b>Satuan:</b> {form.satuan}</div>
+                <div><b>Status:</b> {form.status}</div>
+                <div><b>Keterangan:</b> {form.keterangan}</div>
+              </div>
+            </div>
+          ) : (
+            /* Add/Edit Modal (Landscape) */
+            <div className="bg-white rounded-lg p-6 w-full max-w-4xl shadow-lg relative max-h-[90vh] overflow-y-auto">
+              <button className="absolute top-2 right-2 text-gray-400 hover:text-gray-600" onClick={handleClose}>✕</button>
+              
+              <form onSubmit={handleSubmit}>
+                <h4 className="text-xl font-bold mb-6">{modalType === 'add' ? 'Tambah' : 'Update'} Alat Camping</h4>
+                
+                {/* Layout 2 Kolom */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Kolom Kiri - Upload Gambar */}
+                  <div className="space-y-4">
+                    <h5 className="font-semibold text-gray-700">Upload Gambar</h5>
+                    <AdminAlatCampingUpload onUpload={url => setForm((f: any) => ({ ...f, gambar: url }))} />
+                  </div>
+                  
+                  {/* Kolom Kanan - Form Fields */}
+                  <div className="space-y-4">
+                    <h5 className="font-semibold text-gray-700">Informasi Alat Camping</h5>
+                    
+                    {/* Row 1: Nama Alat & Harga */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <input 
+                        className="input-field w-full" 
+                        placeholder="Nama Alat" 
+                        name="nama_alat" 
+                        value={form.nama_alat} 
+                        onChange={e => setForm({ ...form, nama_alat: e.target.value })} 
+                        required 
+                      />
+                      <input 
+                        className="input-field w-full" 
+                        placeholder="Harga" 
+                        name="harga" 
+                        type="number" 
+                        value={form.harga} 
+                        onChange={e => setForm({ ...form, harga: e.target.value })} 
+                        required 
+                      />
+                    </div>
+                    
+                    {/* Row 2: Satuan & Status */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <input 
+                        className="input-field w-full" 
+                        placeholder="Satuan" 
+                        name="satuan" 
+                        value={form.satuan} 
+                        onChange={e => setForm({ ...form, satuan: e.target.value })} 
+                        required 
+                      />
+                      <select
+                        className="input-field w-full"
+                        name="status"
+                        value={form.status}
+                        onChange={e => setForm({ ...form, status: e.target.value })}
+                        required
+                      >
+                        <option value="">Pilih Status</option>
+                        <option value="aktif">Aktif</option>
+                        <option value="tidak aktif">Tidak Aktif</option>
+                      </select>
+                    </div>
+                    
+                    {/* Row 3: Keterangan */}
+                    <textarea 
+                      className="input-field w-full" 
+                      placeholder="Keterangan" 
+                      name="keterangan" 
+                      value={form.keterangan} 
+                      onChange={e => setForm({ ...form, keterangan: e.target.value })} 
+                      required 
+                      rows={4}
+                    />
+                  </div>
+                </div>
+                
+                {/* Button Simpan - Full Width di bawah */}
+                <div className="mt-6 pt-4 border-t border-gray-200">
+                  <button
+                    type="submit"
+                    className="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold text-lg transition-colors duration-200 disabled:opacity-50"
+                    disabled={loading || !form.gambar}
+                  >
+                    {loading ? (
+                      <div className="flex items-center justify-center gap-2">
+                        <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div>
+                        Menyimpan...
+                      </div>
+                    ) : (
+                      'Simpan Alat Camping'
+                    )}
+                  </button>
+                </div>
               </form>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
     </div>

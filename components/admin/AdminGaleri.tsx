@@ -108,13 +108,27 @@ export default function AdminGaleri() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Hapus galeri ini?')) return;
-    await fetch('/api/admin/galeri', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id }),
-    });
-    mutate('/api/admin/galeri');
+    if (!confirm('Hapus galeri ini? Gambar juga akan dihapus dari storage.')) return;
+    
+    try {
+      const response = await fetch('/api/admin/galeri', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        alert('Galeri berhasil dihapus beserta gambarnya!');
+        mutate('/api/admin/galeri');
+      } else {
+        alert('Gagal menghapus galeri: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error deleting galeri:', error);
+      alert('Terjadi kesalahan saat menghapus galeri');
+    }
   };
 
   const galeri = data?.data || [];

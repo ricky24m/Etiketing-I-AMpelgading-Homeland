@@ -162,12 +162,27 @@ export default function AdminKelolaMenu() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Hapus menu ini?')) return;
-    await fetch(`/api/menu/${id}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    mutate('/api/admin/all-menu');
+    if (!confirm('Hapus menu ini? Gambar juga akan dihapus dari storage.')) return;
+    
+    try {
+      const response = await fetch(`/api/menu/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        alert('Menu berhasil dihapus beserta gambarnya!');
+        mutate('/api/admin/all-menu');
+        mutate('/api/menu');
+      } else {
+        alert('Gagal menghapus menu: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error deleting menu:', error);
+      alert('Terjadi kesalahan saat menghapus menu');
+    }
   };
 
   const menus = data?.data || [];

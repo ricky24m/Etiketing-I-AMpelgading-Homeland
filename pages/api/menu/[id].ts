@@ -81,17 +81,57 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'DELETE') {
     try {
+      // Ambil path gambar sebelum hapus row
+      const { data: menuData, error: fetchError } = await supabase
+        .from('katalog_menu_fix')
+        .select('gambar')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) {
+        return res.status(500).json({ success: false, message: 'Gagal mengambil data menu' });
+      }
+
+      const gambarPath = menuData?.gambar;
+
+      // Hapus dari database
       const { error: deleteError } = await supabase
         .from('katalog_menu_fix')
         .delete()
         .eq('id', id);
 
       if (deleteError) {
-        return res.status(500).json({ success: false, message: 'Gagal hapus menu' });
+        return res.status(500).json({ success: false, message: 'Gagal hapus menu dari database' });
       }
 
-      return res.status(200).json({ success: true });
+      // Hapus file gambar dari storage jika ada
+      if (gambarPath) {
+        let storagePath = gambarPath;
+        
+        // Jika path berupa URL, ambil path setelah '/storage/v1/object/public/'
+        if (storagePath.startsWith('http')) {
+          const idx = storagePath.indexOf('/storage/v1/object/public/');
+          if (idx !== -1) {
+            storagePath = storagePath.substring(idx + '/storage/v1/object/public/'.length);
+          }
+        }
+        
+        // Hapus prefix bucket name jika ada
+        storagePath = storagePath.replace(/^gambar-menu\//, '');
+        
+        const { error: storageError } = await supabase.storage
+          .from('gambar-menu')
+          .remove([storagePath]);
+
+        if (storageError) {
+          console.error('Error deleting image from storage:', storageError);
+          // Tidak return error, karena data sudah terhapus dari database
+        }
+      }
+
+      return res.status(200).json({ success: true, message: 'Menu dan gambar berhasil dihapus' });
     } catch (error) {
+      console.error('Delete menu error:', error);
       return res.status(500).json({ success: false, message: 'Gagal hapus menu' });
     }
   }
