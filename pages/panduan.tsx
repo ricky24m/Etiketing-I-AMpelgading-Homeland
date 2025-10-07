@@ -37,7 +37,7 @@ export default function Panduan() {
             <strong>Registrasi &amp; Login</strong>
             <ul style={{ marginTop: 10, marginBottom: 0 }}>
               <li>Buka halaman utama, klik tombol <b>Daftar</b> di pojok kanan atas.</li>
-              <li>Isi data diri Anda dengan lengkap (Nama, NIK, Nomor Telepon, Email, Password).</li>
+              <li>Isi data diri Anda dengan lengkap (Nama, Kota Asal, Nomor Telepon, Email, Password).</li>
               <li>Setelah berhasil registrasi, lakukan <b>Login</b> menggunakan email dan password yang telah didaftarkan.</li>
             </ul>
           </li>

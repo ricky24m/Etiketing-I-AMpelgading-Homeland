@@ -7,11 +7,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { nama, email, nik, phone, emergency, tanggal, items, total } = req.body;
+    const { nama, email, kota_asal, phone, emergency, kendaraan, tanggal, items, total } = req.body;
 
     // Validasi
     if (!nama || !email || !items || total <= 0) {
       return res.status(400).json({ success: false, message: 'Data tidak valid' });
+    }
+
+    if (!kendaraan) {
+      return res.status(400).json({ success: false, message: 'Jumlah dan jenis kendaraan wajib diisi' });
     }
 
     // Generate order ID
@@ -22,30 +26,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { error } = await supabase.from('booking').insert([{
       order_id: orderId,
       nama,
-      nik,
+      kota_asal,
       nomor_telepon: phone,
       nomor_darurat: emergency,
+      kendaraan,  // Tambah field kendaraan
       email,
       tanggal_booking: bookingDate,
+      waktu_booking: new Date().toISOString(),
       items,
       total,
-      status: 'Belum terverifikasi', // Status default
-      waktu_booking: new Date().toISOString()
+      status: 'Belum terverifikasi'
     }]);
 
-    if (error) {
-      console.error('Database error:', error);
-      return res.status(500).json({ success: false, message: error.message });
-    }
+    if (error) throw error;
 
-    res.status(200).json({
-      success: true,
-      order_id: orderId,
-      message: 'Booking berhasil disimpan'
-    });
-
-  } catch (error) {
-    console.error('Place order error:', error);
-    res.status(500).json({ success: false, message: 'Server error' });
+    res.status(200).json({ success: true, order_id: orderId });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message || 'Server error' });
   }
 }

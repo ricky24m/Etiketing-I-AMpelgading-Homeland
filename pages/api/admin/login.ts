@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import bcrypt from 'bcryptjs';
 import { supabase } from '../../../lib/supabase';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -7,45 +8,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    console.log('Admin login attempt:', { username, password }); // Debug log
-
-    if (!username || !password) {
+    if (!email || !password) {
       return res.status(400).json({ 
         success: false, 
-        message: 'Username dan password harus diisi' 
+        message: 'Email dan password harus diisi' 
       });
     }
 
-    const { data: admin, error } = await supabase
-      .from('admin_users')
-      .select('id, username, password, nama_lengkap, email')
-      .eq('username', username)
+    const { data: user, error } = await supabase
+      .from('users')
+      .select('id, nama_lengkap, kota_asal, nomor_telepon, email, password, is_active')
+      .eq('email', email)
       .maybeSingle();
 
-    console.log('Database result:', { admin, error }); // Debug log
-
-    if (error) {
-      console.error('Database error:', error);
-      throw error;
-    }
-    
-    if (!admin) {
+    if (error) throw error;
+    if (!user) {
       return res.status(401).json({ 
         success: false, 
-        message: 'Username tidak ditemukan' 
+        message: 'Email tidak terdaftar' 
       });
     }
 
-    // Compare password plain text
-    const isPasswordValid = admin.password === password;
-    console.log('Password comparison:', { 
-      inputPassword: password, 
-      dbPassword: admin.password, 
-      isValid: isPasswordValid 
-    }); // Debug log
+    if (!user.is_active) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Akun tidak aktif' 
+      });
+    }
 
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ 
         success: false, 
@@ -53,25 +46,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    // Update last_login
-    await supabase
-      .from('admin_users')
-      .update({ last_login: new Date().toISOString() })
-      .eq('id', admin.id);
-
     // Remove password from response
-    delete admin.password;
-
-    console.log('Admin login successful for:', admin.username); // Debug log
+    delete user.password;
 
     res.status(200).json({
       success: true,
-      admin: admin,
+      user: user,
       message: 'Login berhasil'
     });
 
   } catch (error: any) {
-    console.error('Admin login API error:', error);
     res.status(500).json({ success: false, message: error.message || 'Server error' });
   }
 }

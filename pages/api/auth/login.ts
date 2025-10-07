@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { data: user, error } = await supabase
       .from('users')
-      .select('id, nama_lengkap, nik, nomor_telepon, email, password, is_active')
+      .select('id, nama_lengkap, kota_asal, nomor_telepon, email, password, is_active')
       .eq('email', email)
       .maybeSingle();
 

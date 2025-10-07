@@ -17,20 +17,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .select('id', { count: 'exact', head: true });
     const totalPages = Math.ceil((totalRecords ?? 0) / limit);
 
-    // Get paginated data dengan semua field yang dibutuhkan
+    // Get paginated data dengan semua field yang dibutuhkan - Include kendaraan
     const { data: rows, error } = await supabase
       .from('booking')
-      .select('order_id, nama, nik, nomor_telepon, nomor_darurat, email, tanggal_booking, waktu_booking, items, total, status')
+      .select('order_id, nama, kota_asal, nomor_telepon, nomor_darurat, kendaraan, email, tanggal_booking, waktu_booking, items, total, status')
       .order('waktu_booking', { ascending: false })
       .range(offset, offset + limit - 1);
 
-    if (error) {
-      console.error('Bookings fetch error:', error);
-      return res.status(500).json({ success: false, message: error.message });
-    }
+    if (error) throw error;
 
-    // Format tanggal pesan (waktu_booking) dengan jam
-    const data = (rows as any[]).map(row => ({
+    // Format tanggal untuk tampilan
+    const bookings = (rows || []).map((row: any) => ({
       ...row,
       order_date: row.waktu_booking,
       order_date_formatted: row.waktu_booking
@@ -42,21 +39,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             minute: '2-digit',
             hour12: false,
           })
-        : '-',
+        : row.waktu_booking,
     }));
 
     res.status(200).json({
       success: true,
-      data,
+      data: bookings,
       pagination: {
         current_page: page,
         total_pages: totalPages,
         total_records: totalRecords,
         per_page: limit,
-      }
+      },
     });
-  } catch (error) {
-    console.error('Bookings API error:', error);
-    res.status(500).json({ success: false, message: 'Server error' });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message || 'Server error' });
   }
 }

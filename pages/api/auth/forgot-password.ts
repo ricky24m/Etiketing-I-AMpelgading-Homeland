@@ -8,22 +8,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { email, password, nik } = req.body;
-    if (!email || !password || !nik) {
+    const { email, password, kota_asal } = req.body;
+    if (!email || !password || !kota_asal) {
       return res.status(400).json({ success: false, message: 'Semua field harus diisi' });
     }
 
-    // Cek apakah kombinasi email dan nik ada di baris yang sama
+    // Cek apakah kombinasi email dan kota_asal ada di baris yang sama
     const { data: user, error } = await supabase
       .from('users')
       .select('id')
       .eq('email', email)
-      .eq('nik', nik)
+      .eq('kota_asal', kota_asal)
       .maybeSingle();
 
     if (error) throw error;
     if (!user) {
-      return res.status(404).json({ success: false, message: 'Email atau NIK tidak terdaftar' });
+      return res.status(404).json({ success: false, message: 'Email atau kota asal tidak terdaftar' });
     }
 
     // Update password
@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .from('users')
       .update({ password: hashedPassword })
       .eq('email', email)
-      .eq('nik', nik);
+      .eq('kota_asal', kota_asal);
 
     if (updateError) throw updateError;
 

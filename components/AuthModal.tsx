@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 type ModalType = 'login' | 'register' | 'forgot';
 
@@ -55,7 +55,7 @@ export default function AuthModal({
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             nama: form.nama,
-            nik: form.nik,
+            kota_asal: form.kota_asal,
             phone: form.phone,
             email: form.email,
             password: form.password,
@@ -76,7 +76,7 @@ export default function AuthModal({
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email: form.email,
-            nik: form.nik,
+            kota_asal: form.kota_asal,
             password: form.password,
           }),
         });
@@ -104,6 +104,7 @@ export default function AuthModal({
     <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
       <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative">
         <button className="absolute top-2 right-2 text-gray-400" onClick={onClose}>✕</button>
+        
         <h2 className="text-xl font-bold mb-2 text-center">
           {type === 'login' && 'Login'}
           {type === 'register' && 'Registrasi'}
@@ -146,17 +147,19 @@ export default function AuthModal({
               />
               <input
                 className="input-field w-full"
-                name="nik"
-                placeholder="NIK"
+                name="kota_asal"
+                placeholder="Kota Asal"
                 required
-                maxLength={16}
+                minLength={3}
                 onChange={handleChange}
               />
               <input
                 className="input-field w-full"
                 name="phone"
-                placeholder="Nomor Telepon"
+                placeholder="Nomor Telepon (08xxxxxxxxx)"
                 required
+                pattern="^08\d{8,11}$"
+                title="Format: 08xxxxxxxxx"
                 onChange={handleChange}
               />
               <input
@@ -182,39 +185,7 @@ export default function AuthModal({
                   tabIndex={-1}
                   onClick={() => setShowPassword(v => !v)}
                 >
-                  {showPassword ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.657.402-3.221 1.125-4.575m1.875-2.25A9.956 9.956 0 0112 3c5.523 0 10 4.477 10 10 0 1.657-.402 3.221-1.125 4.575m-1.875 2.25A9.956 9.956 0 0112 21c-5.523 0-10-4.477-10-10 0-1.657.402-3.221 1.125-4.575" /></svg>
-                  ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-6 0a6 6 0 1112 0 6 6 0 01-12 0z" /></svg>
-                  )}
-                </button>
-              </div>
-            </>
-          )}
-          {type === 'forgot' && (
-            <>
-              <input className="input-field w-full" name="email" placeholder="Email" type="email" required onChange={handleChange} />
-              <input className="input-field w-full" name="nik" placeholder="NIK" required maxLength={16} onChange={handleChange} />
-              <div className="relative">
-                <input
-                  className="input-field w-full pr-10"
-                  name="password"
-                  placeholder="Password Baru"
-                  type={showForgotPassword ? 'text' : 'password'}
-                  required
-                  onChange={handleChange}
-                />
-                <button
-                  type="button"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
-                  tabIndex={-1}
-                  onClick={() => setShowForgotPassword(v => !v)}
-                >
-                  {showForgotPassword ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.657.402-3.221 1.125-4.575m1.875-2.25A9.956 9.956 0 0112 3c5.523 0 10 4.477 10 10 0 1.657-.402 3.221-1.125 4.575m-1.875 2.25A9.956 9.956 0 0112 21c-5.523 0-10-4.477-10-10 0-1.657.402-3.221 1.125-4.575" /></svg>
-                  ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-6 0a6 6 0 1112 0 6 6 0 01-12 0z" /></svg>
-                  )}
+                  {showPassword ? '🙈' : '👁️'}
                 </button>
               </div>
             </>
@@ -237,16 +208,40 @@ export default function AuthModal({
                   tabIndex={-1}
                   onClick={() => setShowPassword(v => !v)}
                 >
-                  {showPassword ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.657.402-3.221 1.125-4.575m1.875-2.25A9.956 9.956 0 0112 3c5.523 0 10 4.477 10 10 0 1.657-.402 3.221-1.125 4.575m-1.875 2.25A9.956 9.956 0 0112 21c-5.523 0-10-4.477-10-10 0-1.657.402-3.221 1.125-4.575" /></svg>
-                  ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-6 0a6 6 0 1112 0 6 6 0 01-12 0z" /></svg>
-                  )}
+                  {showPassword ? '🙈' : '👁️'}
                 </button>
               </div>
             </>
           )}
-          <button type="submit" className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full" disabled={loading}>
+          {type === 'forgot' && (
+            <>
+              <input className="input-field w-full" name="email" placeholder="Email" type="email" required onChange={handleChange} />
+              <input className="input-field w-full" name="kota_asal" placeholder="Kota Asal" required minLength={3} onChange={handleChange} />
+              <div className="relative">
+                <input
+                  className="input-field w-full pr-10"
+                  name="password"
+                  placeholder="Password Baru"
+                  type={showForgotPassword ? 'text' : 'password'}
+                  required
+                  onChange={handleChange}
+                />
+                <button
+                  type="button"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+                  tabIndex={-1}
+                  onClick={() => setShowForgotPassword(v => !v)}
+                >
+                  {showForgotPassword ? '🙈' : '👁️'}
+                </button>
+              </div>
+            </>
+          )}
+          <button
+            type="submit"
+            className="btn-primary w-full"
+            disabled={loading}
+          >
             {loading ? 'Memproses...' : (type === 'login' ? 'Login' : type === 'register' ? 'Daftar' : 'Ubah Password')}
           </button>
         </form>

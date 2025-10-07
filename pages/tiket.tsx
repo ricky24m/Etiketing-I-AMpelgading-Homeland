@@ -192,6 +192,10 @@ export default function Tiket() {
                       <span className="text-gray-600 font-medium">No. Telepon:</span>
                       <span className="font-semibold text-gray-800">{ticketData.phone}</span>
                     </div>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                      <span className="text-gray-600 font-medium">Kota Asal:</span>
+                      <span className="font-semibold text-gray-800">{ticketData.kota_asal}</span>
+                    </div>
                     <div className="flex justify-between items-center py-2">
                       <span className="text-gray-600 font-medium">Tanggal Booking:</span>
                       <span className="font-semibold text-gray-800">

@@ -89,6 +89,7 @@ export default function BookingTable() {
               <th className="py-2 px-3">Total</th>
               <th className="py-2 px-3">Status</th>
               <th className="py-2 px-3">Aksi</th>
+              <th className="py-2 px-3">Kendaraan</th> {/* Kolom Kendaraan */}
             </tr>
           </thead>
           <tbody>
@@ -105,10 +106,10 @@ export default function BookingTable() {
                 <td className="py-2 px-3">Rp {Number(b.total).toLocaleString()}</td>
                 <td className="py-2 px-3">
                   <span className={`px-2 py-1 rounded text-xs font-medium ${b.status === 'Terverifikasi'
-                      ? 'bg-green-100 text-green-800'
-                      : b.status === 'Dibatalkan'
-                        ? 'bg-red-100 text-red-800'
-                        : 'bg-yellow-100 text-yellow-800'
+                    ? 'bg-green-100 text-green-800'
+                    : b.status === 'Dibatalkan'
+                      ? 'bg-red-100 text-red-800'
+                      : 'bg-yellow-100 text-yellow-800'
                     }`}>
                     {b.status}
                   </span>
@@ -130,12 +131,13 @@ export default function BookingTable() {
                     onClick={() => openStatusModal(b)}
                   >
                     <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v12m6-6H6" />
-</svg>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v12m6-6H6" />
+                    </svg>
 
                     Status
                   </button>
                 </td>
+                <td className="py-2 px-3">{truncate(b.kendaraan || '-', 20)}</td> {/* Data Kendaraan */}
               </tr>
             ))}
           </tbody>
@@ -165,7 +167,7 @@ export default function BookingTable() {
             <h4 className="text-lg font-bold mb-2">Detail Booking</h4>
             <div className="mb-2"><b>Order ID:</b> {detailData.order_id}</div>
             <div className="mb-2"><b>Nama:</b> {detailData.nama}</div>
-            <div className="mb-2"><b>NIK:</b> {detailData.nik}</div>
+            <div className="mb-2"><b>Kota Asal:</b> {detailData.kota_asal}</div>
             <div className="mb-2"><b>Nomor Telepon:</b> {detailData.nomor_telepon}</div>
             <div className="mb-2"><b>Nomor Darurat:</b> {detailData.nomor_darurat}</div>
             <div className="mb-2"><b>Email:</b> {detailData.email}</div>
@@ -174,6 +176,7 @@ export default function BookingTable() {
             <div className="mb-2"><b>Pesanan:</b> {detailData.items}</div>
             <div className="mb-2"><b>Total:</b> Rp {Number(detailData.total).toLocaleString()}</div>
             <div className="mb-2"><b>Status:</b> {detailData.status}</div>
+            <div className="mb-2"><b>Kendaraan:</b> {detailData.kendaraan || '-'}</div> {/* Detail Kendaraan */}
           </div>
         </div>
       )}

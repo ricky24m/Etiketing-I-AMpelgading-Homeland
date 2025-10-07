@@ -12,10 +12,11 @@ export default function Checkout() {
   const [accessGranted, setAccessGranted] = useState(false);
   const [formData, setFormData] = useState({
     nama: '',
-    nik: '',
+    kota_asal: '',
     phone: '',
     emergency: '',
-    email: ''
+    email: '',
+    kendaraan: ''  // Tambah field kendaraan
   });
 
   useEffect(() => {
@@ -41,10 +42,11 @@ export default function Checkout() {
     if (userData) {
       setFormData({
         nama: userData.nama_lengkap || '',
-        nik: userData.nik || '',
+        kota_asal: userData.kota_asal || '',
         phone: userData.nomor_telepon || '',
         emergency: '',
-        email: userData.email || ''
+        email: userData.email || '',
+        kendaraan: ''  // Tidak auto-fill untuk kendaraan
       });
     }
   }, [router]);
@@ -64,6 +66,11 @@ export default function Checkout() {
 
     if (!formData.emergency) {
       alert('Nomor darurat harus diisi');
+      return;
+    }
+
+    if (!formData.kendaraan) {
+      alert('Jumlah dan jenis kendaraan harus diisi');
       return;
     }
 
@@ -91,6 +98,8 @@ export default function Checkout() {
           nama: formData.nama,
           email: formData.email,
           phone: formData.phone,
+          kota_asal: formData.kota_asal,
+          kendaraan: formData.kendaraan,
           tanggal: selectedDate.toISOString(),
           items,
           total
@@ -324,15 +333,16 @@ export default function Checkout() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        NIK
+                        Kota Asal
                       </label>
                       <input
                         type="text"
                         required
-                        value={formData.nik}
-                        onChange={(e) => setFormData({...formData, nik: e.target.value})}
+                        value={formData.kota_asal}
+                        onChange={(e) => setFormData({...formData, kota_asal: e.target.value})}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        placeholder="Masukkan NIK"
+                        placeholder="Masukkan kota asal"
+                        minLength={3}
                       />
                     </div>
                     <div>
@@ -361,6 +371,24 @@ export default function Checkout() {
                         placeholder="Masukkan email"
                       />
                     </div>
+                  </div>
+                  
+                  {/* Field Kendaraan - Full Width */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Jumlah dan Jenis Kendaraan <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.kendaraan}
+                      onChange={(e) => setFormData({...formData, kendaraan: e.target.value})}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      placeholder="Contoh: 1 Motor atau 1 Motor dan 1 Mobil"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Sebutkan dengan jelas jumlah dan jenis kendaraan yang dibawa
+                    </p>
                   </div>
                   
                   <div>

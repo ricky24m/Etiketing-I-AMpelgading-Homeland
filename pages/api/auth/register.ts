@@ -8,20 +8,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { nama, nik, phone, email, password } = req.body;
+    const { nama, kota_asal, phone, email, password } = req.body;
 
     // Validasi input
-    if (!nama || !nik || !phone || !email || !password) {
+    if (!nama || !kota_asal || !phone || !email || !password) {
       return res.status(400).json({
         success: false,
         message: 'Semua field harus diisi'
-      });
-    }
-
-    if (!/^\d{16}$/.test(nik)) {
-      return res.status(400).json({
-        success: false,
-        message: 'NIK harus 16 digit angka'
       });
     }
 
@@ -29,6 +22,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({
         success: false,
         message: 'Format nomor telepon tidak valid'
+      });
+    }
+
+    if (kota_asal.length < 3) {
+      return res.status(400).json({
+        success: false,
+        message: 'Kota asal minimal 3 karakter'
       });
     }
 
@@ -51,7 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const hashedPassword = await bcrypt.hash(password, 12);
     const { error } = await supabase.from('users').insert([{
       nama_lengkap: nama,
-      nik,
+      kota_asal,
       nomor_telepon: phone,
       email,
       password: hashedPassword,
