@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import bcrypt from 'bcryptjs';
 import { supabase } from '../../../lib/supabase';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -8,54 +7,50 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    if (!email || !password) {
+    if (!username || !password) {
       return res.status(400).json({ 
         success: false, 
-        message: 'Email dan password harus diisi' 
+        message: 'Username dan password harus diisi' 
       });
     }
 
-    const { data: user, error } = await supabase
-      .from('users')
-      .select('id, nama_lengkap, kota_asal, nomor_telepon, email, password, is_active')
-      .eq('email', email)
+    // Query ke tabel admin_users
+    const { data: admin, error } = await supabase
+      .from('admin_users')
+      .select('id, username, nama_lengkap, email, password')
+      .eq('username', username)
       .maybeSingle();
 
     if (error) throw error;
-    if (!user) {
+    
+    if (!admin) {
       return res.status(401).json({ 
         success: false, 
-        message: 'Email tidak terdaftar' 
+        message: 'Username tidak terdaftar' 
       });
     }
 
-    if (!user.is_active) {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Akun tidak aktif' 
-      });
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
+    // Cek password SIMPLE - langsung bandingkan plain text
+    if (password !== admin.password) {
       return res.status(401).json({ 
         success: false, 
         message: 'Password salah' 
       });
     }
 
-    // Remove password from response
-    delete user.password;
+    // Hapus password dari response
+    delete admin.password;
 
     res.status(200).json({
       success: true,
-      user: user,
+      admin: admin,
       message: 'Login berhasil'
     });
 
   } catch (error: any) {
+    console.error('Admin login error:', error);
     res.status(500).json({ success: false, message: error.message || 'Server error' });
   }
 }
