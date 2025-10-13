@@ -7,6 +7,7 @@ export default function Checkout() {
   const router = useRouter();
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string>(''); // Default kosong
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [accessGranted, setAccessGranted] = useState(false);
@@ -16,8 +17,13 @@ export default function Checkout() {
     phone: '',
     emergency: '',
     email: '',
-    kendaraan: ''  // Tambah field kendaraan
+    kendaraan: ''
   });
+
+  // Cek apakah ada item dengan kategori "Paket Camping" di keranjang
+  const hasCampingItem = cartItems.some(item => 
+    item.kategori === 'Paket Camping'
+  );
 
   useEffect(() => {
     // Cek access control - harus melalui cart checkout
@@ -46,7 +52,7 @@ export default function Checkout() {
         phone: userData.nomor_telepon || '',
         emergency: '',
         email: userData.email || '',
-        kendaraan: ''  // Tidak auto-fill untuk kendaraan
+        kendaraan: ''
       });
     }
   }, [router]);
@@ -56,6 +62,12 @@ export default function Checkout() {
     
     if (!selectedDate) {
       alert('Pilih tanggal booking terlebih dahulu');
+      return;
+    }
+
+    // Hanya wajib isi waktu jika ada item dengan kategori "Paket Camping"
+    if (hasCampingItem && !selectedTime) {
+      alert('Pilih waktu kedatangan untuk paket camping');
       return;
     }
 
@@ -84,6 +96,7 @@ export default function Checkout() {
         body: JSON.stringify({
           ...formData,
           tanggal: selectedDate.toISOString(),
+          waktu_kedatangan: selectedTime || null, // Kirim null jika tidak diisi
           items,
           total
         })
@@ -101,6 +114,7 @@ export default function Checkout() {
           kota_asal: formData.kota_asal,
           kendaraan: formData.kendaraan,
           tanggal: selectedDate.toISOString(),
+          waktu_kedatangan: selectedTime || null,
           items,
           total
         };
@@ -125,6 +139,37 @@ export default function Checkout() {
     if (confirm('Yakin ingin membatalkan checkout?')) {
       router.push('/katalog');
     }
+  };
+
+  // Generate time options (jam operasional 15:00 - 00:00)
+  const generateTimeOptions = () => {
+    const options = [
+      <option key="empty" value="">
+        -- Pilih Waktu Kedatangan --
+      </option>
+    ];
+    
+    // Dari 15:00 sampai 23:30 (hari yang sama)
+    for (let hour = 15; hour <= 23; hour++) {
+      for (let minute = 0; minute < 60; minute += 30) {
+        const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+        const displayTime = `${timeString} WIB`;
+        options.push(
+          <option key={timeString} value={timeString}>
+            {displayTime}
+          </option>
+        );
+      }
+    }
+    
+    // Tambah 00:00 (tengah malam)
+    options.push(
+      <option key="00:00" value="00:00">
+        00:00 WIB
+      </option>
+    );
+    
+    return options;
   };
 
   // Navigasi bulan
@@ -256,27 +301,118 @@ export default function Checkout() {
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-8 text-center">
-            <h1 className="text-2xl font-bold text-green-600 mb-2">Pilih Tanggal Booking</h1>
-            <p className="text-gray-600">Pilih tanggal dan lengkapi data untuk melanjutkan booking</p>
+            <h1 className="text-2xl font-bold text-green-600 mb-2">
+              {hasCampingItem ? 'Pilih Tanggal & Waktu Booking' : 'Pilih Tanggal Booking'}
+            </h1>
+            <p className="text-gray-600">
+              {hasCampingItem 
+                ? 'Pilih tanggal dan waktu kedatangan untuk paket camping, lalu lengkapi data untuk melanjutkan booking'
+                : 'Pilih tanggal dan lengkapi data untuk melanjutkan booking'
+              }
+            </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* LEFT SIDE - Calendar */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              {generateCalendar()}
-              {selectedDate && (
-                <div className="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
-                  <p className="text-green-800 font-medium text-center">
-                    <span className="text-sm">Tanggal terpilih:</span><br />
-                    <span className="text-lg">
-                      {selectedDate.toLocaleDateString('id-ID', {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
-                    </span>
-                  </p>
+            {/* LEFT SIDE - Calendar & Time Picker (conditional) */}
+            <div className="space-y-6">
+              {/* Calendar */}
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">Pilih Tanggal</h3>
+                {generateCalendar()}
+                {selectedDate && (
+                  <div className="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
+                    <p className="text-green-800 font-medium text-center">
+                      <span className="text-sm">Tanggal terpilih:</span><br />
+                      <span className="text-lg">
+                        {selectedDate.toLocaleDateString('id-ID', {
+                          weekday: 'long',
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </span>
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Time Picker - Hanya tampil jika ada paket camping */}
+              {hasCampingItem && (
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                    Waktu Kedatangan <span className="text-red-500">*</span>
+                  </h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Waktu Kedatangan <span className="text-red-500">* (Wajib untuk paket camping)</span>
+                      </label>
+                      <select
+                        value={selectedTime}
+                        onChange={(e) => setSelectedTime(e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        required
+                      >
+                        {generateTimeOptions()}
+                      </select>
+                      <p className="text-xs text-gray-500 mt-2">
+                        📍 <strong>Jam Check-in Camping:</strong> 15:00 - 00:00 WIB<br />
+                        <span className="text-orange-600">
+                          ⚠️ <strong>Paket camping terdeteksi:</strong> Waktu kedatangan wajib diisi
+                        </span>
+                      </p>
+                    </div>
+                    
+                    {selectedTime && (
+                      <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <p className="text-blue-800 font-medium text-center">
+                          <span className="text-sm">Waktu kedatangan:</span><br />
+                          <span className="text-lg">{selectedTime} WIB</span>
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Info tentang items di keranjang */}
+                    <div className="p-3 bg-orange-50 rounded-lg border border-orange-200">
+                      <p className="text-xs text-orange-800 font-medium mb-1">🏕️ Paket Camping Terdeteksi:</p>
+                      <div className="space-y-1">
+                        {cartItems
+                          .filter(item => item.kategori === 'Paket Camping')
+                          .map((item, idx) => (
+                            <div key={idx} className="text-xs text-orange-700 flex justify-between">
+                              <span>{item.name}</span>
+                              <span className="font-medium">🏕️ Camping</span>
+                            </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Info jika tidak ada paket camping */}
+              {!hasCampingItem && (
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Informasi Pemesanan</h3>
+                  <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <p className="text-blue-800 text-sm">
+                      💡 <strong>Info:</strong> Pemilihan waktu kedatangan hanya diperlukan untuk paket camping. 
+                      Pesanan Anda tidak memerlukan waktu kedatangan khusus.
+                    </p>
+                  </div>
+                  
+                  {/* Info tentang items di keranjang */}
+                  <div className="p-3 bg-gray-50 rounded-lg border border-gray-200 mt-4">
+                    <p className="text-xs text-gray-600 font-medium mb-1">📦 Pesanan Anda:</p>
+                    <div className="space-y-1">
+                      {cartItems.map((item, idx) => (
+                        <div key={idx} className="text-xs text-gray-500 flex justify-between">
+                          <span>{item.name}</span>
+                          <span className="font-medium">📦 {item.kategori || 'Regular'}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -293,6 +429,9 @@ export default function Checkout() {
                         <p className="font-medium text-gray-800">{item.name}</p>
                         <p className="text-sm text-gray-600">
                           Rp {item.price.toLocaleString()} × {item.qty}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {item.kategori === 'Paket Camping' ? '🏕️ Paket Camping' : `📦 ${item.kategori || 'Regular'}`}
                         </p>
                       </div>
                       <div className="text-right">
@@ -412,7 +551,7 @@ export default function Checkout() {
                   <div className="flex flex-col md:flex-row gap-4 pt-4">
                     <button
                       type="submit"
-                      disabled={!selectedDate || cartItems.length === 0}
+                      disabled={!selectedDate || cartItems.length === 0 || (hasCampingItem && !selectedTime)}
                       className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
                     >
                       Lanjutkan Pembayaran

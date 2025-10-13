@@ -17,10 +17,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .select('id', { count: 'exact', head: true });
     const totalPages = Math.ceil((totalRecords ?? 0) / limit);
 
-    // Get paginated data dengan semua field yang dibutuhkan - Include kendaraan
+    // Get paginated data dengan semua field yang dibutuhkan - Include waktu_kedatangan
     const { data: rows, error } = await supabase
       .from('booking')
-      .select('order_id, nama, kota_asal, nomor_telepon, nomor_darurat, kendaraan, email, tanggal_booking, waktu_booking, items, total, status')
+      .select('order_id, nama, kota_asal, nomor_telepon, nomor_darurat, kendaraan, email, tanggal_booking, waktu_kedatangan, waktu_booking, items, total, status')
       .order('waktu_booking', { ascending: false })
       .range(offset, offset + limit - 1);
 

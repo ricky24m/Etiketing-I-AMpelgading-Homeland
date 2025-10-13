@@ -119,18 +119,57 @@ export default function AdminKelolaMenu() {
     id: null, gambar: '', nama_menu: '', harga: '', kategori: '', satuan: '', status: '', keterangan: ''
   });
   const [loading, setLoading] = useState(false);
+  
+  // State untuk kategori dropdown
+  const [kategoriType, setKategoriType] = useState<'Paket Camping' | 'Non Camping' | ''>('');
+  const [customKategori, setCustomKategori] = useState('');
 
   const handleOpen = (type: 'add' | 'edit' | 'detail', menu?: any) => {
     setModalType(type);
     setShowModal(true);
-    if (menu) setForm(menu);
-    else setForm({ id: null, gambar: '', nama_menu: '', harga: '', kategori: '', satuan: '', status: '', keterangan: '' });
+    if (menu) {
+      setForm(menu);
+      // Set kategori type berdasarkan data existing
+      if (menu.kategori === 'Paket Camping') {
+        setKategoriType('Paket Camping');
+        setCustomKategori('');
+      } else {
+        setKategoriType('Non Camping');
+        setCustomKategori(menu.kategori);
+      }
+    } else {
+      setForm({ id: null, gambar: '', nama_menu: '', harga: '', kategori: '', satuan: '', status: '', keterangan: '' });
+      setKategoriType('');
+      setCustomKategori('');
+    }
   };
 
   const handleClose = () => {
     setShowModal(false);
     setModalType(null);
     setForm({ id: null, gambar: '', nama_menu: '', harga: '', kategori: '', satuan: '', status: '', keterangan: '' });
+    setKategoriType('');
+    setCustomKategori('');
+  };
+
+  // Handle perubahan kategori type
+  const handleKategoriTypeChange = (type: 'Paket Camping' | 'Non Camping' | '') => {
+    setKategoriType(type);
+    if (type === 'Paket Camping') {
+      setForm({ ...form, kategori: 'Paket Camping' });
+      setCustomKategori('');
+    } else if (type === 'Non Camping') {
+      setForm({ ...form, kategori: customKategori });
+    } else {
+      setForm({ ...form, kategori: '' });
+      setCustomKategori('');
+    }
+  };
+
+  // Handle perubahan custom kategori
+  const handleCustomKategoriChange = (value: string) => {
+    setCustomKategori(value);
+    setForm({ ...form, kategori: value });
   };
 
   const handleSubmit = async (e: any) => {
@@ -139,6 +178,18 @@ export default function AdminKelolaMenu() {
       alert('Gambar menu wajib di-upload!');
       return;
     }
+
+    // Validasi kategori
+    if (!kategoriType) {
+      alert('Pilih jenis kategori!');
+      return;
+    }
+
+    if (kategoriType === 'Non Camping' && !customKategori.trim()) {
+      alert('Isi nama kategori untuk Non Camping!');
+      return;
+    }
+
     setLoading(true);
     if (modalType === 'add') {
       await fetch('/api/admin/add-menu', {
@@ -158,7 +209,7 @@ export default function AdminKelolaMenu() {
     
     // Refresh data admin dan katalog
     mutate('/api/admin/all-menu');
-    mutate('/api/menu'); // Tambah ini untuk refresh katalog
+    mutate('/api/menu');
   };
 
   const handleDelete = async (id: number) => {
@@ -317,7 +368,7 @@ export default function AdminKelolaMenu() {
                   <div className="space-y-4">
                     <h5 className="font-semibold text-gray-700">Informasi Menu</h5>
                     
-                    {/* Row 1: Nama & Kategori */}
+                    {/* Row 1: Nama & Kategori Type */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <input 
                         className="input-field w-full" 
@@ -327,15 +378,33 @@ export default function AdminKelolaMenu() {
                         onChange={e => setForm({ ...form, nama_menu: e.target.value })} 
                         required 
                       />
-                      <input 
-                        className="input-field w-full" 
-                        placeholder="Kategori" 
-                        name="kategori" 
-                        value={form.kategori} 
-                        onChange={e => setForm({ ...form, kategori: e.target.value })} 
-                        required 
-                      />
+                      <select
+                        className="input-field w-full"
+                        value={kategoriType}
+                        onChange={e => handleKategoriTypeChange(e.target.value as 'Paket Camping' | 'Non Camping' | '')}
+                        required
+                      >
+                        <option value="">Pilih Jenis Kategori</option>
+                        <option value="Paket Camping">Paket Camping</option>
+                        <option value="Non Camping">Non Camping (Isi Sendiri)</option>
+                      </select>
                     </div>
+
+                    {/* Custom Kategori Input - Hanya muncul jika Non Camping */}
+                    {kategoriType === 'Non Camping' && (
+                      <div>
+                        <input 
+                          className="input-field w-full" 
+                          placeholder="Masukkan nama kategori" 
+                          value={customKategori} 
+                          onChange={e => handleCustomKategoriChange(e.target.value)} 
+                          required 
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Contoh: Paket Wisata, Outbound, Adventure, dll.
+                        </p>
+                      </div>
+                    )}
                     
                     {/* Row 2: Harga & Satuan */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

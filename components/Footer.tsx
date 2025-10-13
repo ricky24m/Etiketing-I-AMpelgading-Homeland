@@ -99,7 +99,7 @@ export default function Footer() {
                     
                     {/* Facebook */}
                     <a
-                      href="#" // Ganti dengan URL Facebook yang sebenarnya
+                      href="https://www.facebook.com/ampelgadinghomeland" // Ganti dengan URL Facebook yang sebenarnya
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-200 hover:text-blue-500 transition-colors duration-200 inline-flex items-center"

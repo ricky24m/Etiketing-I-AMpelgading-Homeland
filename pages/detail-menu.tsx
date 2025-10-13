@@ -48,7 +48,9 @@ export default function DetailMenu() {
         items.push({
           name: data.data.nama_menu,
           price: data.data.harga,
-          qty: qty
+          qty: qty,
+          kategori: data.data.kategori, // Simpan kategori
+          satuan: data.data.satuan
         });
       }
 

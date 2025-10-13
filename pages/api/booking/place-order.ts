@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { nama, email, kota_asal, phone, emergency, kendaraan, tanggal, items, total } = req.body;
+    const { nama, email, kota_asal, phone, emergency, kendaraan, tanggal, waktu_kedatangan, items, total } = req.body;
 
     // Validasi
     if (!nama || !email || !items || total <= 0) {
@@ -17,6 +17,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!kendaraan) {
       return res.status(400).json({ success: false, message: 'Jumlah dan jenis kendaraan wajib diisi' });
     }
+
+    // Waktu kedatangan tidak lagi wajib - hapus validasi ini
+    // if (!waktu_kedatangan) {
+    //   return res.status(400).json({ success: false, message: 'Waktu kedatangan wajib dipilih' });
+    // }
 
     // Generate order ID
     const orderId = `ORDER_${Date.now()}_${Math.floor(Math.random() * 9000) + 1000}`;
@@ -29,9 +34,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       kota_asal,
       nomor_telepon: phone,
       nomor_darurat: emergency,
-      kendaraan,  // Tambah field kendaraan
+      kendaraan,
       email,
       tanggal_booking: bookingDate,
+      waktu_kedatangan: waktu_kedatangan || null, // Simpan null jika tidak diisi
       waktu_booking: new Date().toISOString(),
       items,
       total,

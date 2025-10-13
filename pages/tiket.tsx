@@ -207,6 +207,12 @@ export default function Tiket() {
                         })}
                       </span>
                     </div>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                      <span className="text-gray-600 font-medium">Waktu Kedatangan:</span>
+                      <span className="font-semibold text-gray-800">
+                        {ticketData.waktu_kedatangan ? `${ticketData.waktu_kedatangan} WIB` : '-'}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -253,8 +259,8 @@ export default function Tiket() {
                     <div className="bg-green-50 rounded-lg p-4">
                       <h4 className="font-semibold text-green-800 mb-2">Kontak Bantuan:</h4>
                       <div className="text-sm text-green-700 text-left space-y-1">
-                        <div>• WhatsApp: 085-123-456-789</div>
-                        <div>• Email: info@iampelgading.com</div>
+                        <div>• WhatsApp: +62 838-3883-8668</div>
+                        <div>• Email: ampelgadinghomeland@gmail.com</div>
                         <div>• Jam Operasional: 08:00 - 17:00</div>
                       </div>
                     </div>

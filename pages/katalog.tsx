@@ -64,6 +64,28 @@ export default function Katalog() {
     );
   }
 
+  // Di fungsi addToCart, pastikan kategori disimpan
+  const addToCart = (menu: any) => {
+    const items = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    const existingItem = items.find((item: any) => item.name === menu.nama_menu);
+
+    if (existingItem) {
+      existingItem.qty += 1;
+    } else {
+      items.push({
+        name: menu.nama_menu,
+        price: menu.harga,
+        qty: 1,
+        kategori: menu.kategori, // Pastikan kategori disimpan
+        satuan: menu.satuan
+      });
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(items));
+    setCartItems(items);
+    alert(`${menu.nama_menu} berhasil ditambahkan ke keranjang`);
+  };
+
   return (
     <>
       <Head>

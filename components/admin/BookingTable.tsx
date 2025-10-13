@@ -84,12 +84,13 @@ export default function BookingTable() {
               <th className="py-2 px-3">Nama</th>
               <th className="py-2 px-3">Tanggal Booking</th>
               <th className="py-2 px-3">Tanggal Pesan</th>
-              <th className="py-2 px-3">Email</th>
+              <th className="py-2 px-3 w-32">Email</th> {/* Perkecil kolom email */}
               <th className="py-2 px-3">Pesanan</th>
               <th className="py-2 px-3">Total</th>
               <th className="py-2 px-3">Status</th>
-              <th className="py-2 px-3">Aksi</th>
-              <th className="py-2 px-3">Kendaraan</th> {/* Kolom Kendaraan */}
+              <th className="py-2 px-3 w-20">Aksi</th> {/* Perkecil kolom aksi */}
+              <th className="py-2 px-3">Kendaraan</th>
+              <th className="py-2 px-3">Waktu Kedatangan</th>
             </tr>
           </thead>
           <tbody>
@@ -99,7 +100,11 @@ export default function BookingTable() {
                 <td className="py-2 px-3">{b.nama}</td>
                 <td className="py-2 px-3">{formatTanggal(b.tanggal_booking)}</td>
                 <td className="py-2 px-3">{b.order_date_formatted || b.order_date}</td>
-                <td className="py-2 px-3">{b.email}</td>
+                <td className="py-2 px-3 max-w-32"> {/* Batasi lebar email */}
+                  <div className="truncate" title={b.email}>
+                    {truncate(b.email, 20)}
+                  </div>
+                </td>
                 <td className="py-2 px-3 max-w-xs">
                   {truncate(b.items, 40)}
                 </td>
@@ -114,30 +119,35 @@ export default function BookingTable() {
                     {b.status}
                   </span>
                 </td>
-                <td className="py-2 px-3 flex gap-2">
-                  <button
-                    className="admin-action-btn bg-blue-100 text-blue-700 hover:bg-blue-200"
-                    title="Detail"
-                    onClick={() => { setDetailData(b); setShowDetail(true); }}
-                  >
-                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
-                    </svg>
-                    Detail
-                  </button>
-                  <button
-                    className="admin-action-btn bg-green-100 text-green-700 hover:bg-green-200"
-                    title="Update Status"
-                    onClick={() => openStatusModal(b)}
-                  >
-                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v12m6-6H6" />
-                    </svg>
-
-                    Status
-                  </button>
+                <td className="py-2 px-3">
+                  {/* Tata letak vertikal untuk tombol aksi */}
+                  <div className="flex flex-col gap-1">
+                    <button
+                      className="admin-action-btn bg-blue-100 text-blue-700 hover:bg-blue-200 w-full justify-center text-xs"
+                      title="Detail"
+                      onClick={() => { setDetailData(b); setShowDetail(true); }}
+                    >
+                      <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                      </svg>
+                      Detail
+                    </button>
+                    <button
+                      className="admin-action-btn bg-green-100 text-green-700 hover:bg-green-200 w-full justify-center text-xs"
+                      title="Update Status"
+                      onClick={() => openStatusModal(b)}
+                    >
+                      <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v12m6-6H6" />
+                      </svg>
+                      Status
+                    </button>
+                  </div>
                 </td>
-                <td className="py-2 px-3">{truncate(b.kendaraan || '-', 20)}</td> {/* Data Kendaraan */}
+                <td className="py-2 px-3">{truncate(b.kendaraan || '-', 20)}</td>
+                <td className="py-2 px-3">
+                  {b.waktu_kedatangan ? `${b.waktu_kedatangan} WIB` : '-'}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -176,7 +186,10 @@ export default function BookingTable() {
             <div className="mb-2"><b>Pesanan:</b> {detailData.items}</div>
             <div className="mb-2"><b>Total:</b> Rp {Number(detailData.total).toLocaleString()}</div>
             <div className="mb-2"><b>Status:</b> {detailData.status}</div>
-            <div className="mb-2"><b>Kendaraan:</b> {detailData.kendaraan || '-'}</div> {/* Detail Kendaraan */}
+            <div className="mb-2"><b>Kendaraan:</b> {detailData.kendaraan || '-'}</div>
+            <div className="mb-2">
+              <b>Waktu Kedatangan:</b> {detailData.waktu_kedatangan ? `${detailData.waktu_kedatangan} WIB` : '-'}
+            </div>
           </div>
         </div>
       )}

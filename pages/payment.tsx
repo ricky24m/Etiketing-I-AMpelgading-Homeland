@@ -194,6 +194,10 @@ export default function Payment() {
                     <span className="text-gray-600">Nomor Telepon:</span>
                     <span>{orderData.phone}</span>
                   </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Waktu Kedatangan:</span>
+                    <span>{orderData.waktu_kedatangan ? `${orderData.waktu_kedatangan} WIB` : '-'}</span>
+                  </div>
                 </div>
 
                 <div className="border-t pt-4">
