@@ -21,7 +21,7 @@ export default function DetailMenu() {
 
   // Untuk alat camping
   const isSewaAlatCamping = data?.data?.kategori === 'Sewa Alat Camping';
-  const { data: alatData } = useSWR(isSewaAlatCamping ? '/api/admin/alat-camping' : null, alatFetcher);
+  const { data: alatData } = useSWR(isSewaAlatCamping ? '/api/alat-camping' : null, alatFetcher);
   const [alatQty, setAlatQty] = useState<{ [id: number]: number }>({});
 
   // Hitung jumlah item di keranjang

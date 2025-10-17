@@ -8,7 +8,7 @@ import Cart from '../components/Cart';
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export default function SewaAlatCamping() {
-  const { data, error } = useSWR('/api/admin/alat-camping', fetcher);
+  const { data, error } = useSWR('/api/alat-camping', fetcher);
   const [alatQty, setAlatQty] = useState<{ [id: number]: number }>({});
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [showCart, setShowCart] = useState(false);
